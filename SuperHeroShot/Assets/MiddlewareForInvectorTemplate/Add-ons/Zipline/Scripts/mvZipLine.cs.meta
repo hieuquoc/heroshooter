@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: d1915a57215766749bfc70e70660de75
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 201846
+  packageName: MIS v2
+  packageVersion: 2.7.17
+  assetPath: Assets/MiddlewareForInvectorTemplate/Add-ons/Zipline/Scripts/mvZipLine.cs
+  uploadId: 804822

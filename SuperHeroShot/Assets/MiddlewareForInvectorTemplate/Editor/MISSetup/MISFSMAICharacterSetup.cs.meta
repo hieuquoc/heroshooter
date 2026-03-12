@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 356b032214a166041b56d62748d04e8a
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 201846
+  packageName: MIS v2
+  packageVersion: 2.7.17
+  assetPath: Assets/MiddlewareForInvectorTemplate/Editor/MISSetup/MISFSMAICharacterSetup.cs
+  uploadId: 804822

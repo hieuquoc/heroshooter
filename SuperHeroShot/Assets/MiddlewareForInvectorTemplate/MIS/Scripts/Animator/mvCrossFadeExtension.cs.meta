@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 67d9a4934fa188941b8498da0fe2552b
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 201846
+  packageName: MIS v2
+  packageVersion: 2.7.17
+  assetPath: Assets/MiddlewareForInvectorTemplate/MIS/Scripts/Animator/mvCrossFadeExtension.cs
+  uploadId: 804822

@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 36d6ef51e5b7e4543a51b3f8f333a163
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 201846
+  packageName: MIS v2
+  packageVersion: 2.7.17
+  assetPath: Assets/MiddlewareForInvectorTemplate/Add-ons/PushAction/Scripts/mvPushableObject.cs
+  uploadId: 804822

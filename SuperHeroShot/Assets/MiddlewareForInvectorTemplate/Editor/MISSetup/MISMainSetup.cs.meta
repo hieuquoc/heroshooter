@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: d8f1e1285266a0b43bdbc6c2988923ab
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 201846
+  packageName: MIS v2
+  packageVersion: 2.7.17
+  assetPath: Assets/MiddlewareForInvectorTemplate/Editor/MISSetup/MISMainSetup.cs
+  uploadId: 804822

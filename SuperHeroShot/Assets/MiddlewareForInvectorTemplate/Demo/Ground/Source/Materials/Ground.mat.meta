@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: f936bf871b421bd4196bbddb799e5bb4
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 201846
+  packageName: MIS v2
+  packageVersion: 2.7.17
+  assetPath: Assets/MiddlewareForInvectorTemplate/Demo/Ground/Source/Materials/Ground.mat
+  uploadId: 804822

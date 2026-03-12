@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: e8e719cc7a53ac9498d62ed67c3ca470
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 201846
+  packageName: MIS v2
+  packageVersion: 2.7.17
+  assetPath: Assets/MiddlewareForInvectorTemplate/MIS/Scripts/Generic/mvToolbarOrder.cs
+  uploadId: 804822

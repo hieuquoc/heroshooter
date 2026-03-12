@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 8e60a93bfdf432d44bcfeea29d2d8d5a
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 201846
+  packageName: MIS v2
+  packageVersion: 2.7.17
+  assetPath: Assets/MiddlewareForInvectorTemplate/AI Controllers/mvControlAIMelee.cs
+  uploadId: 804822

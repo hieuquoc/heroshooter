@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: e20af9e91a6d59e409199cb33be8045c
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 201846
+  packageName: MIS v2
+  packageVersion: 2.7.17
+  assetPath: Assets/MiddlewareForInvectorTemplate/Editor/MISSetup/MISAddon/SetupOption@LockOn.asset
+  uploadId: 804822

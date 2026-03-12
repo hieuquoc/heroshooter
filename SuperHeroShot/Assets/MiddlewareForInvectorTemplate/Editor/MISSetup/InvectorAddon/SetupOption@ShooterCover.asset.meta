@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: c2fd6cec332fa1d4487800590feb3534
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 201846
+  packageName: MIS v2
+  packageVersion: 2.7.17
+  assetPath: Assets/MiddlewareForInvectorTemplate/Editor/MISSetup/InvectorAddon/SetupOption@ShooterCover.asset
+  uploadId: 804822

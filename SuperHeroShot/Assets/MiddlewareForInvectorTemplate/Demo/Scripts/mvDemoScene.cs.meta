@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: afd3575cb2d97564b9e94b934f32f667
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 201846
+  packageName: MIS v2
+  packageVersion: 2.7.17
+  assetPath: Assets/MiddlewareForInvectorTemplate/Demo/Scripts/mvDemoScene.cs
+  uploadId: 804822

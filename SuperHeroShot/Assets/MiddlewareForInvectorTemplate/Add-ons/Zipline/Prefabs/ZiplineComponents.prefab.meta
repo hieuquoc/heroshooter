@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 079587796ccae1e4faabe119b1eb5708
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 201846
+  packageName: MIS v2
+  packageVersion: 2.7.17
+  assetPath: Assets/MiddlewareForInvectorTemplate/Add-ons/Zipline/Prefabs/ZiplineComponents.prefab
+  uploadId: 804822

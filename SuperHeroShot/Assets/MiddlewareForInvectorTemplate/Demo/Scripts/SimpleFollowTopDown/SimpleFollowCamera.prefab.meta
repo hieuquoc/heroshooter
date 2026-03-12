@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: a43634f434b7f6941bcc7cb561044fce
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 201846
+  packageName: MIS v2
+  packageVersion: 2.7.17
+  assetPath: Assets/MiddlewareForInvectorTemplate/Demo/Scripts/SimpleFollowTopDown/SimpleFollowCamera.prefab
+  uploadId: 804822

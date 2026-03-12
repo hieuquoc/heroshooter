@@ -1,0 +1,124 @@
+v1.5.7
+- Update: Invector v2.6.4b.
+- Update: MIS-FreeFlying Setup.
+
+v1.5.6
+- Update: Invector 2.6.4.
+- Update: Document p13. (It must be done manually)
+
+v1.5.5
+- Update: Animator States positioning in MIS-FreeFlying setup
+- Update: Chained-Action with MIS-LedgeClimb
+
+v1.5.4
+- Fix: HardLanding feautre was blocked
+- Update: Invector Shooter Template v2.6.3
+- Note: Invector Animator Controllers have been modified.
+
+v1.5.3
+- Remove: UpdateArmsIK from mvShooterMeleeInput
+- Update: GroundDistance member name to FlyingGroundDistance
+- Update: AutoCancelFlying member name to AutoCancelFlyingOnCollison
+- Update: MISCast replaces FilterRayCast
+- Update: MIS Setup v2.7.0
+- Update: MIS Animation StateMachines integration
+- Update: Chained-Action with MIS-Swimming
+
+v1.5.2
+- Update: Chained-Action with MIS-SoftFlying and FreeClimb
+- Update: Set up only the necessary Animator Parameters in each MIS package
+
+v1.5.1
+- Fix: multiSprintCount was not initialized after Sprint
+
+v1.5.0
+- Update: Compatibility with MIS v2.6.0
+- Update: DrawShooterWeaponImmediateConditions while flying
+
+v1.4.6
+- Update: mvTime to Time according to MIS-ActionShooter removal
+- Update: Chained-Action with MIS-Helicopter-AH64D
+
+v1.4.5
+- Update: Chained-Action with MIS-CarRider
+- Update: Removed ToggleFlyingInput
+- Update: Default Enter/Exit FlyingInput are Space
+- Fix: FreeFlying Random Idle state was not cleared after landing
+
+v1.4.4
+- Update: Chained-Action with MIS-WallRun
+
+v1.4.3 (Do not have to remove old version)
+- Fix: Flying Random Idle animation had been executed in a wrong way
+- Fix: Flying mode was canceled when a Hit Reaction occurs during flight
+
+v1.4.2 (Do not have to remove old version)
+- Fix: No Damage On Escape/No Damage On Sprint Roll options were always true
+       MIS must be upgraded to v2.2.2 first
+
+v1.4.1 (Do not have to remove old version)
+- Add: useSubInput option.
+       When it is checked, flyingSubInput will not be used.
+       Therefore, the Flying Start and Finish keys are replaced with toggleFlyingInput.
+       In addition, immediateSprintInput will be used for the Immediate Sprint Flying.
+
+v1.4.0 (Do not have to remove old version)
+- Add: Air Trail/Hard-Landing Start/Finish FX
+- Add: Hard Landing input key (S) which is shared with Flying Finish key
+- Add: minHardLandingGroundDistance, hardLandingForce, hardLandingFxPrefab for Hard Landing action
+- Add: moveStopLayerMask, maxMoveStopCheckDistance in order to separate from collision
+- Add: HardLanding/HardLand Animation clips
+- Fix: Flying Start main key has been changed to W
+- Fix: Played Random Idle animation while moving
+- Fix: Changed the default Crash Angle between 40 and 90 degree and Crash Velocity to 3
+- Fix: Character rolling is only available in Sprint mode
+- Fix: Character always rotates to the camera forward in Strafe mode
+- Fix: Use HorizontalInput and VerticalInput instead of Invector's InputHorizontal, InputVertical, and RotationMagnitude
+- Update: Improved the Sprint crash accuracy
+- Update: Improved the Fly Rolling motion
+- Update: Improved CheckMoveStopWeight()
+- Update: MoveFwdCondition() has been replaced by CheckForwardCapsuleCollision() to increase the accuracy
+- Update: IsFlying Animator parameter has been replaced with FlyingState
+- Update: Chained-Action with Invector Push&Pull, MIS-WaterDash
+
+v1.3.0 (Remove old package before update)
+- Update: Price has been increased
+- Update: MIS v2.0.0 (No backward compatibility)
+- Update: Setup is integrated in All-In-On Setup
+- Update: Adujusts the Animator StateMachines and States positions automatically
+- Update: Skips already existing settings including components and animator controller
+- Update: Document renewal
+- Update: Blocks Jump when finishing flying
+- Fix: The FreeFlying IKAdjust mode was not released after FreeFlying mode
+
+v1.2.0
+- Update: MIS v1.4.2
+- Update: Document
+- Update: Supports both Melee and Melee UpperBody templates
+- Update: Chained-Action with MIS-Motorcycle
+- Fix: Duplicate JetStreamHandler creation
+
+v1.1.1
+- Update: MIS v1.4.2
+
+v1.1.0
+- Update: MIS v1.4.0
+
+v1.0.5
+- Fix: Reset IKAdjust state
+
+v1.0.4
+- Fix: mvTime to vTime (mvTime will be adapted on next MIS)
+
+v1.0.3
+- Fix: Wrong feature used in mvFreeFlyingThirdPersonMelee.cs
+- Remove: Missing prefabs on Demo Scene
+
+v1.0.2
+- Update: Invector v2.6.1
+
+v1.0.1
+- Fix: Wrong IKAdjustList was set on the Shooter character prefab
+
+v1.0.0
+- First release

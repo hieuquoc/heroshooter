@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: d966871d081a032479b776d2c474efc5
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 201846
+  packageName: MIS v2
+  packageVersion: 2.7.17
+  assetPath: Assets/MiddlewareForInvectorTemplate/Basic Locomotion/Scripts/CharacterController/mvThirdPersonController.cs
+  uploadId: 804822

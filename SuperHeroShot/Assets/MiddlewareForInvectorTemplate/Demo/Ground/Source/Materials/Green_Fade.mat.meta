@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 3301832aa6a10ab4fbfa1d03d181f2ca
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 201846
+  packageName: MIS v2
+  packageVersion: 2.7.17
+  assetPath: Assets/MiddlewareForInvectorTemplate/Demo/Ground/Source/Materials/Green_Fade.mat
+  uploadId: 804822

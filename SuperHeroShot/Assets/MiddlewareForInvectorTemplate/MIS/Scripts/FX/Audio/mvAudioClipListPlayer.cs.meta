@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: da1c603bb6f3850499f1471826258125
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 201846
+  packageName: MIS v2
+  packageVersion: 2.7.17
+  assetPath: Assets/MiddlewareForInvectorTemplate/MIS/Scripts/VFX/Audio/mvAudioClipListPlayer.cs
+  uploadId: 804822

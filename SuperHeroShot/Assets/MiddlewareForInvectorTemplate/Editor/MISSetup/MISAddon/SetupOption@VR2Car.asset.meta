@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 08e66561f779c34419cd0499530b665e
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 201846
+  packageName: MIS v2
+  packageVersion: 2.7.17
+  assetPath: Assets/MiddlewareForInvectorTemplate/Editor/MISSetup/MISAddon/SetupOption@VR2Car.asset
+  uploadId: 804822

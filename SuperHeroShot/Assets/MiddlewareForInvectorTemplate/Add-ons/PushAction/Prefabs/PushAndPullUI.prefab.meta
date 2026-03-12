@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 940e54c9ef3e07d4db5c5316e9b6a73d
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 201846
+  packageName: MIS v2
+  packageVersion: 2.7.17
+  assetPath: Assets/MiddlewareForInvectorTemplate/Add-ons/PushAction/Prefabs/PushAndPullUI.prefab
+  uploadId: 804822
