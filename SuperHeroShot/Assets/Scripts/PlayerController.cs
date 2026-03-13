@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     public float sprintSpeed = 8f;
     public float dashSpeed = 15f;
     public float dashDuration = 0.5f;   
+    public float dashCooldown = 1f;
     public Vector3 cameraForward;
     [SerializeField] private Rigidbody rigidbody;
     private Vector3 _sprintDirection;
@@ -21,7 +22,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private bool _isSprinting;
     [SerializeField] private float lookRotationSpeed = 200f;
     private int _dashDirectionInput;
+    private float _dashCooldownTimer;
     private Vector3 _dashVel;
+    public bool IsDashing => _isDashing;
+    public bool CanDash => _dashCooldownTimer <= 0f;
     [SerializeField] private AnimatorManager animatorManager;
     public CameraFollow cameraFollow;
 
@@ -151,6 +155,10 @@ public class PlayerController : MonoBehaviour
         {
             _isDashing = false;
         }      
+        if(_dashCooldownTimer > 0f)
+        {
+            _dashCooldownTimer -= Time.deltaTime;
+        }
 
         Vector3 targetVel = cameraFollow.transform.forward.normalized * sprintSpeed + _dashVel;
         rigidbody.velocity = targetVel;
@@ -168,6 +176,7 @@ public class PlayerController : MonoBehaviour
         _dashDirectionInput = directionInput;
         _dashTimer = dashDuration;
         animatorManager.SetTriggerDash(_dashDirectionInput);
+        _dashCooldownTimer = dashCooldown;
     }
 
     public void ChangeState(PlayerState newState)

@@ -34,6 +34,7 @@ public class AnimatorManager : MonoBehaviour
 
     public void SetTriggerDash(int direction)
     {
+        Debug.Log("Dash direction: " + direction);
         if(direction > 0)
         {
             animator.SetTrigger("RollRight");

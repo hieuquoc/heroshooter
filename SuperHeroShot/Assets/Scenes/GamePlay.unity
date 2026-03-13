@@ -45369,6 +45369,14 @@ PrefabInstance:
       propertyPath: animatorManager
       value: 
       objectReference: {fileID: 1257404594}
+    - target: {fileID: 3912955155913341723, guid: a3b44e1df5f402c4f8be0aae1dc94c6e, type: 3}
+      propertyPath: m_Animation
+      value: 
+      objectReference: {fileID: 7400000, guid: bdb5e6c77def11246a8d87365cb3772e, type: 2}
+    - target: {fileID: 3912955155913341723, guid: a3b44e1df5f402c4f8be0aae1dc94c6e, type: 3}
+      propertyPath: m_Animations.Array.data[0]
+      value: 
+      objectReference: {fileID: 7400000, guid: bdb5e6c77def11246a8d87365cb3772e, type: 2}
     - target: {fileID: 6395958105554107259, guid: a3b44e1df5f402c4f8be0aae1dc94c6e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.0014930964

@@ -5,6 +5,7 @@ public class InputManager : MonoBehaviour
 {
     public VirtualJoystick moveJoystick;
     public static InputManager Instance { get; private set; }
+    private PlayerController _player;
 
     void Awake()
     {
@@ -23,6 +24,11 @@ public class InputManager : MonoBehaviour
         {
             useMouseLook = false;
         }
+    }
+
+    void Start()
+    {
+        _player = GameManager.Player;
     }
 
     [SerializeField] private Vector3 _moveInput;
@@ -79,12 +85,11 @@ public class InputManager : MonoBehaviour
             _moveInput = Vector3.zero;
         } 
 
-        GameManager.Player.SetSprinting(Input.GetKey(KeyCode.LeftShift));
-        if(GameManager.Player.CurrentState == PlayerState.Sprint)
+        _player.SetSprinting(Input.GetKey(KeyCode.LeftShift));
+        if(_player.CurrentState == PlayerState.Sprint && !_player.IsDashing)
         {
-            Debug.Log("Sprinting " + _navButtonPressed);
             if(_navButtonPressed)
-                GameManager.Player.SetDashing(true , (int)kb.x);
+                _player.SetDashing(true , (int)kb.x);
         }
         HandleFlyingUp();
         _navButtonPressed = false;
