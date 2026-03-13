@@ -14,5 +14,21 @@ public class AnimatorManager : MonoBehaviour
         animator.SetFloat("InputX", smoothInput.x);
         animator.SetFloat("InputZ", smoothInput.y);
         animator.SetInteger("CurrentState", (int)GameManager.Player.CurrentState);
+        animator.SetBool("IsSprint", GameManager.Player.CurrentState == PlayerState.Sprint);
+    }
+
+    public void SetTriggerSprint()
+    {
+        animator.SetTrigger("Sprint");
+    }
+
+    public void SetTriggerIdle()
+    {
+        animator.SetTrigger("Idle");
+    }
+
+    public void SetTriggerMove()
+    {
+        animator.SetTrigger("Move");
     }
 }

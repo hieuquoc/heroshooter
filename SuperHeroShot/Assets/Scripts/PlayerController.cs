@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private bool _isDashing;
     [SerializeField] private bool _isSprinting;
     [SerializeField] private float lookRotationSpeed = 200f;
+    [SerializeField] private AnimatorManager animatorManager;
     public CameraFollow cameraFollow;
 
     private void Awake()
@@ -88,24 +89,29 @@ public class PlayerController : MonoBehaviour
 
     public void UpdateState(Vector3 movementInput, bool isSprinting, bool isDashing)
     {
+        PlayerState newState = currentState;
         if(!isSprinting && !isDashing)
         {
             if (movementInput.sqrMagnitude < 0.0001f)
             {
-                currentState = PlayerState.Idle;
+                newState = PlayerState.Idle;
             }
             else
             {
-                currentState = PlayerState.Move;
+                newState = PlayerState.Move;
             }
         }
         else if (isSprinting)
         {
-            currentState = PlayerState.Sprint;
+            newState = PlayerState.Sprint;
         }
         else if (isDashing)
         {
-            currentState = PlayerState.Dash;
+            newState = PlayerState.Dash;
+        }
+        if(newState != currentState)
+        {
+            ChangeState(newState);
         }
     }
 
@@ -149,6 +155,25 @@ public class PlayerController : MonoBehaviour
     public void SetSprinting(bool sprinting)
     {
         _isSprinting = sprinting;
+    }
+
+    public void ChangeState(PlayerState newState)
+    {
+        currentState = newState;
+        switch (currentState)
+        {
+            case PlayerState.Idle:
+            animatorManager.SetTriggerIdle();
+                break;
+            case PlayerState.Move:
+            animatorManager.SetTriggerMove();
+                break;
+            case PlayerState.Sprint:
+            animatorManager.SetTriggerSprint();
+                break;
+            case PlayerState.Dash:
+                break;
+        }
     }
 }
 
