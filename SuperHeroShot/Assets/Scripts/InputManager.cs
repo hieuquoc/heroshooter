@@ -14,10 +14,14 @@ public class InputManager : MonoBehaviour
         }
         Instance = this;
         DontDestroyOnLoad(gameObject);
-    #if UNITY_EDITOR
-        useMouseLook = true;
-    #endif
-        useMouseLook = false;
+        if(Application.isEditor || Application.platform == RuntimePlatform.WindowsPlayer || Application.platform == RuntimePlatform.OSXPlayer)
+        {
+            useMouseLook = true;
+        }
+        else
+        {
+            useMouseLook = false;
+        }
     }
 
     [SerializeField] private Vector2 _moveInput;
@@ -28,6 +32,8 @@ public class InputManager : MonoBehaviour
     [SerializeField] private bool invertY = false;
     [SerializeField] private bool useMouseLook = true;
     private int _activeTouchId = -1;
+
+    public float LookSensitivity => lookSensitivity;
 
 
     void Update()
@@ -67,14 +73,10 @@ public class InputManager : MonoBehaviour
         // Mouse look: use mouse delta only while right mouse button is held (when enabled)
         if (useMouseLook)
         {
-            if (Input.GetMouseButton(1)) // right mouse button
-            {
-                float mx = Input.GetAxis("Mouse X");
-                float my = Input.GetAxis("Mouse Y");
-                look = new Vector2(mx, my) * lookSensitivity;
-            }
-        }
-
+            float mx = Input.GetAxis("Mouse X");
+            float my = Input.GetAxis("Mouse Y");
+            look = new Vector2(mx, my) * lookSensitivity;
+        }else
         // Mobile / touch mode: single-touch drag to look (only when touch mode selected)
         if (!useMouseLook)
         {
@@ -124,18 +126,6 @@ public class InputManager : MonoBehaviour
                             _activeTouchId = -1;
                         }
                         break;
-                    }
-                }
-            }
-            else
-            {
-                if (Application.isEditor || Application.platform == RuntimePlatform.WindowsPlayer || Application.platform == RuntimePlatform.OSXPlayer)
-                {
-                    if (Input.GetMouseButton(1))
-                    {
-                        float dx = Input.GetAxis("Mouse X") / Screen.width;
-                        float dy = Input.GetAxis("Mouse Y") / Screen.height;
-                        look = new Vector2(dx, dy) / touchSensitivity;
                     }
                 }
             }

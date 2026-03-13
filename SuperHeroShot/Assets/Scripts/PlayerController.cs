@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public PlayerState currentState = PlayerState.Idle;
+    private PlayerState currentState = PlayerState.Idle;
+    public PlayerState CurrentState => currentState;
     public Vector2 movementInput;
     public InputManager inputManager;
     public float moveSpeed = 5f;
@@ -19,11 +20,18 @@ public class PlayerController : MonoBehaviour
     private Vector3 _moveDirection;
     [SerializeField] private bool _isDashing;
     [SerializeField] private bool _isSprinting;
+    [SerializeField] private float lookRotationSpeed = 200f;
+    public CameraFollow cameraFollow;
 
     private void Awake()
     {
         if (rigidbody == null)
             rigidbody = GetComponent<Rigidbody>();
+    }
+
+    void Start()
+    {
+        cameraFollow = GameManager.Camera;
     }
 
     void Update()
@@ -34,15 +42,18 @@ public class PlayerController : MonoBehaviour
         else
             movementInput = Vector2.zero;
         
+        
         UpdateState(movementInput, _isSprinting, _isDashing);
 
         switch (currentState)
         {
             case PlayerState.Idle:
                 Stopping();
+                UpdateLook();
                 break;
             case PlayerState.Move:
                 MoveNormal();
+                UpdateLook();
                 break;
             case PlayerState.Sprint:
                 break;
@@ -54,15 +65,13 @@ public class PlayerController : MonoBehaviour
     // Move the player on the X,Z plane using Rigidbody based on movementInput (Vector2)
     private void MoveNormal()
     {
-        // Build local input vector (x = strafe, z = forward)
-        Debug.Log($"Move Input: {movementInput}");
         Vector3 input = new Vector3(movementInput.x, 0f, movementInput.y);
         if (input.sqrMagnitude < 0.0001f)
             return;
 
-        // Use the player's transform forward as the forward direction
-        Vector3 forward = transform.forward;
-
+        // Move relative to player's own forward — UpdateLook() already lerps player to face camera,
+        // so W/S/A/D is stable and doesn't compound with shoulder-offset camera tilt.
+        Vector3 forward = GameManager.Camera.transform.forward;
         forward.y = 0f;
         forward.Normalize();
         Vector3 right = Vector3.Cross(Vector3.up, forward);
@@ -104,10 +113,23 @@ public class PlayerController : MonoBehaviour
 
     public void Stopping()
     {
-        if (currentState == PlayerState.Idle && rigidbody.velocity.sqrMagnitude < 0.01f)
+        if (currentState == PlayerState.Idle && rigidbody.velocity.sqrMagnitude < 0.0001f)
             return;
         currentState = PlayerState.Idle;
         rigidbody.velocity = Vector3.Lerp(rigidbody.velocity, Vector3.zero, Time.deltaTime * 5f);
+    }
+
+    // Rotate player yaw (Y) to follow camera yaw
+    private void UpdateLook()
+    {
+        if (cameraFollow == null)
+            return;
+        Quaternion targetRot = Quaternion.Euler(0f, cameraFollow.Yaw, 0f);
+        transform.rotation = Quaternion.RotateTowards(
+            transform.rotation,
+            targetRot,
+            lookRotationSpeed * Time.deltaTime
+        );
     }
 
 
