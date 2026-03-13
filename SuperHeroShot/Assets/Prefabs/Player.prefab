@@ -169,16 +169,18 @@ MonoBehaviour:
   currentState: 0
   movementInput: {x: 0, y: 0, z: 0}
   inputManager: {fileID: 0}
-  moveSpeed: 5
-  sprintSpeed: 10
-  dashSpeed: 15
-  dashDuration: 0.5
-  _dashDirection: {x: 0, y: 0, z: 0}
+  moveSpeed: 10
+  sprintSpeed: 30
+  dashSpeed: 20
+  dashDuration: 0.3
+  dashCooldown: 1
   cameraForward: {x: 0, y: 0, z: 0}
   rigidbody: {fileID: 5443379835886896868}
+  _dashTimer: 0
   _isDashing: 0
   _isSprinting: 0
   lookRotationSpeed: 150
+  animatorManager: {fileID: 1590406336823966157}
   cameraFollow: {fileID: 0}
 --- !u!1001 &6618836882438683871
 PrefabInstance:
@@ -412,9 +414,9 @@ Animation:
   m_GameObject: {fileID: 6618836882438716027}
   m_Enabled: 0
   serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: 8dcb054fbadb5a94b9f19cf5af496982, type: 2}
+  m_Animation: {fileID: 7400000, guid: bdb5e6c77def11246a8d87365cb3772e, type: 2}
   m_Animations:
-  - {fileID: 7400000, guid: 8dcb054fbadb5a94b9f19cf5af496982, type: 2}
+  - {fileID: 7400000, guid: bdb5e6c77def11246a8d87365cb3772e, type: 2}
   m_WrapMode: 0
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
@@ -432,6 +434,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 6618836882448058815}
+  smoothInput: {x: 0, y: 0}
 --- !u!4 &6618836882438809153 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400030, guid: cf3910b7639e12447827e45f63f60201, type: 3}
