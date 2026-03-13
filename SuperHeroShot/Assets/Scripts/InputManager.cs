@@ -24,7 +24,7 @@ public class InputManager : MonoBehaviour
         }
     }
 
-    [SerializeField] private Vector2 _moveInput;
+    [SerializeField] private Vector3 _moveInput;
     [SerializeField] private Vector2 _lookInput;
     [Header("Look Settings")]
     [SerializeField] private float lookSensitivity = 1f;
@@ -35,6 +35,8 @@ public class InputManager : MonoBehaviour
 
     public float LookSensitivity => lookSensitivity;
 
+    [SerializeField] private bool _isFlyingUp;
+
 
     void Update()
     {
@@ -44,9 +46,9 @@ public class InputManager : MonoBehaviour
 
     private void HandleMoveInput()
     {
-        Vector2 kb = Vector2.zero;
-        if (Input.GetKey(KeyCode.W)) kb.y += 1f;
-        if (Input.GetKey(KeyCode.S)) kb.y -= 1f;
+        Vector3 kb = Vector3.zero;
+        if (Input.GetKey(KeyCode.W)) kb.z += 1f;
+        if (Input.GetKey(KeyCode.S)) kb.z -= 1f;
         if (Input.GetKey(KeyCode.D)) kb.x += 1f;
         if (Input.GetKey(KeyCode.A)) kb.x -= 1f;
 
@@ -59,10 +61,25 @@ public class InputManager : MonoBehaviour
         }
         else
         {
-            _moveInput = Vector2.zero;
+            _moveInput = Vector3.zero;
         } 
 
         GameManager.Player.SetSprinting(Input.GetKey(KeyCode.LeftShift));
+        HandleFlyingUp();
+    }
+
+    private void HandleFlyingUp()
+    {
+        _isFlyingUp = false;
+        if(Input.GetKey(KeyCode.Space))
+        {
+            _isFlyingUp = true;
+        }
+
+        if(_isFlyingUp)
+        {
+            _moveInput.y = 1f;
+        }
     }
 
     private void HandleLookInput()
@@ -134,6 +151,6 @@ public class InputManager : MonoBehaviour
         _lookInput = look;
     }
 
-    public Vector2 MoveInput => _moveInput;
+    public Vector3 MoveInput => _moveInput;
     public Vector2 LookInput => _lookInput;
 }

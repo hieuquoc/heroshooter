@@ -6,7 +6,7 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] private PlayerState currentState = PlayerState.Idle;
     public PlayerState CurrentState => currentState;
-    public Vector2 movementInput;
+    public Vector3 movementInput;
     public InputManager inputManager;
     public float moveSpeed = 5f;
     public float sprintSpeed = 8f;
@@ -63,30 +63,30 @@ public class PlayerController : MonoBehaviour
     // Move the player on the X,Z plane using Rigidbody based on movementInput (Vector2)
     private void MoveNormal()
     {
-        Vector3 input = new Vector3(movementInput.x, 0f, movementInput.y);
+        Vector3 input = inputManager.MoveInput;
         if (input.sqrMagnitude < 0.0001f)
             return;
 
-        // Move relative to player's own forward — UpdateLook() already lerps player to face camera,
-        // so W/S/A/D is stable and doesn't compound with shoulder-offset camera tilt.
+        // Flatten camera forward onto XZ plane before use
         Vector3 forward = GameManager.Camera.transform.forward;
         forward.y = 0f;
         forward.Normalize();
         Vector3 right = Vector3.Cross(Vector3.up, forward);
 
-        Vector3 desired = (forward * input.z + right * input.x);
+        // XZ: driven by input.x (strafe) and input.z (forward/back)
+        Vector3 desired = forward * input.z + right * input.x;
         if (desired.sqrMagnitude > 0.0001f)
             desired.Normalize();
 
         Vector3 targetVel = desired * moveSpeed;
 
-        // Preserve existing vertical velocity (gravity, jump, etc.)
-        targetVel.y = rigidbody.velocity.y;
+        // Y: use input.y if provided (e.g. fly/jump axis), otherwise preserve rigidbody gravity
+        targetVel.y = Mathf.Abs(input.y) > 0.0001f ? input.y * moveSpeed : rigidbody.velocity.y;
 
         rigidbody.velocity = targetVel;
     }
 
-    public void UpdateState(Vector2 movementInput, bool isSprinting, bool isDashing)
+    public void UpdateState(Vector3 movementInput, bool isSprinting, bool isDashing)
     {
         if(!isSprinting && !isDashing)
         {
