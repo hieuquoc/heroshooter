@@ -26211,7 +26211,7 @@ Animation:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1257404589}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Animation: {fileID: 7400000, guid: 8dcb054fbadb5a94b9f19cf5af496982, type: 2}
   m_Animations:
@@ -29001,13 +29001,13 @@ LookAtConstraint:
   m_GameObject: {fileID: 1435063137}
   m_Enabled: 1
   serializedVersion: 2
-  m_Weight: 0.593
-  m_RotationAtRest: {x: 0, y: 0, z: 0}
-  m_RotationOffset: {x: 172.93, y: 0, z: 0}
-  m_Roll: -177.8
+  m_Weight: 1
+  m_RotationAtRest: {x: 146.65, y: 0.8, z: -9.6}
+  m_RotationOffset: {x: 146.65, y: 0.8, z: -9.6}
+  m_Roll: -76.6
   m_WorldUpObject: {fileID: 158443517}
   m_UseUpObject: 0
-  m_Active: 0
+  m_Active: 1
   m_IsLocked: 1
   m_Sources:
   - sourceTransform: {fileID: 1405479105}
@@ -31031,13 +31031,13 @@ LookAtConstraint:
   m_GameObject: {fileID: 1515512380}
   m_Enabled: 1
   serializedVersion: 2
-  m_Weight: 0.667
-  m_RotationAtRest: {x: 0, y: 0, z: 0}
-  m_RotationOffset: {x: 0, y: 0, z: 0}
-  m_Roll: 0
+  m_Weight: 1
+  m_RotationAtRest: {x: 50, y: 1.4, z: 3.5}
+  m_RotationOffset: {x: 50, y: 1.4, z: 3.5}
+  m_Roll: -80.2
   m_WorldUpObject: {fileID: 0}
   m_UseUpObject: 0
-  m_Active: 0
+  m_Active: 1
   m_IsLocked: 1
   m_Sources:
   - sourceTransform: {fileID: 563374889}
@@ -45562,47 +45562,59 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6618836882438809157, guid: a3b44e1df5f402c4f8be0aae1dc94c6e, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9206074
+      value: 0.9102124
       objectReference: {fileID: 0}
     - target: {fileID: 6618836882438809157, guid: a3b44e1df5f402c4f8be0aae1dc94c6e, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.32916933
+      value: -0.013268894
       objectReference: {fileID: 0}
     - target: {fileID: 6618836882438809157, guid: a3b44e1df5f402c4f8be0aae1dc94c6e, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.046069674
+      value: 0.36799115
       objectReference: {fileID: 0}
     - target: {fileID: 6618836882438809157, guid: a3b44e1df5f402c4f8be0aae1dc94c6e, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.20495695
+      value: 0.1895253
+      objectReference: {fileID: 0}
+    - target: {fileID: 6618836882438809157, guid: a3b44e1df5f402c4f8be0aae1dc94c6e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 6618836882438809157, guid: a3b44e1df5f402c4f8be0aae1dc94c6e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 1.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6618836882438809157, guid: a3b44e1df5f402c4f8be0aae1dc94c6e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: 6618836882438809159, guid: a3b44e1df5f402c4f8be0aae1dc94c6e, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7747645
+      value: 0.94762725
       objectReference: {fileID: 0}
     - target: {fileID: 6618836882438809159, guid: a3b44e1df5f402c4f8be0aae1dc94c6e, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.50184804
+      value: 0.18711081
       objectReference: {fileID: 0}
     - target: {fileID: 6618836882438809159, guid: a3b44e1df5f402c4f8be0aae1dc94c6e, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.35731164
+      value: -0.2459753
       objectReference: {fileID: 0}
     - target: {fileID: 6618836882438809159, guid: a3b44e1df5f402c4f8be0aae1dc94c6e, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.14218657
+      value: 0.08055024
       objectReference: {fileID: 0}
     - target: {fileID: 6618836882438809159, guid: a3b44e1df5f402c4f8be0aae1dc94c6e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: 146.65
       objectReference: {fileID: 0}
     - target: {fileID: 6618836882438809159, guid: a3b44e1df5f402c4f8be0aae1dc94c6e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 6618836882438809159, guid: a3b44e1df5f402c4f8be0aae1dc94c6e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
+      value: -9.6
       objectReference: {fileID: 0}
     - target: {fileID: 6618836882448058815, guid: a3b44e1df5f402c4f8be0aae1dc94c6e, type: 3}
       propertyPath: m_Controller
@@ -45610,10 +45622,7 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: 8f98cf025bf5fc144a103c4d1e89faea, type: 2}
     - target: {fileID: 6618836882448058815, guid: a3b44e1df5f402c4f8be0aae1dc94c6e, type: 3}
       propertyPath: m_WarningMessage
-      value: "\nBinding warning: Some generic clip(s) animate transforms that are
-        already bound by a Humanoid avatar. These transforms can only be changed
-        by Humanoid clips.\n\tTransform 'Hand.R'\n\tTransform 'Hand.L'\n\tFrom animation
-        clip 'Flying@Idle Hans'"
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6618836882448058815, guid: a3b44e1df5f402c4f8be0aae1dc94c6e, type: 3}
       propertyPath: m_ApplyRootMotion

@@ -154,8 +154,8 @@ public class PlayerController : MonoBehaviour
 
 public enum PlayerState
 {
-    Idle,
-    Move,
-    Sprint,
-    Dash,
+    Idle = 0,
+    Move = 1,
+    Sprint = 2,
+    Dash = 3,
 }
