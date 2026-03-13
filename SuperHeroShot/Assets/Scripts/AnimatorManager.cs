@@ -31,4 +31,16 @@ public class AnimatorManager : MonoBehaviour
     {
         animator.SetTrigger("Move");
     }
+
+    public void SetTriggerDash(int direction)
+    {
+        if(direction > 0)
+        {
+            animator.SetTrigger("RollRight");
+        }
+        else if(direction < 0)
+        {
+            animator.SetTrigger("RollLeft");
+        }
+    }
 }

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class InputManager : MonoBehaviour
@@ -36,6 +37,7 @@ public class InputManager : MonoBehaviour
     public float LookSensitivity => lookSensitivity;
 
     [SerializeField] private bool _isFlyingUp;
+    private bool _navButtonPressed;
 
 
     void Update()
@@ -46,11 +48,20 @@ public class InputManager : MonoBehaviour
 
     private void HandleMoveInput()
     {
+        _navButtonPressed = false;
         Vector3 kb = Vector3.zero;
         if (Input.GetKey(KeyCode.W)) kb.z += 1f;
         if (Input.GetKey(KeyCode.S)) kb.z -= 1f;
-        if (Input.GetKey(KeyCode.D)) kb.x += 1f;
-        if (Input.GetKey(KeyCode.A)) kb.x -= 1f;
+        if (Input.GetKey(KeyCode.D))
+        {
+            _navButtonPressed = true;
+            kb.x += 1f;
+        } 
+        if (Input.GetKey(KeyCode.A))
+        {
+            _navButtonPressed = true;
+            kb.x -= 1f;
+        }
 
         if (kb.sqrMagnitude > 0.001f)
         {
@@ -58,6 +69,10 @@ public class InputManager : MonoBehaviour
         }else if (moveJoystick != null)
         {
             _moveInput = moveJoystick.Direction;
+            if(Math.Abs(_moveInput.x) > 0.01f)
+            {
+                _navButtonPressed = true;
+            }
         }
         else
         {
@@ -65,7 +80,14 @@ public class InputManager : MonoBehaviour
         } 
 
         GameManager.Player.SetSprinting(Input.GetKey(KeyCode.LeftShift));
+        if(GameManager.Player.CurrentState == PlayerState.Sprint)
+        {
+            Debug.Log("Sprinting " + _navButtonPressed);
+            if(_navButtonPressed)
+                GameManager.Player.SetDashing(true , (int)kb.x);
+        }
         HandleFlyingUp();
+        _navButtonPressed = false;
     }
 
     private void HandleFlyingUp()

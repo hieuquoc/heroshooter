@@ -12,15 +12,16 @@ public class PlayerController : MonoBehaviour
     public float sprintSpeed = 8f;
     public float dashSpeed = 15f;
     public float dashDuration = 0.5f;   
-    public Vector3 _dashDirection;
     public Vector3 cameraForward;
     [SerializeField] private Rigidbody rigidbody;
     private Vector3 _sprintDirection;
-    private float _dashTimer;
+    [SerializeField] private float _dashTimer;
     private Vector3 _moveDirection;
     [SerializeField] private bool _isDashing;
     [SerializeField] private bool _isSprinting;
     [SerializeField] private float lookRotationSpeed = 200f;
+    private int _dashDirectionInput;
+    private Vector3 _dashVel;
     [SerializeField] private AnimatorManager animatorManager;
     public CameraFollow cameraFollow;
 
@@ -55,8 +56,6 @@ public class PlayerController : MonoBehaviour
             case PlayerState.Sprint:
                 MoveSprint();
                 UpdateLook();
-                break;
-            case PlayerState.Dash:
                 break;
         }
     }
@@ -105,10 +104,6 @@ public class PlayerController : MonoBehaviour
         {
             newState = PlayerState.Sprint;
         }
-        else if (isDashing)
-        {
-            newState = PlayerState.Dash;
-        }
         if(newState != currentState)
         {
             ChangeState(newState);
@@ -147,14 +142,32 @@ public class PlayerController : MonoBehaviour
         // Snap player to face sprint direction immediately
         if (forward.sqrMagnitude > 0.0001f)
             transform.rotation = Quaternion.LookRotation(forward);
+        _dashVel = Vector3.zero;        
+        if(_isDashing && _dashTimer > 0f)
+        {
+            _dashTimer -= Time.deltaTime;
+             _dashVel = (Vector3.right * _dashDirectionInput).normalized * dashSpeed;
+        }else
+        {
+            _isDashing = false;
+        }      
 
-        Vector3 targetVel = cameraFollow.transform.forward.normalized * sprintSpeed;
+        Vector3 targetVel = cameraFollow.transform.forward.normalized * sprintSpeed + _dashVel;
         rigidbody.velocity = targetVel;
     }
+
 
     public void SetSprinting(bool sprinting)
     {
         _isSprinting = sprinting;
+    }
+
+    public void SetDashing(bool dashing, int directionInput = 0)
+    {
+        _isDashing = dashing;
+        _dashDirectionInput = directionInput;
+        _dashTimer = dashDuration;
+        animatorManager.SetTriggerDash(_dashDirectionInput);
     }
 
     public void ChangeState(PlayerState newState)
@@ -171,8 +184,6 @@ public class PlayerController : MonoBehaviour
             case PlayerState.Sprint:
             animatorManager.SetTriggerSprint();
                 break;
-            case PlayerState.Dash:
-                break;
         }
     }
 }
@@ -182,5 +193,4 @@ public enum PlayerState
     Idle = 0,
     Move = 1,
     Sprint = 2,
-    Dash = 3,
 }

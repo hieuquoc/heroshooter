@@ -45354,6 +45354,14 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1694440905904960110, guid: a3b44e1df5f402c4f8be0aae1dc94c6e, type: 3}
+      propertyPath: sprintSpeed
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 1694440905904960110, guid: a3b44e1df5f402c4f8be0aae1dc94c6e, type: 3}
+      propertyPath: dashDuration
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1694440905904960110, guid: a3b44e1df5f402c4f8be0aae1dc94c6e, type: 3}
       propertyPath: inputManager
       value: 
       objectReference: {fileID: 2133253562}
