@@ -26127,6 +26127,33 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1255918591}
   m_CullTransparentMesh: 1
+--- !u!1 &1257404589 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6618836882438716027, guid: a3b44e1df5f402c4f8be0aae1dc94c6e, type: 3}
+  m_PrefabInstance: {fileID: 1849785243401061362}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &1257404592 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 6618836882448058815, guid: a3b44e1df5f402c4f8be0aae1dc94c6e, type: 3}
+  m_PrefabInstance: {fileID: 1849785243401061362}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1257404593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1257404589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f52999f68a6116f41a82fd9ffcc14071, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 1257404592}
+  animSmooth: 0.15
+  _player: {fileID: 0}
+  _rb: {fileID: 0}
+  _cam: {fileID: 0}
 --- !u!1001 &1257625174
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -44853,12 +44880,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveJoystick: {fileID: 1341460343}
-  _moveInput: {x: 0, y: 0}
+  _moveInput: {x: 0, y: 0, z: 0}
   _lookInput: {x: 0, y: 0}
   lookSensitivity: 20
   touchSensitivity: 0.02
   invertY: 0
   useMouseLook: 1
+  _isFlyingUp: 0
 --- !u!4 &2133253563
 Transform:
   m_ObjectHideFlags: 0
@@ -45385,6 +45413,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6618836882448058815, guid: a3b44e1df5f402c4f8be0aae1dc94c6e, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 8f98cf025bf5fc144a103c4d1e89faea, type: 2}
+    - target: {fileID: 6618836882448058815, guid: a3b44e1df5f402c4f8be0aae1dc94c6e, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7636893330351092935, guid: a3b44e1df5f402c4f8be0aae1dc94c6e, type: 3}
       propertyPath: m_Name
       value: Player
@@ -45392,7 +45428,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6618836882438716027, guid: a3b44e1df5f402c4f8be0aae1dc94c6e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1257404593}
   m_SourcePrefab: {fileID: 100100000, guid: a3b44e1df5f402c4f8be0aae1dc94c6e, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
