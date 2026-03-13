@@ -238,9 +238,9 @@ MonoBehaviour:
   enablePitch: 1
   pitchMin: -30
   pitchMax: 60
-  offset: {x: -1.06, y: 1.22, z: -2.41}
-  shoulderOffset: {x: 3.06, y: 1.33, z: -2}
-  useShoulder: 0
+  offset: {x: 0, y: 0, z: 0}
+  shoulderOffset: {x: 1.24, y: 1.06, z: -2.9}
+  useShoulder: 1
   shoulderRight: 0
   positionSmoothTime: 0
   offsetLerpSpeed: 8
@@ -248,6 +248,7 @@ MonoBehaviour:
   collisionMask:
     serializedVersion: 2
     m_Bits: 4294967295
+  sprintShoulderOffset: {x: 0, y: 1.2, z: -2.9}
 --- !u!1001 &8875484
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26127,17 +26128,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1255918591}
   m_CullTransparentMesh: 1
---- !u!114 &1257404594 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1590406336823966157, guid: a3b44e1df5f402c4f8be0aae1dc94c6e, type: 3}
-  m_PrefabInstance: {fileID: 1849785243401061362}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a08f0544cfed6974d91f736fe783cc20, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1257625174
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -45353,30 +45343,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1694440905904960110, guid: a3b44e1df5f402c4f8be0aae1dc94c6e, type: 3}
-      propertyPath: sprintSpeed
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 1694440905904960110, guid: a3b44e1df5f402c4f8be0aae1dc94c6e, type: 3}
-      propertyPath: dashDuration
-      value: 0.3
+    - target: {fileID: 1590406336823966157, guid: a3b44e1df5f402c4f8be0aae1dc94c6e, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1694440905904960110, guid: a3b44e1df5f402c4f8be0aae1dc94c6e, type: 3}
       propertyPath: inputManager
       value: 
       objectReference: {fileID: 2133253562}
-    - target: {fileID: 1694440905904960110, guid: a3b44e1df5f402c4f8be0aae1dc94c6e, type: 3}
-      propertyPath: animatorManager
-      value: 
-      objectReference: {fileID: 1257404594}
-    - target: {fileID: 3912955155913341723, guid: a3b44e1df5f402c4f8be0aae1dc94c6e, type: 3}
-      propertyPath: m_Animation
-      value: 
-      objectReference: {fileID: 7400000, guid: bdb5e6c77def11246a8d87365cb3772e, type: 2}
-    - target: {fileID: 3912955155913341723, guid: a3b44e1df5f402c4f8be0aae1dc94c6e, type: 3}
-      propertyPath: m_Animations.Array.data[0]
-      value: 
-      objectReference: {fileID: 7400000, guid: bdb5e6c77def11246a8d87365cb3772e, type: 2}
     - target: {fileID: 6395958105554107259, guid: a3b44e1df5f402c4f8be0aae1dc94c6e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.0014930964

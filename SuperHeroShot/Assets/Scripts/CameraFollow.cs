@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
@@ -27,6 +28,7 @@ public class CameraFollow : MonoBehaviour
     [Header("Collision")]
     public float collisionRadius = 0.2f;
     public LayerMask collisionMask = ~0;
+    public Vector3 sprintShoulderOffset = new Vector3(0.8f, 1.6f, -2.5f);
 
     float yaw;
     float pitch;
@@ -34,6 +36,8 @@ public class CameraFollow : MonoBehaviour
 
     public float Yaw => yaw;
     Vector3 velocity = Vector3.zero;
+    private bool _cameraRecovering = false;
+    private Vector3 _originalShoulderOffset;
 
     void Start()
     {
@@ -42,6 +46,7 @@ public class CameraFollow : MonoBehaviour
         currentOffset = offset;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        _originalShoulderOffset = shoulderOffset;
     }
 
     void LateUpdate()
@@ -79,6 +84,18 @@ public class CameraFollow : MonoBehaviour
         // --- Smooth position ---
         transform.position = Vector3.SmoothDamp(transform.position, targetPos, ref velocity, positionSmoothTime);
         transform.rotation = rotation;
+        if(GameManager.Player.CurrentState == PlayerState.Sprint)
+        {
+            shoulderOffset = Vector3.Lerp(shoulderOffset, sprintShoulderOffset, Time.deltaTime * offsetLerpSpeed);
+            _cameraRecovering = false;
+        }else if(useShoulder && !_cameraRecovering)
+        {
+            shoulderOffset = Vector3.Lerp(shoulderOffset, _originalShoulderOffset, Time.deltaTime * offsetLerpSpeed);
+            if(Vector3.Distance(shoulderOffset, _originalShoulderOffset) < 0.1f)
+            {
+                _cameraRecovering = true;
+            }
+        }
     }
 
     public void ToggleShoulder()
