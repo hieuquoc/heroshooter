@@ -53,17 +53,16 @@ public class InputManager : MonoBehaviour
         if (kb.sqrMagnitude > 0.001f)
         {
             _moveInput = kb.normalized;
-            return;
-        }
-
-        if (moveJoystick != null)
+        }else if (moveJoystick != null)
         {
             _moveInput = moveJoystick.Direction;
         }
         else
         {
-            _moveInput = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-        }
+            _moveInput = Vector2.zero;
+        } 
+
+        GameManager.Player.SetSprinting(Input.GetKey(KeyCode.LeftShift));
     }
 
     private void HandleLookInput()

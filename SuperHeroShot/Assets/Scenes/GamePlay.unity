@@ -233,14 +233,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 544589807}
-  offset: {x: 0, y: 2, z: -5}
-  positionSmoothTime: 0.1
-  rotationSmoothTime: 0.1
-  collisionRadius: 0.3
+  mouseSensitivity: 1
+  enableYaw: 1
+  enablePitch: 1
+  pitchMin: -30
+  pitchMax: 60
+  offset: {x: -1.06, y: 1.22, z: -2.41}
+  shoulderOffset: {x: 3.06, y: 1.33, z: -2}
+  useShoulder: 0
+  shoulderRight: 0
+  positionSmoothTime: 0
+  offsetLerpSpeed: 8
+  collisionRadius: 0.2
   collisionMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  minDistance: 0.5
 --- !u!1001 &8875484
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10024,10 +10031,11 @@ MonoBehaviour:
   dashDuration: 0.5
   _dashDirection: {x: 0, y: 0, z: 0}
   cameraForward: {x: 0, y: 0, z: 0}
-  rigidbody: {fileID: 0}
+  rigidbody: {fileID: 544589808}
   _isDashing: 0
   _isSprinting: 0
-  lookRotationSpeed: 800
+  lookRotationSpeed: 150
+  cameraFollow: {fileID: 0}
 --- !u!1001 &545772905
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -45010,7 +45018,7 @@ MonoBehaviour:
   moveJoystick: {fileID: 1341460343}
   _moveInput: {x: 0, y: 0}
   _lookInput: {x: 0, y: 0}
-  lookSensitivity: 2
+  lookSensitivity: 20
   touchSensitivity: 0.02
   invertY: 0
   useMouseLook: 1

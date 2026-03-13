@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private PlayerState currentState = PlayerState.Idle;
+    [SerializeField] private PlayerState currentState = PlayerState.Idle;
     public PlayerState CurrentState => currentState;
     public Vector2 movementInput;
     public InputManager inputManager;
@@ -37,11 +37,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         // read movement input from InputManager (player only accepts input from it)
-        if (inputManager != null)
-            movementInput = inputManager.MoveInput;
-        else
-            movementInput = Vector2.zero;
-        
+        movementInput = InputManager.Instance.MoveInput;       
         
         UpdateState(movementInput, _isSprinting, _isDashing);
 
@@ -56,6 +52,8 @@ public class PlayerController : MonoBehaviour
                 UpdateLook();
                 break;
             case PlayerState.Sprint:
+                MoveSprint();
+                UpdateLook();
                 break;
             case PlayerState.Dash:
                 break;
@@ -113,9 +111,8 @@ public class PlayerController : MonoBehaviour
 
     public void Stopping()
     {
-        if (currentState == PlayerState.Idle && rigidbody.velocity.sqrMagnitude < 0.0001f)
+        if (currentState != PlayerState.Idle || rigidbody.velocity.sqrMagnitude < 0.0001f)
             return;
-        currentState = PlayerState.Idle;
         rigidbody.velocity = Vector3.Lerp(rigidbody.velocity, Vector3.zero, Time.deltaTime * 5f);
     }
 
@@ -132,7 +129,27 @@ public class PlayerController : MonoBehaviour
         );
     }
 
+    private void MoveSprint()
+    {
+        if (cameraFollow == null) return;
 
+        // Lock sprint direction to camera forward (flat)
+        Vector3 forward = cameraFollow.transform.forward;
+        forward.y = 0f;
+        forward.Normalize();
+
+        // Snap player to face sprint direction immediately
+        if (forward.sqrMagnitude > 0.0001f)
+            transform.rotation = Quaternion.LookRotation(forward);
+
+        Vector3 targetVel = cameraFollow.transform.forward.normalized * sprintSpeed;
+        rigidbody.velocity = targetVel;
+    }
+
+    public void SetSprinting(bool sprinting)
+    {
+        _isSprinting = sprinting;
+    }
 }
 
 public enum PlayerState
