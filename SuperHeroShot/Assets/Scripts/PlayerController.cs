@@ -140,8 +140,11 @@ public class PlayerController : MonoBehaviour
 
         // Lock sprint direction to camera forward (flat)
         Vector3 forward = cameraFollow.transform.forward;
-        forward.y = 0f;
         forward.Normalize();
+
+        // Camera-relative right — always perpendicular to forward,
+        // so dash velocity won't cancel any of the forward component.
+        Vector3 right = Vector3.Cross(Vector3.up, forward);
 
         // Snap player to face sprint direction immediately
         if (forward.sqrMagnitude > 0.0001f)
@@ -150,7 +153,7 @@ public class PlayerController : MonoBehaviour
         if(_isDashing && _dashTimer > 0f)
         {
             _dashTimer -= Time.deltaTime;
-             _dashVel = (Vector3.right * _dashDirectionInput).normalized * dashSpeed;
+            _dashVel = right * _dashDirectionInput * dashSpeed;
         }else
         {
             _isDashing = false;
@@ -160,7 +163,7 @@ public class PlayerController : MonoBehaviour
             _dashCooldownTimer -= Time.deltaTime;
         }
 
-        Vector3 targetVel = cameraFollow.transform.forward.normalized * sprintSpeed + _dashVel;
+        Vector3 targetVel = forward * sprintSpeed + _dashVel;
         rigidbody.velocity = targetVel;
     }
 

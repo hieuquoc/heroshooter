@@ -38,6 +38,7 @@ public class InputManager : MonoBehaviour
     [SerializeField] private float touchSensitivity = 0.02f;
     [SerializeField] private bool invertY = false;
     [SerializeField] private bool useMouseLook = true;
+    private bool _canDash = true;
     private int _activeTouchId = -1;
 
     public float LookSensitivity => lookSensitivity;
@@ -88,10 +89,17 @@ public class InputManager : MonoBehaviour
         _player.SetSprinting(Input.GetKey(KeyCode.LeftShift));
         if(_player.CurrentState == PlayerState.Sprint && !_player.IsDashing)
         {
-            if(_navButtonPressed)
+            if(_navButtonPressed && _canDash)
+            {
                 _player.SetDashing(true , (int)kb.x);
+                _canDash = false;
+            }
         }
         HandleFlyingUp();
+        if(!_navButtonPressed)
+        {
+            _canDash = true;
+        }
         _navButtonPressed = false;
     }
 
