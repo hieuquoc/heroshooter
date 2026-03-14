@@ -6,7 +6,7 @@ public class Bullet : PooledObject
 {
     public int Damage { get; set; }
     public Vector3 Direction { get; set; }
-    public float Speed { get; set; }
+    public float Speed = 20f;
 
     public void Shoot(Vector3 direction)
     {

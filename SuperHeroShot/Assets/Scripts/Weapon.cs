@@ -8,7 +8,7 @@ public class Weapon : MonoBehaviour
     public WeaponData rayShoot;
     public WeaponData rocketAim;
 
-    public WeaponType currentWeaponType;
+    public WeaponType currentWeaponType = WeaponType.Pistol;
 
     void Start()
     {
@@ -34,7 +34,8 @@ public class Weapon : MonoBehaviour
         Quaternion shootRotation = Quaternion.LookRotation(GameManager.Camera.transform.forward);
         Bullet bullet = ObjectPool.Instance.Get(handShoot.bulletPrefab, handShoot.shootingPoints[0].transform.position, shootRotation).GetComponent<Bullet>();
         bullet.Damage = handShoot.damage;
-        bullet.Direction = GameManager.Camera.transform.forward;
+        bullet.Direction = handShoot.currentAimDirection;
+        handShoot.fireTimer = handShoot.fireInterval;
     }
 
     public void ShootRay()
@@ -62,11 +63,13 @@ public class Weapon : MonoBehaviour
 
     public bool CheckTargetHandShoot()
     {
+        if(handShoot.CanShoot() == false) return false;
         if(Physics.Raycast(GameManager.Camera.transform.position, GameManager.Camera.transform.forward, out RaycastHit hit, handShoot.range))
         {
             // Check if the hit object is an enemy or a valid target
-            if (hit.collider.CompareTag("Enemy"))
+            if (hit.collider.CompareTag("enemy"))
             {
+                handShoot.currentAimDirection = (hit.point - handShoot.shootingPoints[0].position).normalized;
                 ShootHand();
                 return true;
             }
@@ -93,10 +96,11 @@ public class WeaponData
     public Transform[] shootingPoints;
     public int damage;
     public float range;
-    public float fireCooldown;
-    public float fireTime;
+    public float fireInterval;
+    public float fireTimer;
     public float cooldown;
     public float cooldownTimer;
+    public Vector3 currentAimDirection;
 
     public void UpdateCooldown()
     {
@@ -106,13 +110,13 @@ public class WeaponData
 
     public void UpdateFireTime()
     {
-        if (fireTime > 0f)
-            fireTime -= Time.deltaTime;
+        if (fireTimer > 0f)
+            fireTimer -= Time.deltaTime;
     }
 
     public bool CanShoot()
     {
-        return cooldownTimer <= 0f && fireTime <= 0f;
+        return cooldownTimer <= 0f && fireTimer <= 0f;
     }
 }
 
