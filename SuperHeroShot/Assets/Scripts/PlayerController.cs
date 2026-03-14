@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour
     public bool IsDashing => _isDashing;
     public bool CanDash => _dashCooldownTimer <= 0f;
     [SerializeField] private AnimatorManager animatorManager;
+    public AnimatorManager AnimatorManager => animatorManager;
     public CameraFollow cameraFollow;
 
     private void Awake()
