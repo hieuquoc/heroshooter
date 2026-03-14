@@ -21,7 +21,8 @@ public class AnimatorManager : MonoBehaviour
 
     public void SetTriggerSprint()
     {
-        animator.SetTrigger("Sprint");
+        animator.SetTrigger("Sprint");        
+        SetWeightLayerShoot(0f, true);
     }
 
     public void SetTriggerIdle()
@@ -45,6 +46,7 @@ public class AnimatorManager : MonoBehaviour
         {
             animator.SetTrigger("RollLeft");
         }
+        SetWeightLayerShoot(0f, true);
     }
 
     public void SetLookAtWeight(float weight)
@@ -52,6 +54,21 @@ public class AnimatorManager : MonoBehaviour
         foreach (var constraint in lookAtConstraints)
         {
             constraint.weight = weight;
+        }
+    }
+
+    public void ShootAnimation()
+    {
+        SetWeightLayerShoot(1f, false);
+        animator.SetTrigger("PistolShoot");
+    }
+
+    public void SetWeightLayerShoot(float weight, bool stopAim =  false)
+    {
+        animator.SetLayerWeight(1, weight);
+        if (stopAim)
+        {
+            animator.SetTrigger("StopAim");
         }
     }
 }
