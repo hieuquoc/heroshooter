@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PrefabID: 0
-  Speed: 20
+  Speed: 2
 --- !u!1001 &7150041866842256608
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -111,13 +111,21 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 198363811370790770, guid: 1807a854759e3934f80dccb5b8d775ff, type: 3}
+      propertyPath: moveWithTransform
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 199158703312543046, guid: 1807a854759e3934f80dccb5b8d775ff, type: 3}
+      propertyPath: m_RenderAlignment
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 199158703312543046, guid: 1807a854759e3934f80dccb5b8d775ff, type: 3}
       propertyPath: m_Materials.Array.size
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
-    - {fileID: 114561938137654726, guid: 1807a854759e3934f80dccb5b8d775ff, type: 3}
-    - {fileID: 114866040999948062, guid: 1807a854759e3934f80dccb5b8d775ff, type: 3}
+    - {fileID: 0}
+    - {fileID: 0}
     - {fileID: 54753083351612336, guid: 1807a854759e3934f80dccb5b8d775ff, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
