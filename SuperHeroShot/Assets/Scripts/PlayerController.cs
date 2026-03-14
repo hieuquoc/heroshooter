@@ -104,10 +104,12 @@ public class PlayerController : MonoBehaviour
             {
                 newState = PlayerState.Move;
             }
+            animatorManager.SetLookAtWeight(1f);
         }
         else if (isSprinting)
         {
             newState = PlayerState.Sprint;
+            animatorManager.SetLookAtWeight(0f);
         }
         if(newState != currentState)
         {

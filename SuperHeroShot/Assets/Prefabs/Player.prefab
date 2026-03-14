@@ -347,7 +347,7 @@ LookAtConstraint:
   m_Roll: -80.2
   m_WorldUpObject: {fileID: 0}
   m_UseUpObject: 0
-  m_Active: 1
+  m_Active: 0
   m_IsLocked: 1
   m_Sources:
   - sourceTransform: {fileID: 2248876497711665232}
@@ -372,7 +372,7 @@ LookAtConstraint:
   m_Roll: -76.6
   m_WorldUpObject: {fileID: 8970036114818414994}
   m_UseUpObject: 0
-  m_Active: 1
+  m_Active: 0
   m_IsLocked: 1
   m_Sources:
   - sourceTransform: {fileID: 9101742981140720141}
@@ -414,9 +414,9 @@ Animation:
   m_GameObject: {fileID: 6618836882438716027}
   m_Enabled: 0
   serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: bdb5e6c77def11246a8d87365cb3772e, type: 2}
+  m_Animation: {fileID: 7400000, guid: 7d54f8bbd8d18d04892c27fe2f4de8d5, type: 2}
   m_Animations:
-  - {fileID: 7400000, guid: bdb5e6c77def11246a8d87365cb3772e, type: 2}
+  - {fileID: 7400000, guid: 7d54f8bbd8d18d04892c27fe2f4de8d5, type: 2}
   m_WrapMode: 0
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
@@ -435,6 +435,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animator: {fileID: 6618836882448058815}
   smoothInput: {x: 0, y: 0}
+  lookAtConstraints: []
 --- !u!4 &6618836882438809153 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400030, guid: cf3910b7639e12447827e45f63f60201, type: 3}

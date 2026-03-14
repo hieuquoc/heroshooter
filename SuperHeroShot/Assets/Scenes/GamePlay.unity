@@ -45398,11 +45398,11 @@ PrefabInstance:
     - target: {fileID: 3912955155913341723, guid: a3b44e1df5f402c4f8be0aae1dc94c6e, type: 3}
       propertyPath: m_Animation
       value: 
-      objectReference: {fileID: 7400000, guid: fb0f4f3d20fd1684d9be9feeab56f67c, type: 2}
+      objectReference: {fileID: 7400000, guid: 7d54f8bbd8d18d04892c27fe2f4de8d5, type: 2}
     - target: {fileID: 3912955155913341723, guid: a3b44e1df5f402c4f8be0aae1dc94c6e, type: 3}
       propertyPath: m_Animations.Array.data[0]
       value: 
-      objectReference: {fileID: 7400000, guid: fb0f4f3d20fd1684d9be9feeab56f67c, type: 2}
+      objectReference: {fileID: 7400000, guid: 7d54f8bbd8d18d04892c27fe2f4de8d5, type: 2}
     - target: {fileID: 4446734927414988273, guid: a3b44e1df5f402c4f8be0aae1dc94c6e, type: 3}
       propertyPath: m_Active
       value: 0

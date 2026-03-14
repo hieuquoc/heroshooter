@@ -10,7 +10,6 @@ public class Weapon : MonoBehaviour
 
     public WeaponType currentWeaponType;
 
-    private bool _handGunTriggered;
     void Start()
     {
         
@@ -23,7 +22,7 @@ public class Weapon : MonoBehaviour
         {
             if(currentWeaponType == WeaponType.Pistol && CheckTargetHandShoot())
             {
-                
+                ShootHand();
             }
         }
 
@@ -32,7 +31,10 @@ public class Weapon : MonoBehaviour
 
     public void ShootHand()
     {
-        
+        Quaternion shootRotation = Quaternion.LookRotation(GameManager.Camera.transform.forward);
+        Bullet bullet = ObjectPool.Instance.Get(handShoot.bulletPrefab, handShoot.shootingPoints[0].transform.position, shootRotation).GetComponent<Bullet>();
+        bullet.Damage = handShoot.damage;
+        bullet.Direction = GameManager.Camera.transform.forward;
     }
 
     public void ShootRay()

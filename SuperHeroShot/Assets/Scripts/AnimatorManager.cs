@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Animations;
 
 public class AnimatorManager : MonoBehaviour
 {
     public Animator animator;
     [SerializeField] private Vector2 smoothInput;
+    [SerializeField] private LookAtConstraint[] lookAtConstraints;
 
     void Update()
     {
@@ -42,6 +44,14 @@ public class AnimatorManager : MonoBehaviour
         else if(direction < 0)
         {
             animator.SetTrigger("RollLeft");
+        }
+    }
+
+    public void SetLookAtWeight(float weight)
+    {
+        foreach (var constraint in lookAtConstraints)
+        {
+            constraint.weight = weight;
         }
     }
 }
