@@ -37,6 +37,10 @@ public class CameraFollow : MonoBehaviour
     public float Yaw => yaw;
     public float Pitch => pitch;
     Vector3 velocity = Vector3.zero;
+    private float _smoothedActualDist = 0f;
+    private Quaternion _currentRotation;
+    public float rotationSmoothTime = 0.05f;
+    private Vector3 _rotationVelocity;
     private bool _cameraRecovering = false;
     private Vector3 _originalShoulderOffset;
 
@@ -45,6 +49,8 @@ public class CameraFollow : MonoBehaviour
         yaw = transform.eulerAngles.y;
         pitch = transform.eulerAngles.x;
         currentOffset = offset;
+        _currentRotation = Quaternion.Euler(pitch, yaw, 0f);
+        _smoothedActualDist = Mathf.Abs(offset.z);
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         _originalShoulderOffset = shoulderOffset;
@@ -59,7 +65,9 @@ public class CameraFollow : MonoBehaviour
         if (enablePitch) pitch -= Input.GetAxis("Mouse Y") * mouseSensitivity;
         pitch = Mathf.Clamp(pitch, pitchMin, pitchMax);
 
-        Quaternion rotation = Quaternion.Euler(pitch, yaw, 0f);
+        Quaternion targetRotation = Quaternion.Euler(pitch, yaw, 0f);
+        _currentRotation = Quaternion.Slerp(_currentRotation, targetRotation, 1f - Mathf.Exp(-rotationSmoothTime * 60f * Time.deltaTime));
+        Quaternion rotation = _currentRotation;
 
         // --- Shoulder offset blend ---
         Vector3 desired = useShoulder ? shoulderOffset : offset;
@@ -75,25 +83,30 @@ public class CameraFollow : MonoBehaviour
         // --- Collision: SphereCast from pivot toward camera ---
         Vector3 dir = desiredPos - pivot;
         float desiredDist = dir.magnitude;
-        float actualDist = desiredDist;
 
+        float rawDist = desiredDist;
         if (Physics.SphereCast(pivot, collisionRadius, dir.normalized, out RaycastHit hit, desiredDist, collisionMask))
-            actualDist = Mathf.Max(hit.distance - collisionRadius, 0f);
+            rawDist = Mathf.Max(hit.distance - collisionRadius, 0f);
+        // Smooth collision distance to avoid jitter at geometry edges
+        _smoothedActualDist = Mathf.Lerp(_smoothedActualDist, rawDist, Time.deltaTime * 20f);
 
-        Vector3 targetPos = pivot + dir.normalized * actualDist;
+        Vector3 targetPos = pivot + dir.normalized * _smoothedActualDist;
 
         // --- Smooth position ---
         transform.position = Vector3.SmoothDamp(transform.position, targetPos, ref velocity, positionSmoothTime);
         transform.rotation = rotation;
-        if(GameManager.Player.CurrentState == PlayerState.Sprint)
+        if (GameManager.Player.CurrentState == PlayerState.Sprint)
         {
             shoulderOffset = Vector3.Lerp(shoulderOffset, sprintShoulderOffset, Time.deltaTime * offsetLerpSpeed);
             _cameraRecovering = false;
-        }else if(useShoulder && !_cameraRecovering)
+        }
+        else if (!_cameraRecovering)
         {
+            // Recover regardless of useShoulder to avoid jump when aiming after sprint
             shoulderOffset = Vector3.Lerp(shoulderOffset, _originalShoulderOffset, Time.deltaTime * offsetLerpSpeed);
-            if(Vector3.Distance(shoulderOffset, _originalShoulderOffset) < 0.1f)
+            if (Vector3.Distance(shoulderOffset, _originalShoulderOffset) < 0.01f)
             {
+                shoulderOffset = _originalShoulderOffset;
                 _cameraRecovering = true;
             }
         }
@@ -107,5 +120,11 @@ public class CameraFollow : MonoBehaviour
     public void SetShoulderSide(bool right)
     {
         shoulderRight = right;
+    }
+
+    public void SetTracking(bool track)
+    {
+        enablePitch = track;
+        enableYaw = track;
     }
 }

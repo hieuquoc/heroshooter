@@ -141,7 +141,7 @@ public class PlayerController : MonoBehaviour
         Vector3 cameraVector = new Vector3(0 ,cameraFollow.Yaw, 0);
         if(usePitch)
         {
-            cameraVector.x = cameraFollow.Pitch;
+            cameraVector.x = cameraFollow.Pitch - 15f;
         }
         Quaternion targetRot = Quaternion.Euler(cameraVector);
         transform.rotation = Quaternion.RotateTowards(

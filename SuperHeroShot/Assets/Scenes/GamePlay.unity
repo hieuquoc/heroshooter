@@ -249,6 +249,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   sprintShoulderOffset: {x: 0, y: 1.2, z: -2.9}
+  rotationSmoothTime: 0.15
 --- !u!1001 &8875484
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6195,11 +6196,6 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 4f32dfddb033d3e40b5841bc53cc1689, type: 3}
   m_PrefabInstance: {fileID: 308203871}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &314870319 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 127419227894178899, guid: a3b44e1df5f402c4f8be0aae1dc94c6e, type: 3}
-  m_PrefabInstance: {fileID: 1849785243401061362}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &314901987 stripped
 GameObject:
@@ -14357,6 +14353,34 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 100000, guid: 2509cc5763ca17f4598bf61fd585a93e, type: 3}
   m_PrefabInstance: {fileID: 1680054619}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &740627893 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6618836882438715909, guid: a3b44e1df5f402c4f8be0aae1dc94c6e, type: 3}
+  m_PrefabInstance: {fileID: 1849785243401061362}
+  m_PrefabAsset: {fileID: 0}
+--- !u!136 &740627895
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 740627893}
+  m_Material: {fileID: 13400000, guid: a319fd5167189e246aad4ec6a5edd690, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.29
+  m_Height: 2.06
+  m_Direction: 1
+  m_Center: {x: 0, y: -0.29, z: 0}
 --- !u!1001 &741803615
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30374,17 +30398,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.8867121, y: 10.330151, z: 1.4046078}
   m_Center: {x: 0.0016509888, y: 5.1666584, z: -0.2589483}
---- !u!114 &1427651431 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3096026329665415992, guid: a3b44e1df5f402c4f8be0aae1dc94c6e, type: 3}
-  m_PrefabInstance: {fileID: 1849785243401061362}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ca1af54be0d2a14aba9ed90e5757b18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1431230886 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100000, guid: 4f32dfddb033d3e40b5841bc53cc1689, type: 3}
@@ -47909,37 +47922,13 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1694440905904960110, guid: a3b44e1df5f402c4f8be0aae1dc94c6e, type: 3}
-      propertyPath: weapon
-      value: 
-      objectReference: {fileID: 1427651431}
-    - target: {fileID: 1694440905904960110, guid: a3b44e1df5f402c4f8be0aae1dc94c6e, type: 3}
       propertyPath: inputManager
       value: 
       objectReference: {fileID: 2133253562}
     - target: {fileID: 3096026329665415992, guid: a3b44e1df5f402c4f8be0aae1dc94c6e, type: 3}
-      propertyPath: rayShoot.range
-      value: 5000
+      propertyPath: rayShoot.fireInterval
+      value: 5
       objectReference: {fileID: 0}
-    - target: {fileID: 3096026329665415992, guid: a3b44e1df5f402c4f8be0aae1dc94c6e, type: 3}
-      propertyPath: rayShoot.damage
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3096026329665415992, guid: a3b44e1df5f402c4f8be0aae1dc94c6e, type: 3}
-      propertyPath: rayShoot.cooldown
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 3096026329665415992, guid: a3b44e1df5f402c4f8be0aae1dc94c6e, type: 3}
-      propertyPath: rayShoot.weaponType
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3096026329665415992, guid: a3b44e1df5f402c4f8be0aae1dc94c6e, type: 3}
-      propertyPath: rayShoot.shootingPoints.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3096026329665415992, guid: a3b44e1df5f402c4f8be0aae1dc94c6e, type: 3}
-      propertyPath: rayShoot.shootingPoints.Array.data[0]
-      value: 
-      objectReference: {fileID: 314870319}
     - target: {fileID: 6395958105554107259, guid: a3b44e1df5f402c4f8be0aae1dc94c6e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.0014930964
@@ -47984,10 +47973,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 9120914298515288769, guid: a3b44e1df5f402c4f8be0aae1dc94c6e, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9120914298515288769, guid: a3b44e1df5f402c4f8be0aae1dc94c6e, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 13400000, guid: a319fd5167189e246aad4ec6a5edd690, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6618836882438715909, guid: a3b44e1df5f402c4f8be0aae1dc94c6e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 740627895}
   m_SourcePrefab: {fileID: 100100000, guid: a3b44e1df5f402c4f8be0aae1dc94c6e, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
