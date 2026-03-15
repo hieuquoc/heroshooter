@@ -7,6 +7,8 @@ public class Enemy : PooledObject
     public int MaxHealth = 1;
     public int Health = 1;
     public int Damage = 1;
+    private float rayHitTime;
+    private float rayHitInterval = 0.5f;
     
     void Start()
     {
@@ -25,8 +27,16 @@ public class Enemy : PooledObject
         Health = health;
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, WeaponType weaponType)
     {
+        if(weaponType == WeaponType.Ray)
+        {
+            if(Time.time - rayHitTime < rayHitInterval)
+            {
+                return; // Ignore damage if hit too frequently
+            }
+            rayHitTime = Time.time;
+        }
         Health -= damage;
         if (Health <= 0)
         {

@@ -27,8 +27,10 @@ public class PlayerController : MonoBehaviour
     public bool IsDashing => _isDashing;
     public bool CanDash => _dashCooldownTimer <= 0f;
     [SerializeField] private AnimatorManager animatorManager;
+    [SerializeField] private Weapon weapon;
     public AnimatorManager AnimatorManager => animatorManager;
     public CameraFollow cameraFollow;
+    public bool IsAimming => currentState == PlayerState.LaserShoot || currentState == PlayerState.RocketAim;
 
     private void Awake()
     {
@@ -60,7 +62,10 @@ public class PlayerController : MonoBehaviour
                 break;
             case PlayerState.Sprint:
                 MoveSprint();
-                UpdateLook();
+                UpdateLook(2, true);
+                break;
+            case PlayerState.LaserShoot:
+                UpdateLook(2);
                 break;
         }
     }
@@ -93,6 +98,10 @@ public class PlayerController : MonoBehaviour
 
     public void UpdateState(Vector3 movementInput, bool isSprinting, bool isDashing)
     {
+        if (IsAimming)
+        {
+            return;
+        }
         PlayerState newState = currentState;
         if(!isSprinting && !isDashing)
         {
@@ -104,12 +113,12 @@ public class PlayerController : MonoBehaviour
             {
                 newState = PlayerState.Move;
             }
-            animatorManager.SetLookAtWeight(1f);
+            animatorManager.SetWeightLayerShoot(1f);
         }
         else if (isSprinting)
         {
             newState = PlayerState.Sprint;
-            animatorManager.SetLookAtWeight(0f);
+            animatorManager.SetWeightLayerShoot(0f);
         }
         if(newState != currentState)
         {
@@ -125,15 +134,20 @@ public class PlayerController : MonoBehaviour
     }
 
     // Rotate player yaw (Y) to follow camera yaw
-    private void UpdateLook()
+    private void UpdateLook(float speedMultiplier = 1f, bool usePitch = false)
     {
         if (cameraFollow == null)
             return;
-        Quaternion targetRot = Quaternion.Euler(0f, cameraFollow.Yaw, 0f);
+        Vector3 cameraVector = new Vector3(0 ,cameraFollow.Yaw, 0);
+        if(usePitch)
+        {
+            cameraVector.x = cameraFollow.Pitch;
+        }
+        Quaternion targetRot = Quaternion.Euler(cameraVector);
         transform.rotation = Quaternion.RotateTowards(
             transform.rotation,
             targetRot,
-            lookRotationSpeed * Time.deltaTime
+            lookRotationSpeed * speedMultiplier * Time.deltaTime
         );
     }
 
@@ -150,8 +164,8 @@ public class PlayerController : MonoBehaviour
         Vector3 right = Vector3.Cross(Vector3.up, forward);
 
         // Snap player to face sprint direction immediately
-        if (forward.sqrMagnitude > 0.0001f)
-            transform.rotation = Quaternion.LookRotation(forward);
+        //transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(forward), lookRotationSpeed * Time.deltaTime);
+            
         _dashVel = Vector3.zero;        
         if(_isDashing && _dashTimer > 0f)
         {
@@ -187,6 +201,7 @@ public class PlayerController : MonoBehaviour
 
     public void ChangeState(PlayerState newState)
     {
+        Debug.Log("Changing state from " + currentState + " to " + newState);
         currentState = newState;
         switch (currentState)
         {
@@ -199,6 +214,20 @@ public class PlayerController : MonoBehaviour
             case PlayerState.Sprint:
             animatorManager.SetTriggerSprint();
                 break;
+            case PlayerState.LaserShoot:
+            animatorManager.ShootRayAnimation();
+            rigidbody.velocity = Vector3.zero;
+                break;
+        }
+    }
+
+    public void ShootLaser()
+    {
+        if(currentState == PlayerState.Idle || currentState == PlayerState.Move)
+        if (weapon.rayShoot.CanShoot())
+        {
+            ChangeState(PlayerState.LaserShoot);
+            weapon.ShootRay();
         }
     }
 }
@@ -208,4 +237,6 @@ public enum PlayerState
     Idle = 0,
     Move = 1,
     Sprint = 2,
+    LaserShoot = 3,
+    RocketAim = 4
 }

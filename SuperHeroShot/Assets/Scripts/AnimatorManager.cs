@@ -49,14 +49,6 @@ public class AnimatorManager : MonoBehaviour
         SetWeightLayerShoot(0f, true);
     }
 
-    public void SetLookAtWeight(float weight)
-    {
-        foreach (var constraint in lookAtConstraints)
-        {
-            constraint.weight = weight;
-        }
-    }
-
     public void ShootAnimation()
     {
         SetWeightLayerShoot(1f, false);
@@ -70,5 +62,11 @@ public class AnimatorManager : MonoBehaviour
         {
             animator.SetTrigger("StopAim");
         }
+    }
+
+    public void ShootRayAnimation()
+    {
+        SetWeightLayerShoot(0f, false);
+        animator.SetTrigger("LaserShoot");
     }
 }

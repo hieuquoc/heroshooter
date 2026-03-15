@@ -35,6 +35,7 @@ public class CameraFollow : MonoBehaviour
     Vector3 currentOffset;
 
     public float Yaw => yaw;
+    public float Pitch => pitch;
     Vector3 velocity = Vector3.zero;
     private bool _cameraRecovering = false;
     private Vector3 _originalShoulderOffset;

@@ -12,7 +12,7 @@ public class Weapon : MonoBehaviour
 
     void Start()
     {
-        
+        rayShoot.bulletPrefab.SetActive(false);
     }
 
     // Update is called once per frame
@@ -27,6 +27,17 @@ public class Weapon : MonoBehaviour
         }
 
         UpdateGun();
+        if(GameManager.Player.CurrentState == PlayerState.LaserShoot)
+        {
+            if(rayShoot.fireTimer <= 0f)
+            {
+                rayShoot.bulletPrefab.SetActive(false);
+                GameManager.Player.ChangeState(PlayerState.Idle);
+            }else
+            
+            UpdateRayAim();
+            
+        }
     }
 
     public void ShootHand()
@@ -41,7 +52,26 @@ public class Weapon : MonoBehaviour
 
     public void ShootRay()
     {
+        rayShoot.bulletPrefab.SetActive(true);
+        rayShoot.fireTimer = rayShoot.fireInterval;
+        rayShoot.cooldownTimer = rayShoot.cooldown + rayShoot.fireInterval;
         
+        
+    }
+
+    public void UpdateRayAim()
+    {
+        Vector3 cameraForward = GameManager.Camera.transform.forward;
+        if(Physics.Raycast(GameManager.Camera.transform.position, cameraForward, out RaycastHit hit, rayShoot.range))
+        {
+            rayShoot.currentAimDirection = (hit.point - rayShoot.shootingPoints[0].position).normalized;
+            Debug.DrawRay(rayShoot.shootingPoints[0].position, rayShoot.currentAimDirection * rayShoot.range, Color.red);
+        }else
+        {
+            rayShoot.currentAimDirection = cameraForward;
+            Debug.DrawRay(rayShoot.shootingPoints[0].position, rayShoot.currentAimDirection * rayShoot.range, Color.blue);
+        }
+        rayShoot.bulletPrefab.transform.rotation = Quaternion.LookRotation(rayShoot.currentAimDirection);
     }
 
     public void AimRocket()

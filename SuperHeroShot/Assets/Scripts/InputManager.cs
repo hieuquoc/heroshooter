@@ -84,6 +84,11 @@ public class InputManager : MonoBehaviour
         else
         {
             _moveInput = Vector3.zero;
+        }
+
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            _moveInput.y = 1f;
         } 
 
         _player.SetSprinting(Input.GetKey(KeyCode.LeftShift));
@@ -101,6 +106,11 @@ public class InputManager : MonoBehaviour
             _canDash = true;
         }
         _navButtonPressed = false;
+
+        if (Input.GetKey(KeyCode.Mouse1))
+        {
+            _player.ShootLaser();
+        }
     }
 
     private void HandleFlyingUp()

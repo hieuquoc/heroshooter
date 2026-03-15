@@ -7,9 +7,12 @@ public class Bullet : PooledObject
     public int Damage { get; set; }
     public Vector3 Direction { get; set; }
     public float Speed = 20f;
+    public WeaponType WeaponType { get; set; }
 
-    public void Shoot(Vector3 direction)
+    public void Shoot(Vector3 direction, WeaponType weaponType)
     {
+        Direction = direction;
+        WeaponType = weaponType;
         transform.rotation = Quaternion.LookRotation(direction);
     }
 
@@ -23,7 +26,7 @@ public class Bullet : PooledObject
     {
         Enemy enemy = other.GetComponent<Enemy>();
         if (enemy != null)        {
-            enemy.TakeDamage(Damage);
+            enemy.TakeDamage(Damage, WeaponType);
             ObjectPool.Instance.Return(gameObject);
         }
     }
