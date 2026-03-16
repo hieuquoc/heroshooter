@@ -132,4 +132,10 @@ public class Bullet : PooledObject
         ObjectPool.Instance.Return(gameObject);
     }
 
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, _explosionRadius);
+    }
+
 }

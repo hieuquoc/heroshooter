@@ -136,7 +136,7 @@ MonoBehaviour:
   _target: {fileID: 0}
   _bezierControlXZDistance: 5
   _bezierControlHeight: 5
-  _explosionRadius: 3
+  _explosionRadius: 1
 --- !u!65 &5740067718647617608
 BoxCollider:
   m_ObjectHideFlags: 0
