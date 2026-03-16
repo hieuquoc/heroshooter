@@ -27,22 +27,6 @@ public class RocketAimUI : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    void Update()
-    {
-        if(_currentShotIndex >= 3) return;   // đã bắn hết 3 slot, chờ reset
-        _timers[_currentShotIndex] -= Time.deltaTime;
-
-        if (_timers[_currentShotIndex] <= 0f)
-        {
-            _timers[_currentShotIndex] = 0f;
-            _currentShotIndex++;
-        }
-        else
-        {
-            // fill = tỷ lệ thời gian còn lại / tổng
-            SetFill(_currentShotIndex, 1 - _timers[_currentShotIndex] / aimDuration);
-        }
-    }
 
     /// <summary>Kích hoạt slot aim thứ index (0-2), hiển thị.</summary>
     public void ActivateSlot(int index, float initialFill = 1f)

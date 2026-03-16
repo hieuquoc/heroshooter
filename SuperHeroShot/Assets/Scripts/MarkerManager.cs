@@ -6,20 +6,20 @@ public class MarkerManager : MonoBehaviour
     public static MarkerManager Instance { get; private set; }
 
     [SerializeField] Camera _cam;
-    [SerializeField] RectTransform _canvasRect; // Canvas gốc (Screen Space – Overlay hoặc Camera)
+    [SerializeField] RectTransform _canvasRect;
 
-    struct IndicatorEntry
+    private struct IndicatorEntry
     {
-        public GameObject Prefab;    // prefab gốc — dùng để Return đúng pool
-        public GameObject Instance;  // UI object đang dùng
+        public Transform Target;
+        public GameObject Prefab;
+        public GameObject Instance;
+        public Vector3 Position;  // vị trí world dùng để đặt marker
+        public bool IsRemoving;
     }
 
-    // key   = Transform của target
-    // value = stack indicator (index cuối là cái đang hiển thị)
-    readonly Dictionary<Transform, List<IndicatorEntry>> _tracked = new();
-
-    // buffer tránh modify dict trong foreach
-    readonly List<Transform> _toRemove = new();
+    // flat list; 1 target có thể xuất hiện nhiều lần
+    // index cuối cùng của mỗi target là indicator đang hiển thị
+    private List<IndicatorEntry> _tracked = new();
 
     // ──────────────────────────────────────────────
     // Lifecycle
@@ -41,107 +41,113 @@ public class MarkerManager : MonoBehaviour
     // ──────────────────────────────────────────────
 
     /// <summary>
-    /// Thêm indicator cho target. Indicator mới nhất sẽ được hiển thị;
-    /// indicator trước đó bị ẩn nhưng vẫn được giữ trong stack.
+    /// Thêm indicator cho target. Indicator mới trở thành top;
+    /// indicator trước đó của cùng target bị ẩn nhưng giữ nguyên trong list.
     /// </summary>
-    public void AddTarget(GameObject indicatorPrefab, Transform target)
+    public GameObject AddTarget(GameObject indicatorPrefab, Transform target, Vector3 hitPoint)
     {
-        if (target == null || indicatorPrefab == null) return;
+        if (target == null || indicatorPrefab == null) return null;
 
         GameObject instance = ObjectPool.Instance.Get(indicatorPrefab, Vector3.zero, Quaternion.identity);
         instance.transform.SetParent(_canvasRect, false);
-
-        if (!_tracked.TryGetValue(target, out var list))
-        {
-            list = new List<IndicatorEntry>();
-            _tracked[target] = list;
-        }
-        else if (list.Count > 0)
-        {
-            // ẩn top hiện tại (không trả pool — vẫn giữ trong stack)
-            list[list.Count - 1].Instance.SetActive(false);
-        }
-
-        list.Add(new IndicatorEntry { Prefab = indicatorPrefab, Instance = instance });
         instance.SetActive(true);
+
+        _tracked.Add(new IndicatorEntry
+        {
+            Target   = target,
+            Prefab   = indicatorPrefab,
+            Instance = instance,
+            Position = hitPoint
+        });
+        return instance;
+
     }
 
-    /// <summary>
-    /// Trả indicator trên cùng về pool, kích hoạt lại indicator bên dưới nó.
-    /// </summary>
-    public void RemoveTopMarker(Transform target)
+    public Vector3 GetHitPoint(GameObject marker)
     {
-        if (target == null || !_tracked.TryGetValue(target, out var list) || list.Count == 0)
-            return;
+        for (int i = _tracked.Count - 1; i >= 0; i--)
+        {
+            if (_tracked[i].Instance == marker)
+                return _tracked[i].Position;
+        }
+        return Vector3.zero;
+    }
 
-        var top = list[list.Count - 1];
-        list.RemoveAt(list.Count - 1);
-        ObjectPool.Instance.Return(top.Instance); // Return tự gọi SetActive(false)
-
-        if (list.Count > 0)
-            list[list.Count - 1].Instance.SetActive(true);
-        else
-            _tracked.Remove(target);
+    /// <summary>Cập nhật vị trí world cho tất cả indicator của target.</summary>
+    public void SetPosition(Transform target, Vector3 worldPosition)
+    {
+        for (int i = 0; i < _tracked.Count; i++)
+        {
+            if (_tracked[i].Target != target) continue;
+            var e = _tracked[i];
+            e.Position = worldPosition;
+            _tracked[i] = e;
+        }
     }
 
     /// <summary>Xoá toàn bộ indicator của target và trả hết về pool.</summary>
     public void RemoveTarget(Transform target)
     {
-        if (!_tracked.TryGetValue(target, out var list)) return;
-
-        foreach (var entry in list)
-            ObjectPool.Instance.Return(entry.Instance);
-
-        _tracked.Remove(target);
+        for (int i = _tracked.Count - 1; i >= 0; i--)
+        {
+            if (_tracked[i].Target == target)
+            {
+                ObjectPool.Instance.Return(_tracked[i].Instance);
+                _tracked.RemoveAt(i);
+            }
+        }
     }
+
+    public void RemoveMarker(GameObject marker)
+    {
+        for (int i = _tracked.Count - 1; i >= 0; i--)
+        {
+            if (_tracked[i].Instance == marker)
+            {
+                var e = _tracked[i];
+                e.IsRemoving = true;
+                _tracked[i] = e;
+                break;
+            }
+        }
+    }
+    
 
     // ──────────────────────────────────────────────
     // Update — đồng bộ vị trí UI với vị trí world
+    // chỉ xử lý entry là top của từng target
     // ──────────────────────────────────────────────
 
     void Update()
     {
-        _toRemove.Clear();
-
-        foreach (var kvp in _tracked)
+        for (int i = _tracked.Count - 1; i >= 0; i--)
         {
-            Transform target = kvp.Key;
-            var list = kvp.Value;
+            var entry = _tracked[i];
 
             // target bị destroy
-            if (target == null)
+            if (entry.Target == null || entry.IsRemoving)
             {
-                foreach (var e in list)
-                    ObjectPool.Instance.Return(e.Instance);
-                _toRemove.Add(target);
+                ObjectPool.Instance.Return(entry.Instance);
+                _tracked.RemoveAt(i);
                 continue;
             }
 
-            if (list.Count == 0) { _toRemove.Add(target); continue; }
+            Vector3 screenPos = _cam.WorldToScreenPoint(entry.Position);
 
-            var topInstance = list[list.Count - 1].Instance;
-
-            Vector3 screenPos = _cam.WorldToScreenPoint(target.position);
-
-            // chỉ hiện khi nằm trong frustum camera
             bool inView = screenPos.z > 0f
                        && screenPos.x >= 0f && screenPos.x <= Screen.width
                        && screenPos.y >= 0f && screenPos.y <= Screen.height;
 
-            if (topInstance.activeSelf != inView)
-                topInstance.SetActive(inView);
+            if (entry.Instance.activeSelf != inView)
+                entry.Instance.SetActive(inView);
 
             if (inView)
             {
-                // null = Screen Space Overlay; thay bằng canvas camera nếu dùng Screen Space – Camera
                 RectTransformUtility.ScreenPointToLocalPointInRectangle(
                     _canvasRect, screenPos, null, out Vector2 localPoint);
 
-                topInstance.GetComponent<RectTransform>().anchoredPosition = localPoint;
+                entry.Instance.GetComponent<RectTransform>().anchoredPosition = localPoint;
             }
         }
-
-        foreach (var t in _toRemove)
-            _tracked.Remove(t);
     }
 }

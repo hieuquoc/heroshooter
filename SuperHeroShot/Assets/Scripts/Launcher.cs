@@ -1,4 +1,6 @@
 using System.Collections;
+using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public class Launcher : MonoBehaviour
@@ -13,8 +15,9 @@ public class Launcher : MonoBehaviour
 
     public GameObject MarkerPrefab;   // prefab marker để hiển thị trên target đã lock
 
-    readonly Transform[] _targets = new Transform[MaxTargets];
-    readonly float[]     _timers  = new float[MaxTargets];
+    [SerializeField] private Transform[] _targets = new Transform[MaxTargets];
+    [SerializeField] private float[] _timers  = new float[MaxTargets];
+    private List<GameObject> markers = new List<GameObject>();
     int _lockedCount = 0;
     Transform _lastSeenTarget;
 
@@ -22,25 +25,7 @@ public class Launcher : MonoBehaviour
     void Update()
     {
         if (!isAimming) return;
-
         ScanForTargets();
-
-        for (int i = 0; i < MaxTargets; i++)
-        {
-            if (_targets[i] == null) continue;
-
-            _timers[i] -= Time.deltaTime;
-            if (_timers[i] <= 0f)
-            {
-                _targets[i] = null;
-                _lockedCount--;
-                RocketAimUI.Instance.SetSlotFill(i, 0f);
-            }
-            else
-            {
-                RocketAimUI.Instance.SetSlotFill(i, _timers[i] / lockDuration);
-            }
-        }
     }
 
     /// <summary>Bắt đầu aim: hiện cả 3 slot ngay lập tức với fill = 0.</summary>
@@ -54,51 +39,58 @@ public class Launcher : MonoBehaviour
         for (int i = 0; i < MaxTargets; i++)
         {
             _targets[i] = null;
-            _timers[i]  = 0f;
-            RocketAimUI.Instance.ActivateSlot(i, 0f);
+            _timers[i]  = lockDuration;
+            RocketAimUI.Instance.ActivateSlot(i, 1f);
         }
+        markers = new List<GameObject>();
     }
 
     /// <summary>Gọi mỗi frame khi player giữ nút aim.</summary>
     public void ScanForTargets()
     {
-        if (!isAimming || _lockedCount >= MaxTargets) return;
+        if(_lockedCount >= MaxTargets) return;
+        bool addTarget = false;
+        _timers[_lockedCount] -= Time.deltaTime;
+        RocketAimUI.Instance.SetSlotFill(_lockedCount, _timers[_lockedCount] / lockDuration);
 
         Vector3 origin    = GameManager.Camera.transform.position;
         Vector3 direction = GameManager.Camera.transform.forward;
-        Debug.DrawRay(origin, direction * _launcherData.range, Color.red);
 
-        if (Physics.Raycast(origin, direction, out RaycastHit hit, _launcherData.range, enemyLayerMask)
-            && hit.collider.CompareTag("enemy"))
+        if (Physics.Raycast(origin, direction, out RaycastHit hit, _launcherData.range, enemyLayerMask))
+        {
+            
+            if(_timers[_lockedCount] > 0f && hit.collider.CompareTag("enemy"))
+            {
+                bool alreadyLocked = false;
+                 for (int i = 0; i < MaxTargets; i++)
+                    if (_targets[i] == hit.transform) { alreadyLocked = true; break; }
+                    if (!alreadyLocked)
+                        addTarget = true;
+            }
+            else if(_timers[_lockedCount] <= 0f )
+                addTarget = true;
+        }
+
+        if (addTarget)
         {
             Debug.Log($"Locked target: {hit.transform.name}");
             _lastSeenTarget = hit.transform;
-            MarkerManager.Instance.AddTarget(MarkerPrefab, hit.transform);
-
-            bool alreadyLocked = false;
-            for (int i = 0; i < MaxTargets; i++)
-                if (_targets[i] == hit.transform) { alreadyLocked = true; break; }
-
-            if (!alreadyLocked)
-            {
-                for (int i = 0; i < MaxTargets; i++)
-                {
-                    if (_targets[i] != null) continue;
-                    _targets[i] = hit.transform;
-                    _timers[i]  = lockDuration;
-                    _lockedCount++;
-                    RocketAimUI.Instance.SetSlotFill(i, 1f);
-                    break;
-                }
-            }
+            AddTarget(hit.transform, hit.point);
+            _lockedCount++;
+            RocketAimUI.Instance.SetSlotFill(_lockedCount - 1, 0);
         }
 
         if (_lockedCount >= MaxTargets)
         {
             RocketAimUI.Instance.gameObject.SetActive(false);
             StartCoroutine(FireSequence());
-            isAimming = false;
         }
+    }
+
+    private void AddTarget(Transform target, Vector3 hitPoint)
+    {
+        markers.Add(MarkerManager.Instance.AddTarget(MarkerPrefab, target, hitPoint));
+        _targets[_lockedCount] = target;
     }
 
     /// <summary>Player thả nút aim sớm → bắn những gì đã lock được.</summary>
@@ -114,22 +106,23 @@ public class Launcher : MonoBehaviour
         for (int i = 0; i < MaxTargets; i++)
         {
             Transform t = _targets[i] != null ? _targets[i] : _lastSeenTarget;
-            if (t != null) ShootAt(t);
+            if (t != null) ShootAt(t, i);
             _targets[i] = null;
             yield return new WaitForSeconds(shootDelay);
         }
 
         for (int i = 0; i < MaxTargets; i++)
             RocketAimUI.Instance.DeactivateSlot(i);
-
-        _lockedCount    = 0;
-        _lastSeenTarget = null;
+        _lastSeenTarget = null;        
+        yield return new WaitForSeconds(2f);
         GameManager.Player.ChangeState(PlayerState.Idle);
+        markers.ForEach(m => MarkerManager.Instance.RemoveMarker(m));
     }
 
-    private void ShootAt(Transform target)
+    private void ShootAt(Transform target, int index)
     {
-        // TODO: pool/instantiate rocket toward target
+        Bullet bullet = ObjectPool.Instance.Get(_launcherData.bulletPrefab, _launcherData.shootingPoints[index].position, _launcherData.shootingPoints[index].rotation).GetComponent<Bullet>();
+        bullet.Shoot(target, _launcherData.weaponType);
     }
 
     public void SetUp(WeaponData data)
