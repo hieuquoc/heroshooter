@@ -374,7 +374,9 @@ MonoBehaviour:
   PrefabID: 0
   MaxHealth: 1
   Health: 1
-  Damage: 1
+  aimPoint: {fileID: 0}
+  rotateSpeed: 5
+  yAngleOffset: 16
 --- !u!1 &8813088330877996252
 GameObject:
   m_ObjectHideFlags: 0
