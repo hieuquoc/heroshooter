@@ -15,7 +15,7 @@ public class Bullet : PooledObject
     [SerializeField] private float _bezierControlHeight = 5f;
     [SerializeField] private float _explosionRadius = 3f;
 
-    private float _lifeTimer;
+    [SerializeField] private float _lifeTimer;
     private Vector3 _spawnPosition;
     private Vector3 _bezierControlPoint;
     private float _bezierT;
@@ -26,6 +26,7 @@ public class Bullet : PooledObject
         WeaponType = weaponType;
         transform.rotation = Quaternion.LookRotation(direction);
         _lifeTimer = 5f;
+        Debug.Log("bullet time " + _lifeTimer);
     }
 
     public void Shoot(Transform target, WeaponType weaponType)
@@ -102,6 +103,7 @@ public class Bullet : PooledObject
 
     void OnTriggerEnter(Collider other)
     {
+        Debug.Log($"Bullet hit: {other.name}");
         if(impactEffectPrefab != null)
         {
             GameObject effect = ObjectPool.Instance.Get(impactEffectPrefab, transform.position, Quaternion.identity);

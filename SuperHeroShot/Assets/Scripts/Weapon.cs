@@ -50,6 +50,7 @@ public class Weapon : MonoBehaviour
         bullet.Damage = handShoot.damage;
         bullet.Direction = handShoot.currentAimDirection;
         handShoot.fireTimer = handShoot.fireInterval;
+        bullet.Shoot(handShoot.currentAimDirection, handShoot.weaponType);
         GameManager.Player.AnimatorManager.ShootAnimation();
     }
 
