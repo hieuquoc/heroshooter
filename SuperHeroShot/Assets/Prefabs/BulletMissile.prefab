@@ -133,10 +133,14 @@ MonoBehaviour:
   PrefabID: 0
   Speed: 5
   impactEffectPrefab: {fileID: 1320135975536332274, guid: cc8818708cd934741a7adf14dc0be72c, type: 3}
-  _target: {fileID: 0}
+  _target: {x: 0, y: 0, z: 0}
   _bezierControlXZDistance: 5
   _bezierControlHeight: 5
   _explosionRadius: 1
+  _lifeTimer: 0
+  _enemyLayerMask:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!65 &5740067718647617608
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -18,6 +18,7 @@ public class Launcher : MonoBehaviour
     [SerializeField] private Transform[] _targets = new Transform[MaxTargets];
     [SerializeField] private float[] _timers  = new float[MaxTargets];
     private List<GameObject> markers = new List<GameObject>();
+    [SerializeField] private List<Vector3> hitPoints = new List<Vector3>();
     int _lockedCount = 0;
     Transform _lastSeenTarget;
 
@@ -43,6 +44,7 @@ public class Launcher : MonoBehaviour
             RocketAimUI.Instance.ActivateSlot(i, 1f);
         }
         markers = new List<GameObject>();
+        hitPoints = new List<Vector3>();
     }
 
     /// <summary>Gọi mỗi frame khi player giữ nút aim.</summary>
@@ -91,6 +93,7 @@ public class Launcher : MonoBehaviour
     {
         markers.Add(MarkerManager.Instance.AddTarget(MarkerPrefab, target, hitPoint));
         _targets[_lockedCount] = target;
+        hitPoints.Add(hitPoint);
     }
 
     /// <summary>Player thả nút aim sớm → bắn những gì đã lock được.</summary>
@@ -106,7 +109,7 @@ public class Launcher : MonoBehaviour
         for (int i = 0; i < MaxTargets; i++)
         {
             Transform t = _targets[i] != null ? _targets[i] : _lastSeenTarget;
-            if (t != null) ShootAt(t, i);
+            if (t != null) ShootAt(hitPoints[i], i);
             _targets[i] = null;
             yield return new WaitForSeconds(shootDelay);
         }
@@ -119,10 +122,10 @@ public class Launcher : MonoBehaviour
         markers.ForEach(m => MarkerManager.Instance.RemoveMarker(m));
     }
 
-    private void ShootAt(Transform target, int index)
+    private void ShootAt(Vector3 target, int index)
     {
         Bullet bullet = ObjectPool.Instance.Get(_launcherData.bulletPrefab, _launcherData.shootingPoints[index].position, _launcherData.shootingPoints[index].rotation).GetComponent<Bullet>();
-        bullet.Shoot(target, _launcherData.weaponType);
+        bullet.Shoot(target, _launcherData.damage);
     }
 
     public void SetUp(WeaponData data)
