@@ -15376,6 +15376,7 @@ GameObject:
   - component: {fileID: 5443379835886896868}
   - component: {fileID: 1694440905904960110}
   - component: {fileID: 3096026329665415992}
+  - component: {fileID: 1100188288016856209}
   m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
@@ -15502,10 +15503,41 @@ MonoBehaviour:
     range: 5000
     fireInterval: 3
     fireTimer: 0
-    cooldown: 0
-    cooldownTimer: 10
+    cooldown: 10
+    cooldownTimer: 0
     currentAimDirection: {x: 0, y: 0, z: 0}
   currentWeaponType: 2
+  launcher: {fileID: 1100188288016856209}
+--- !u!114 &1100188288016856209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7636893330351092935}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa7cdc43f73f73e46bc75a8d834a13b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isAimming: 0
+  lockDuration: 3
+  shootDelay: 0.15
+  launcherData:
+    bulletPrefab: {fileID: 4847837683928767952, guid: 21c3810ef7f9aa149a1aa3c5c500d8d4, type: 3}
+    weaponType: 2
+    shootingPoints: []
+    damage: 0
+    range: 0
+    fireInterval: 0
+    fireTimer: 0
+    cooldown: 0
+    cooldownTimer: 0
+    currentAimDirection: {x: 0, y: 0, z: 0}
+  enemyLayerMask:
+    serializedVersion: 2
+    m_Bits: 512
+  MarkerPrefab: {fileID: 2030049832484204554, guid: ac4f9abad39837e4a95d841a04123bca, type: 3}
 --- !u!1 &8105498185978397480
 GameObject:
   m_ObjectHideFlags: 0

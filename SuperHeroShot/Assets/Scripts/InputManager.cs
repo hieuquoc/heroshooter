@@ -111,6 +111,10 @@ public class InputManager : MonoBehaviour
         {
             _player.ShootLaser();
         }
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            _player.ShootRocket();
+        }
     }
 
     private void HandleFlyingUp()

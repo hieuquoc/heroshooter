@@ -67,6 +67,9 @@ public class PlayerController : MonoBehaviour
             case PlayerState.LaserShoot:
                 UpdateLook(2);
                 break;
+            case PlayerState.RocketAim:
+                UpdateLook(2);
+                break;
         }
     }
 
@@ -228,6 +231,17 @@ public class PlayerController : MonoBehaviour
         {
             ChangeState(PlayerState.LaserShoot);
             weapon.ShootRay();
+        }
+    }
+
+    public void ShootRocket()
+    {
+        Debug.Log("Attempting to shoot rocket. Can shoot: " + weapon.rocketAim.CanShoot() + ", Current state: " + currentState);
+        if(currentState == PlayerState.Idle || currentState == PlayerState.Move)
+        if (weapon.rocketAim.CanShoot())
+        {
+            ChangeState(PlayerState.RocketAim);
+            weapon.AimRocket();
         }
     }
 }

@@ -10,9 +10,12 @@ public class Weapon : MonoBehaviour
 
     public WeaponType currentWeaponType = WeaponType.Pistol;
 
+    [SerializeField] private Launcher launcher;
+
     void Start()
     {
         rayShoot.bulletPrefab.SetActive(false);
+        launcher.SetUp(rocketAim);
     }
 
     // Update is called once per frame
@@ -76,20 +79,7 @@ public class Weapon : MonoBehaviour
 
     public void AimRocket()
     {
-        
-    }
-
-    public void ShootSpecialWeapon(WeaponType weaponType)
-    {
-        if(currentWeaponType != WeaponType.Pistol) return;
-        if(weaponType == WeaponType.Ray)
-        {
-            ShootRay();
-        }
-        else if(weaponType == WeaponType.RocketAim)
-        {
-            AimRocket();
-        }
+        launcher.StartAiming();
     }
 
     public bool CheckTargetHandShoot()

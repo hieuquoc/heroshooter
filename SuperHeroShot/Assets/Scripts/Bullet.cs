@@ -66,6 +66,8 @@ public class Bullet : PooledObject
             enemy.TakeDamage(Damage, WeaponType);            
         }
         ObjectPool.Instance.Return(gameObject);
+        if(WeaponType == WeaponType.RocketAim)
+            MarkerManager.Instance.RemoveTarget(_target); // Remove marker if this bullet was tracking a target
     }
 
 }
