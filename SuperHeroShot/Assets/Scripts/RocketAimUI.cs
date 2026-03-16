@@ -32,7 +32,6 @@ public class RocketAimUI : MonoBehaviour
     public void ActivateSlot(int index, float initialFill = 1f)
     {
         if (index < 0 || index >= 3) return;
-        Debug.Log($"Activating slot {index} with initial fill {initialFill}");
         _timers[index] = aimDuration;
         SetSlotVisible(index, true);
         SetFill(index, initialFill);

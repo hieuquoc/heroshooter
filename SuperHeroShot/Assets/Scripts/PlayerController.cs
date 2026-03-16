@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private bool _isDashing;
     [SerializeField] private bool _isSprinting;
     [SerializeField] private float lookRotationSpeed = 200f;
+    [SerializeField] private Transform centerPoint;
     private int _dashDirectionInput;
     private float _dashCooldownTimer;
     private Vector3 _dashVel;
@@ -31,6 +32,9 @@ public class PlayerController : MonoBehaviour
     public AnimatorManager AnimatorManager => animatorManager;
     public CameraFollow cameraFollow;
     public bool IsAimming => currentState == PlayerState.LaserShoot || currentState == PlayerState.RocketAim;
+
+    public Transform CenterPoint => centerPoint;
+
 
     private void Awake()
     {

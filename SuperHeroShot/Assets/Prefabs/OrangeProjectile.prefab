@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6295949953516483548}
   - component: {fileID: 8023022962918065737}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: OrangeProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -47,8 +47,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PrefabID: 0
   Speed: 20
-  _target: {fileID: 0}
-  _rocketTurnSpeed: 180
+  impactEffectPrefab: {fileID: 1801918589960200, guid: 03280e26db9a2524c8409f02a2ab4d7d, type: 3}
+  _target: {x: 0, y: 0, z: 0}
+  _bezierControlXZDistance: 5
+  _bezierControlHeight: 5
+  _explosionRadius: 3
+  _lifeTimer: 0
+  _enemyLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1001 &9002664322751305416
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -57,9 +64,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6295949953516483548}
     m_Modifications:
+    - target: {fileID: 1308403569615522, guid: 5d777067c17b96c43a3bd547d25cb893, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1769995617360978, guid: 5d777067c17b96c43a3bd547d25cb893, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 1830508508936448, guid: 5d777067c17b96c43a3bd547d25cb893, type: 3}
       propertyPath: m_Name
       value: vfx_Projectile_BulletOrange
+      objectReference: {fileID: 0}
+    - target: {fileID: 1830508508936448, guid: 5d777067c17b96c43a3bd547d25cb893, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4419243995105470, guid: 5d777067c17b96c43a3bd547d25cb893, type: 3}
       propertyPath: m_LocalScale.x

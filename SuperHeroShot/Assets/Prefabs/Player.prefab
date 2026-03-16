@@ -15453,6 +15453,7 @@ MonoBehaviour:
   _isDashing: 0
   _isSprinting: 0
   lookRotationSpeed: 150
+  centerPoint: {fileID: 6618836882438809153}
   animatorManager: {fileID: 1590406336823966157}
   weapon: {fileID: 3096026329665415992}
   cameraFollow: {fileID: 0}
@@ -15546,6 +15547,7 @@ MonoBehaviour:
   - 0
   - 0
   - 0
+  hitPoints: []
 --- !u!1 &8105498185978397480
 GameObject:
   m_ObjectHideFlags: 0

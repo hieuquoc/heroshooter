@@ -24,7 +24,7 @@ public class Enemy : PooledObject
     void Start()
     {
         if (GameManager.Player != null)
-            _playerTransform = GameManager.Player.transform;
+            _playerTransform = GameManager.Player.CenterPoint;
     }
 
     void Update()
@@ -89,9 +89,7 @@ public class Enemy : PooledObject
         // Cập nhật aimPoint luôn nhìn thẳng về vị trí player (bao gồm Y — để aim không bị flat)
         if (aimPoint != null)
         {
-            Vector3 aimDir = _playerTransform.position - aimPoint.position;
-            if (aimDir.sqrMagnitude > 0.0001f)
-                aimPoint.rotation = Quaternion.LookRotation(aimDir);
+            aimPoint.transform.position = _playerTransform.position;
         }
     }
 

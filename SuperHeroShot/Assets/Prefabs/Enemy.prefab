@@ -30,7 +30,8 @@ Transform:
   m_LocalPosition: {x: 0.03565101, y: 0.08170604, z: -0.0023364797}
   m_LocalScale: {x: 0.89999956, y: 0.89999974, z: 0.89999956}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 3669394837609080714}
   m_Father: {fileID: 6094712538753082524}
   m_LocalEulerAnglesHint: {x: 0, y: -0.145, z: 0}
 --- !u!33 &6613336913911821882
@@ -280,6 +281,37 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &6786060786838194420
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3669394837609080714}
+  m_Layer: 7
+  m_Name: shootPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3669394837609080714
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6786060786838194420}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.102, z: 0.665}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1976512373809080576}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8314528816469231292
 GameObject:
   m_ObjectHideFlags: 0
@@ -333,7 +365,8 @@ MonoBehaviour:
   weaponData:
     bulletPrefab: {fileID: 742640391473783529, guid: f120ad45d485d344dbc1420de6982ea8, type: 3}
     weaponType: 0
-    shootingPoints: []
+    shootingPoints:
+    - {fileID: 3669394837609080714}
     damage: 0
     range: 0
     fireInterval: 0
@@ -344,7 +377,7 @@ MonoBehaviour:
   playerMask:
     serializedVersion: 2
     m_Bits: 8
-  aimPoint: {fileID: 0}
+  aimPoint: {fileID: 3448575618824536298}
   rotateSpeed: 5
   yAngleOffset: 16
 --- !u!136 &4940750449084850680
