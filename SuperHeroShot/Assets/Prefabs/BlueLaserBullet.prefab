@@ -4974,13 +4974,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PrefabID: 0
-  Speed: 2
+  Speed: 20
   impactEffectPrefab: {fileID: 6785847957752937217, guid: ad3eafb3208e246419e9dbaa7ed37d3e, type: 3}
-  _target: {fileID: 0}
+  _target: {x: 0, y: 0, z: 0}
   _bezierControlXZDistance: 5
   _bezierControlHeight: 5
   _explosionRadius: 3
   _lifeTimer: 5
+  _enemyLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!65 &8867420888631939344
 BoxCollider:
   m_ObjectHideFlags: 0

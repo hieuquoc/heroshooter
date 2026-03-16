@@ -19,12 +19,12 @@ public class RocketAimUI : MonoBehaviour
 
     // runtime state — mỗi slot lưu time còn lại
     [SerializeField] private float[] _timers = new float[3];
+    [SerializeField] private GameObject fillbarContainer;   // parent chứa fill bars, để bật/tắt cả đống cùng lúc
     private int _currentShotIndex = 0;   // slot nào sẽ được bắn tiếp theo (0-2)
 
     void Start()
     {
         ResetAllBars();
-        gameObject.SetActive(false);
     }
 
 
@@ -57,7 +57,9 @@ public class RocketAimUI : MonoBehaviour
     void SetSlotVisible(int i, bool visible)
     {
         if (fillBars != null && i < fillBars.Length && fillBars[i] != null)
-            fillBars[i].gameObject.SetActive(visible);
+            {
+                fillBars[i].gameObject.SetActive(visible);
+            }
     }
 
     void SetFill(int i, float value)
@@ -70,5 +72,11 @@ public class RocketAimUI : MonoBehaviour
     {
         for (int i = 0; i < 3; i++)
             SetSlotVisible(i, false);
+    }
+
+    public void SetFillBarGroupActive(bool active)
+    {
+        if (fillbarContainer != null)
+            fillbarContainer.SetActive(active);
     }
 }

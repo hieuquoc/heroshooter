@@ -32,7 +32,7 @@ public class Launcher : MonoBehaviour
     /// <summary>Bắt đầu aim: hiện cả 3 slot ngay lập tức với fill = 0.</summary>
     public void StartAiming()
     {
-        RocketAimUI.Instance.gameObject.SetActive(true);
+        RocketAimUI.Instance.SetFillBarGroupActive(true);
         isAimming       = true;
         _lockedCount    = 0;
         _lastSeenTarget = null;
@@ -84,7 +84,7 @@ public class Launcher : MonoBehaviour
 
         if (_lockedCount >= MaxTargets)
         {
-            RocketAimUI.Instance.gameObject.SetActive(false);
+            RocketAimUI.Instance.SetFillBarGroupActive(false);
             StartCoroutine(FireSequence());
         }
     }
@@ -120,6 +120,7 @@ public class Launcher : MonoBehaviour
         yield return new WaitForSeconds(2f);
         GameManager.Player.ChangeState(PlayerState.Idle);
         markers.ForEach(m => MarkerManager.Instance.RemoveMarker(m));
+        RocketAimUI.Instance.SetFillBarGroupActive(false);
     }
 
     private void ShootAt(Vector3 target, int index)

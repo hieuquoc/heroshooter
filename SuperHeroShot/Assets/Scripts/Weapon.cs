@@ -52,6 +52,7 @@ public class Weapon : MonoBehaviour
         handShoot.fireTimer = handShoot.fireInterval;
         bullet.Shoot(handShoot.currentAimDirection, handShoot.weaponType);
         GameManager.Player.AnimatorManager.ShootAnimation();
+        CrossHair.NotifyPistolShot();
     }
 
     public void ShootRay()
@@ -76,11 +77,13 @@ public class Weapon : MonoBehaviour
             Debug.DrawRay(rayShoot.shootingPoints[0].position, rayShoot.currentAimDirection * rayShoot.range, Color.blue);
         }
         rayShoot.bulletPrefab.transform.rotation = Quaternion.LookRotation(rayShoot.currentAimDirection);
+        CrossHair.NotifyLaserFiring();
     }
 
     public void AimRocket()
     {
         launcher.StartAiming();
+        CrossHair.NotifyRocketFired();
     }
 
     public bool CheckTargetHandShoot()
