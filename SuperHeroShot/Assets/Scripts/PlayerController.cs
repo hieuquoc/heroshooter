@@ -221,6 +221,9 @@ public class PlayerController : MonoBehaviour
             animatorManager.ShootRayAnimation();
             rigidbody.velocity = Vector3.zero;
                 break;
+            case PlayerState.RocketAim:
+            rigidbody.velocity = Vector3.zero;
+            break;
         }
     }
 

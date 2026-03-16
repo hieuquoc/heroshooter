@@ -9,6 +9,7 @@ public class Bullet : PooledObject
     public float Speed = 20f;
     public WeaponType WeaponType { get; set; }
 
+    [SerializeField] private GameObject impactEffectPrefab;
     [SerializeField] private Transform _target;
     [SerializeField] private float _bezierControlXZDistance = 5f;
     [SerializeField] private float _bezierControlHeight = 5f;
@@ -101,6 +102,11 @@ public class Bullet : PooledObject
 
     void OnTriggerEnter(Collider other)
     {
+        if(impactEffectPrefab != null)
+        {
+            GameObject effect = ObjectPool.Instance.Get(impactEffectPrefab, transform.position, Quaternion.identity);
+            ObjectPool.Instance.ReturnDelayed(effect, 2f);
+        }
         if (WeaponType == WeaponType.RocketAim)
         {
             Explode();
