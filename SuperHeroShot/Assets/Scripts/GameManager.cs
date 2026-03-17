@@ -43,6 +43,7 @@ public class GameManager : MonoBehaviour
         player.transform.position = PlayerSpawnPoint.position;
         player.transform.rotation = PlayerSpawnPoint.rotation;
         UIManager.Instance.Close("HomePopup");
+        UIManager.Instance.Open("InGameHUDPopup");
         _gameState = GameState.Playing;
     }
 }

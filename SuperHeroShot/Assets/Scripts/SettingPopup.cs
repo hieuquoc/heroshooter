@@ -31,8 +31,12 @@ public class SettingPopup : BasePopup
 
     void LoadSettingsToUI()
     {
-        if (cameraSensitivitySlider != null)
-            cameraSensitivitySlider.value = PlayerPrefs.GetFloat(cameraKey, 1f);
+        if (cameraSensitivitySlider != null && InputManager.Instance != null)
+        {
+            cameraSensitivitySlider.minValue = InputManager.MinTouchSensitivity;
+            cameraSensitivitySlider.maxValue = InputManager.MaxTouchSensitivity;
+            cameraSensitivitySlider.value = PlayerPrefs.GetFloat(cameraKey, InputManager.Instance.TouchSensitivity);
+        }
         if (soundToggle != null)
             soundToggle.isOn = PlayerPrefs.GetInt(soundKey, 1) == 1;
         if (musicToggle != null)
@@ -41,8 +45,13 @@ public class SettingPopup : BasePopup
 
     public void OnCameraSensitivityChanged(float value)
     {
+        // 'value' is in the same range as InputManager.MinTouchSensitivity..MaxTouchSensitivity
         PlayerPrefs.SetFloat(cameraKey, value);
         PlayerPrefs.Save();
+        if (InputManager.Instance != null)
+        {
+            InputManager.Instance.SetTouchSensitivity(value);
+        }
     }
 
     public void OnSoundToggleChanged(bool isOn)

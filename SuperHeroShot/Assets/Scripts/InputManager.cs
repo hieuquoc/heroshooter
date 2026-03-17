@@ -42,6 +42,9 @@ public class InputManager : MonoBehaviour
     private int _activeTouchId = -1;
 
     public float LookSensitivity => lookSensitivity;
+    public float TouchSensitivity => touchSensitivity;
+    public const float MinTouchSensitivity = 0.01f;
+    public const float MaxTouchSensitivity = 0.1f;
 
     [SerializeField] private bool _isFlyingUp;
     private bool _navButtonPressed;
@@ -130,6 +133,11 @@ public class InputManager : MonoBehaviour
         {
             _moveInput.y = 1f;
         }
+    }
+
+    public void SetTouchSensitivity(float value)
+    {
+        touchSensitivity = value;
     }
 
     private void HandleLookInput()
