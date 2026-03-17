@@ -8,6 +8,9 @@ using UnityEngine;
 /// </summary>
 public static class PlayerData
 {
+    public static bool IsInvincible { get; set; } = false;
+    public static bool IsFreeFire { get; set; } = false;
+
     // ── PlayerPrefs keys ─────────────────────────────────────────────────
     private const string KEY_LEVEL = "player_level";
     private const string KEY_KILLS = "player_kills";
