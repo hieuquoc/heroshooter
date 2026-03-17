@@ -91,7 +91,5 @@ public class CooldownButton : MonoBehaviour
     {
         if (button != null) button.interactable = interactable;
         InteractLock.SetActive(!interactable);
-        Debug.Log($"Set {gameObject.name} interactable: {interactable}");
-        Debug.Log($"InteractLock {gameObject.name} interactable: {InteractLock.activeSelf}");
     }
 }

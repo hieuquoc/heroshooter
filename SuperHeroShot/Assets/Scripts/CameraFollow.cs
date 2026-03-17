@@ -61,8 +61,8 @@ public class CameraFollow : MonoBehaviour
         if (target == null) return;
 
         // --- Mouse input ---
-        if (enableYaw)   yaw   += Input.GetAxis("Mouse X") * mouseSensitivity;
-        if (enablePitch) pitch -= Input.GetAxis("Mouse Y") * mouseSensitivity;
+        if (enableYaw)   yaw   += InputManager.Instance.LookInput.x * mouseSensitivity;
+        if (enablePitch) pitch -= InputManager.Instance.LookInput.y * mouseSensitivity;
         pitch = Mathf.Clamp(pitch, pitchMin, pitchMax);
 
         Quaternion targetRotation = Quaternion.Euler(pitch, yaw, 0f);

@@ -20,7 +20,6 @@ public class RocketAimUI : MonoBehaviour
     // runtime state — mỗi slot lưu time còn lại
     [SerializeField] private float[] _timers = new float[3];
     [SerializeField] private GameObject fillbarContainer;   // parent chứa fill bars, để bật/tắt cả đống cùng lúc
-    private int _currentShotIndex = 0;   // slot nào sẽ được bắn tiếp theo (0-2)
 
     void Start()
     {
