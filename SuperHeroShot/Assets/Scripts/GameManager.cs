@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -13,12 +11,9 @@ public class GameManager : MonoBehaviour
     {
         Player = player;
         Camera = cameraFollow;
-    }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+        // Load persisted player data (level, kills) and reset runtime state (hp, flags)
+        PlayerData.Load();
     }
 
     // Update is called once per frame

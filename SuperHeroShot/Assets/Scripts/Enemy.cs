@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Animations;
 
 public class Enemy : PooledObject
 {
@@ -15,9 +16,13 @@ public class Enemy : PooledObject
     [SerializeField] private Transform aimPoint;   // constraint source — trỏ về phía player
     [SerializeField] private float rotateSpeed = 5f;
     [SerializeField] private float yAngleOffset = 0f; // offset góc Y so với hướng player
+    [SerializeField] private Animator animator; // để tắt khi ragdoll, tránh animation override
+    [SerializeField] private AimConstraint aimConstraint; 
+    [SerializeField] private Collider mainCollider; // collider chính của enemy, để tắt khi ragdoll
 
     private float rayHitTime;
     private float rayHitInterval = 0.5f;
+    private Vector3 hitDirection;   // hướng từ player đến enemy, dùng để apply force khi chết
 
     Transform _playerTransform;
 
@@ -25,6 +30,11 @@ public class Enemy : PooledObject
     {
         if (GameManager.Player != null)
             _playerTransform = GameManager.Player.CenterPoint;
+    }
+
+    void OnEnable()
+    {
+        SetRagdoll(false);
     }
 
     void Update()
@@ -49,8 +59,8 @@ public class Enemy : PooledObject
 
         // Raycast LOS từ shootPoint đến player
         Vector3 origin = shootPoint.position;
-        Vector3 dir    = _playerTransform.position - origin;
-        float   dist   = dir.magnitude;
+        Vector3 dir = _playerTransform.position - origin;
+        float dist = dir.magnitude;
 
         if (!Physics.Raycast(origin, dir.normalized, out RaycastHit hit, dist, playerMask, QueryTriggerInteraction.Ignore))
             return;   // bị chặn → skip interval
@@ -66,11 +76,11 @@ public class Enemy : PooledObject
             .GetComponent<Bullet>();
         if (bullet != null)
         {
-            bullet.Damage    = weaponData.damage;
+            bullet.Damage = weaponData.damage;
             bullet.Direction = weaponData.currentAimDirection;
         }
 
-        weaponData.fireTimer     = weaponData.fireInterval;
+        weaponData.fireTimer = weaponData.fireInterval;
         weaponData.cooldownTimer = weaponData.cooldown;
     }
 
@@ -101,9 +111,10 @@ public class Enemy : PooledObject
 
     public void TakeDamage(int damage, WeaponType weaponType)
     {
-        if(weaponType == WeaponType.Ray)
+        hitDirection = (transform.position - GameManager.Player.transform.position).normalized;
+        if (weaponType == WeaponType.Ray)
         {
-            if(Time.time - rayHitTime < rayHitInterval)
+            if (Time.time - rayHitTime < rayHitInterval)
             {
                 return; // Ignore damage if hit too frequently
             }
@@ -112,7 +123,7 @@ public class Enemy : PooledObject
         Health -= damage;
         if (Health <= 0)
         {
-            Die();
+            Die(damage);
         }
         else
         {
@@ -121,10 +132,43 @@ public class Enemy : PooledObject
         }
     }
 
-    private void Die()
+    [Header("Ragdoll Force")]
+    [SerializeField] private float ragdollHorizontalForce = 120f;   // lực đẩy ngang base
+    [SerializeField] private float ragdollUpForce         = 40f;    // lực đẩy lên base
+    [SerializeField] private float ragdollDamageScale     = 8f;     // nhân thêm theo damage (up = horizontal * scale, up = upForce * scale * 0.5)
+    [SerializeField] private float ragdollMaxForce        = 600f;   // giới hạn trên để không bắn bay quá xa
+    [SerializeField] private float ragdollReturnDelay     = 3f;
+
+    private void Die(int damage)
     {
-        // Handle enemy death, e.g., play death animation, disable enemy, etc.
         Debug.Log("Enemy died!");
-        ObjectPool.Instance.Return(gameObject);
+        SetRagdoll(true);
+
+        // Scale lực theo damage, nhưng cap lại để không bay quá
+        float scale = 1f + damage * ragdollDamageScale * 0.01f;
+        float horizontal = Mathf.Min(ragdollHorizontalForce * scale, ragdollMaxForce);
+        float upward     = Mathf.Min(ragdollUpForce * scale, ragdollMaxForce * 0.5f);
+
+        Vector3 horizontalDir = new Vector3(hitDirection.x, 0f, hitDirection.z).normalized;
+        Vector3 forceVec = horizontalDir * horizontal + Vector3.up * upward;
+
+        foreach (var rb in GetComponentsInChildren<Rigidbody>())
+            rb.AddForce(forceVec, ForceMode.Impulse);
+
+        ObjectPool.Instance.ReturnDelayed(gameObject, ragdollReturnDelay);
+    }
+
+    void SetRagdoll(bool enabled)
+    {
+        foreach (var rb in GetComponentsInChildren<Rigidbody>())
+            rb.isKinematic = !enabled;
+
+        foreach (var col in GetComponentsInChildren<Collider>())
+            col.enabled = enabled;
+
+        animator.enabled = !enabled;
+        // Tắt luôn main collider của enemy nếu có riêng
+        aimConstraint.enabled = !enabled;
+        mainCollider.enabled = !enabled;
     }
 }
