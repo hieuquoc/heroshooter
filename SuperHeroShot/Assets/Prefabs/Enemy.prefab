@@ -384,8 +384,8 @@ MonoBehaviour:
   aimConstraint: {fileID: 3714260337676422517}
   mainCollider: {fileID: 4940750449084850680}
   ragdollHorizontalForce: 20
-  ragdollUpForce: 30
-  ragdollDamageScale: 1
+  ragdollUpForce: 20
+  ragdollDamageScale: 2
   ragdollMaxForce: 100
   ragdollReturnDelay: 3
 --- !u!136 &4940750449084850680
