@@ -137,7 +137,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6575455}
   - component: {fileID: 6575457}
-  - component: {fileID: 6575456}
   - component: {fileID: 6575458}
   m_Layer: 0
   m_Name: Camera
@@ -161,14 +160,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!81 &6575456
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6575454}
-  m_Enabled: 1
 --- !u!20 &6575457
 Camera:
   m_ObjectHideFlags: 0
@@ -12394,6 +12385,7 @@ GameObject:
   m_Component:
   - component: {fileID: 653056138}
   - component: {fileID: 653056137}
+  - component: {fileID: 653056139}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -12432,6 +12424,14 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!81 &653056139
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 653056136}
+  m_Enabled: 1
 --- !u!1 &654735739 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100000, guid: bc532b78ce09f234ea01da2deecfe035, type: 3}
@@ -27620,7 +27620,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1263833927}
   - component: {fileID: 1263833926}
-  - component: {fileID: 1263833925}
   m_Layer: 0
   m_Name: Camera (1)
   m_TagString: Untagged
@@ -27628,14 +27627,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &1263833925
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1263833924}
-  m_Enabled: 1
 --- !u!20 &1263833926
 Camera:
   m_ObjectHideFlags: 0
@@ -47171,10 +47162,10 @@ MonoBehaviour:
   rocketButton: {fileID: 1732465359}
   _moveInput: {x: 0, y: 0, z: 0}
   _lookInput: {x: 0, y: 0}
-  lookSensitivity: 20
+  lookSensitivity: 1
   touchSensitivity: 0.02
   invertY: 0
-  useMouseLook: 1
+  useMouseLook: 0
   _isFlyingUp: 0
 --- !u!4 &2133253563
 Transform:
@@ -47830,6 +47821,10 @@ PrefabInstance:
     - target: {fileID: 1419673299058142240, guid: 15d2927ecc71fed4d9a54293683d1ed6, type: 3}
       propertyPath: m_Name
       value: InGameHUD
+      objectReference: {fileID: 0}
+    - target: {fileID: 1419673299058142240, guid: 15d2927ecc71fed4d9a54293683d1ed6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
