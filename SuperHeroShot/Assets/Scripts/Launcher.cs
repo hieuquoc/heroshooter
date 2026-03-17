@@ -8,9 +8,7 @@ public class Launcher : MonoBehaviour
     private const int MaxTargets = 3;
 
     [SerializeField] private bool isAimming;
-    [SerializeField] private float lockDuration = 3f;
-    [SerializeField] private float shootDelay   = 0.15f;
-    [SerializeField] private WeaponData _launcherData;
+    [SerializeField] private float lockDuration = 3f;    [SerializeField] private WeaponData _launcherData;
     public LayerMask enemyLayerMask;
 
     public GameObject MarkerPrefab;   // prefab marker để hiển thị trên target đã lock
@@ -111,7 +109,7 @@ public class Launcher : MonoBehaviour
             Transform t = _targets[i] != null ? _targets[i] : _lastSeenTarget;
             if (t != null) ShootAt(hitPoints[i], i);
             _targets[i] = null;
-            yield return new WaitForSeconds(shootDelay);
+            yield return new WaitForSeconds(_launcherData.fireInterval);
         }
 
         for (int i = 0; i < MaxTargets; i++)

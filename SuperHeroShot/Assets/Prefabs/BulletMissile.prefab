@@ -132,7 +132,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PrefabID: 0
-  Speed: 10
+  Speed: 15
   impactEffectPrefab: {fileID: 1320135975536332274, guid: cc8818708cd934741a7adf14dc0be72c, type: 3}
   _target: {x: 0, y: 0, z: 0}
   _bezierControlXZDistance: 5
@@ -161,8 +161,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.51205933, y: 0.5750191, z: 1.0104376}
-  m_Center: {x: 0.0026233792, y: -0.00000011920929, z: 0.07344216}
+  m_Size: {x: 0.51205933, y: 0.5750191, z: 2.1535423}
+  m_Center: {x: 0.0026233727, y: -0.00000011641532, z: -0.49811247}
 --- !u!54 &-7739008440245678247
 Rigidbody:
   m_ObjectHideFlags: 0

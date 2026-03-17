@@ -34,6 +34,8 @@ public class PlayerController : MonoBehaviour
     public bool IsAimming => currentState == PlayerState.LaserShoot || currentState == PlayerState.RocketAim;
 
     public Transform CenterPoint => centerPoint;
+    public float RocketCooldown => weapon.RocketDuration();
+    public float LaserCooldown => weapon.LaserCooldown();
 
 
     private void Awake()

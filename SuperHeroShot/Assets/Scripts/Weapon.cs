@@ -59,7 +59,7 @@ public class Weapon : MonoBehaviour
     {
         rayShoot.bulletPrefab.SetActive(true);
         rayShoot.fireTimer = rayShoot.fireInterval;
-        rayShoot.cooldownTimer = rayShoot.cooldown + rayShoot.fireInterval;
+        rayShoot.cooldownTimer = rayShoot.cooldown;
         
         
     }
@@ -110,6 +110,16 @@ public class Weapon : MonoBehaviour
         rayShoot.UpdateFireTime();
         rocketAim.UpdateCooldown();
         rocketAim.UpdateFireTime();
+    }
+
+    public float LaserCooldown()
+    {
+        return rayShoot.cooldown;
+    }
+
+    public float RocketDuration()
+    {
+        return rocketAim.cooldown + rocketAim.fireInterval * 3 + 2;
     }
 }
 

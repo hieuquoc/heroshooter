@@ -1,11 +1,17 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InputManager : MonoBehaviour
 {
     public VirtualJoystick moveJoystick;
     public static InputManager Instance { get; private set; }
     private PlayerController _player;
+
+    public Button sprintButton;
+    public Button flightUpButton;
+    public CooldownButton laserButton;
+    public CooldownButton rocketButton;
 
     void Awake()
     {
@@ -29,6 +35,12 @@ public class InputManager : MonoBehaviour
     void Start()
     {
         _player = GameManager.Player;
+        sprintButton.onClick.AddListener(OnSprintButtonClicked);
+        flightUpButton.onClick.AddListener(OnFlightUpButtonClicked);
+        laserButton.button.onClick.AddListener(() => _player.ShootLaser());
+        rocketButton.button.onClick.AddListener(() => _player.ShootRocket());
+        laserButton.cooldownDuration = _player.LaserCooldown;
+        rocketButton.cooldownDuration = _player.RocketCooldown;
     }
 
     [SerializeField] private Vector3 _moveInput;
@@ -114,11 +126,23 @@ public class InputManager : MonoBehaviour
         if (Input.GetKey(KeyCode.Mouse1))
         {
             _player.ShootLaser();
+            if (laserButton != null) laserButton.StartCooldown();
         }
         if (Input.GetKeyDown(KeyCode.F))
         {
             _player.ShootRocket();
+            if (rocketButton != null) rocketButton.StartCooldown();
         }
+    }
+
+    public void OnSprintButtonClicked()
+    {
+        _player.SetSprinting(true);
+    }
+
+    public void OnFlightUpButtonClicked()
+    {
+        _moveInput.y = 1f;
     }
 
     private void HandleFlyingUp()

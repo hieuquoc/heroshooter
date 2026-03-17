@@ -15502,7 +15502,7 @@ MonoBehaviour:
     - {fileID: 7276142198529232255}
     damage: 3
     range: 5000
-    fireInterval: 3
+    fireInterval: 0.15
     fireTimer: 0
     cooldown: 10
     cooldownTimer: 0
@@ -15523,7 +15523,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isAimming: 0
   lockDuration: 3
-  shootDelay: 0.2
   _launcherData:
     bulletPrefab: {fileID: 0}
     weaponType: 0
@@ -15537,7 +15536,7 @@ MonoBehaviour:
     currentAimDirection: {x: 0, y: 0, z: 0}
   enemyLayerMask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 640
   MarkerPrefab: {fileID: 2030049832484204554, guid: ac4f9abad39837e4a95d841a04123bca, type: 3}
   _targets:
   - {fileID: 0}
