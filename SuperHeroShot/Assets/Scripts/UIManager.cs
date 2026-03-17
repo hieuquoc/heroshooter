@@ -33,6 +33,11 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    void Start()
+    {
+        Open("HomePopup");
+    }
+
     public void Register(string name, BasePopup popup)
     {
         if (string.IsNullOrEmpty(name) || popup == null) return;

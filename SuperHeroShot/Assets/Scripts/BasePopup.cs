@@ -26,7 +26,6 @@ public class BasePopup : MonoBehaviour
         canvasGroup.interactable = false;
         canvasGroup.blocksRaycasts = false;
         rectTransform.localScale = Vector3.zero;
-        gameObject.SetActive(false);
     }
 
     public virtual void Open()

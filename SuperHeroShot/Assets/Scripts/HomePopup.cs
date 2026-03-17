@@ -19,6 +19,7 @@ public class HomePopup : BasePopup
     public Button invulnerabilityAds;
     public GameObject freeSkillAdsIcon;
     public GameObject invulnerabilityAdsIcon;
+    public GameObject UICamera;
 
     protected override void Awake()
     {
@@ -36,13 +37,14 @@ public class HomePopup : BasePopup
         UpdateLevelText();
         freeSkillAdsIcon.SetActive(!PlayerData.IsFreeFire);
         invulnerabilityAdsIcon.SetActive(!PlayerData.IsInvincible);
+        UICamera.SetActive(true);
     }
 
     void UpdateLevelText()
     {
         if (levelText == null) return;
         int level = PlayerPrefs.GetInt(levelKey, 1);
-        levelText.text = $"Level {level}";
+        levelText.text = $"LEVEL: {level}";
     }
 
     void OnDestroy()
@@ -53,12 +55,12 @@ public class HomePopup : BasePopup
 
     public void OnPlayButton()
     {
-
+        GameManager.Instance.StartGame();
     }
 
     public void OnSettingsButton()
     {
-
+        UIManager.Instance.Open("SettingPopup");
     }
 
     public void OnFreeSkillAdsButton()
@@ -74,5 +76,11 @@ public class HomePopup : BasePopup
         PlayerData.IsInvincible = true;
         if (invulnerabilityAdsIcon != null)
             invulnerabilityAdsIcon.SetActive(false);
+    }
+
+    public void OnCloseButton()
+    {
+        Close();
+        UICamera.SetActive(false);
     }
 }

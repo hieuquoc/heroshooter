@@ -49,6 +49,7 @@ public class InputManager : MonoBehaviour
 
     void Update()
     {
+        if(GameManager.Instance.GameState != GameState.Playing) return;
         HandleMoveInput();
         HandleLookInput();
     }
@@ -111,7 +112,7 @@ public class InputManager : MonoBehaviour
         {
             _player.ShootLaser();
         }
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        if (Input.GetKeyDown(KeyCode.F))
         {
             _player.ShootRocket();
         }
