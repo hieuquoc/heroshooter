@@ -20,6 +20,7 @@ public class CooldownButton : MonoBehaviour
 
     [Tooltip("If true, clicking the button will automatically start the cooldown")]
     public bool startOnClick = true;
+    public GameObject InteractLock;
 
     Coroutine running;
     float remaining;
@@ -34,6 +35,7 @@ public class CooldownButton : MonoBehaviour
         if (button == null) button = GetComponent<Button>();
         if (button != null && startOnClick) button.onClick.AddListener(OnButtonClicked);
         if (fillImage != null) fillImage.fillAmount = 0f;
+        SetInteractable(true);
     }
 
     void OnDestroy()
@@ -83,5 +85,13 @@ public class CooldownButton : MonoBehaviour
         if (cooldownText != null) cooldownText.text = string.Empty;
         if (button != null) button.interactable = true;
         running = null;
+    }
+
+    public void SetInteractable(bool interactable)
+    {
+        if (button != null) button.interactable = interactable;
+        InteractLock.SetActive(!interactable);
+        Debug.Log($"Set {gameObject.name} interactable: {interactable}");
+        Debug.Log($"InteractLock {gameObject.name} interactable: {InteractLock.activeSelf}");
     }
 }

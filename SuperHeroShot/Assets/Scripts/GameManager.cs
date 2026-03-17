@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
+        Screen.orientation = ScreenOrientation.LandscapeLeft;
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);

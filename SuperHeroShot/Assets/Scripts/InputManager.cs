@@ -91,7 +91,7 @@ public class InputManager : MonoBehaviour
             _moveInput = kb.normalized;
         }else if (moveJoystick != null)
         {
-            _moveInput = moveJoystick.Direction;
+            _moveInput = new Vector3(moveJoystick.Horizontal, _moveInput.y, moveJoystick.Vertical);
             if(Math.Abs(_moveInput.x) > 0.01f)
             {
                 _navButtonPressed = true;
@@ -235,4 +235,10 @@ public class InputManager : MonoBehaviour
 
     public Vector3 MoveInput => _moveInput;
     public Vector2 LookInput => _lookInput;
+
+    public void SetSkillButtonInteractable(bool canUseLaser, bool canUseRocket)
+    {
+        if (laserButton != null) laserButton.SetInteractable(canUseLaser);
+        if (rocketButton != null) rocketButton.SetInteractable(canUseRocket);
+    }
 }

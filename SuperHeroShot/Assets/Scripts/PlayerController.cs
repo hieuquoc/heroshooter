@@ -216,18 +216,23 @@ public class PlayerController : MonoBehaviour
         {
             case PlayerState.Idle:
             animatorManager.SetTriggerIdle();
+            inputManager.SetSkillButtonInteractable(true, true);
                 break;
             case PlayerState.Move:
             animatorManager.SetTriggerMove();
+            inputManager.SetSkillButtonInteractable(true, true);
                 break;
             case PlayerState.Sprint:
             animatorManager.SetTriggerSprint();
+            inputManager.SetSkillButtonInteractable(false, false);
                 break;
             case PlayerState.LaserShoot:
             animatorManager.ShootRayAnimation();
+            inputManager.SetSkillButtonInteractable(false, false);
             rigidbody.velocity = Vector3.zero;
                 break;
             case PlayerState.RocketAim:
+            inputManager.SetSkillButtonInteractable(false, false);
             rigidbody.velocity = Vector3.zero;
             break;
         }
