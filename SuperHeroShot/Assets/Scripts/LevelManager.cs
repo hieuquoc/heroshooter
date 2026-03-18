@@ -42,6 +42,7 @@ public class LevelManager : MonoBehaviour
     // Track spawned enemies and the transform used for their marker (if any)
     class SpawnEntry { public GameObject Enemy; public Transform MarkerTarget; }
     List<SpawnEntry> _spawned = new List<SpawnEntry>();
+    private int totalEnemies = 0;
 
     void Awake()
     {
@@ -170,7 +171,7 @@ public class LevelManager : MonoBehaviour
         }
 
         int currentMax = baseMaxEnemies + ((Mathf.Max(1, level) - 1) / 5) * 5;
-        int totalEnemies = Mathf.Min(10 + level, currentMax);
+        totalEnemies = Mathf.Min(10 + level, currentMax);
         int eliteCount = Mathf.Min(level, totalEnemies);
 
         int normalCount = totalEnemies - eliteCount;
@@ -258,6 +259,8 @@ public class LevelManager : MonoBehaviour
             _spawned.Add(new SpawnEntry { Enemy = obj, MarkerTarget = markerTarget });
         }
 
+        InGameHUD.Instance?.UpdateEnemyCount(0, totalEnemies);
+
         Debug.Log($"SpawnLevel {level}: spawned {Mathf.Min(chosen.Count, totalEnemies)} enemies ({eliteCount} elite)");
     }
 
@@ -302,6 +305,7 @@ public class LevelManager : MonoBehaviour
                 break;
             }
         }
+        InGameHUD.Instance?.UpdateEnemyCount(totalEnemies - _spawned.Count, totalEnemies);
     }
 
     [ContextMenu("Clear Spawn Positions")]

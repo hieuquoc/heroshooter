@@ -716,6 +716,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   healthBarFill: {fileID: 6964943776407615397}
+  enemyCountText: {fileID: 7856665739639805873}
 --- !u!225 &2228614221649929537
 CanvasGroup:
   m_ObjectHideFlags: 0

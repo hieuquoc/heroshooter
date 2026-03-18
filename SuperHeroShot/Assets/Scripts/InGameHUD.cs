@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +11,7 @@ public class InGameHUD : BasePopup
     public static InGameHUD Instance { get; private set; }
 
     public Image healthBarFill;
+    [SerializeField] private TextMeshProUGUI enemyCountText;
 
     protected override void Awake()
     {
@@ -41,4 +43,13 @@ public class InGameHUD : BasePopup
             healthBarFill.fillAmount = Mathf.Clamp01(currentHp / maxHp);
         }
     }
+
+    public void UpdateEnemyCount(int count, int max)
+    {
+        if (enemyCountText != null)
+        {
+            enemyCountText.text = $"{count} / {max}";
+        }
+    }
+
 }
