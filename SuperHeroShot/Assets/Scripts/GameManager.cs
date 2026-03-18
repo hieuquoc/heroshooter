@@ -52,6 +52,7 @@ public class GameManager : MonoBehaviour
         UIManager.Instance.Open("InGameHUDPopup");
         _gameState = GameState.Playing;
         player.SetRagdoll(false);
+        LevelManager.Instance.SpawnLevel(PlayerData.Level, 2);
     }
 }
 

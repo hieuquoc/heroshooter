@@ -19,6 +19,7 @@ public class Enemy : PooledObject, IDamageable
     [SerializeField] private Animator animator; // để tắt khi ragdoll, tránh animation override
     [SerializeField] private AimConstraint aimConstraint; 
     [SerializeField] private Collider mainCollider; // collider chính của enemy, để tắt khi ragdoll
+    public Transform markPoint; // điểm để hiển thị marker trên UI
 
     private float rayHitTime;
     private float rayHitInterval = 0.5f;
@@ -175,6 +176,10 @@ public class Enemy : PooledObject, IDamageable
 
     private void Die(int damage)
     {
+        // notify LevelManager to unregister this enemy (remove marker and stop tracking)
+        if (LevelManager.Instance != null)
+            LevelManager.Instance.UnregisterSpawnedEnemy(gameObject);
+
         Debug.Log("Enemy died!");
         SetRagdoll(true);
 
