@@ -324,13 +324,19 @@ public class PlayerController : MonoBehaviour, IDamageable
         rigidbody.isKinematic = false; // Ensure main rigidbody also follows kinematic state
     }
 
-    public void SetStateIdle()
+    
+    public void SetAll(Transform spawnPoint)
     {
-        if(currentState != PlayerState.Idle)
-        {
-            ChangeState(PlayerState.Idle);
-        }
+        transform.position = spawnPoint.position;
+        transform.rotation = spawnPoint.rotation;
+        SetRagdoll(false);
+        if (_health != null)
+            _health.SetMaxHealth(PlayerData.MaxHp);
+        currentState = PlayerState.Idle;
+        weapon.Reset();
+        InputManager.Instance.Reset();
     }
+    
 }
 
 public enum PlayerState

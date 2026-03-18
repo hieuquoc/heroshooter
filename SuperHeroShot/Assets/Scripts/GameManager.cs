@@ -37,23 +37,13 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
-        // Reset player HP at the start of the game via Health component
-        if (player != null)
-        {
-            var h = player.GetComponent<Health>();
-            if (h != null)
-                h.SetMaxHealth(PlayerData.MaxHp);
-        }
         cameraFollow.gameObject.SetActive(true);
         player.gameObject.SetActive(true);
-        player.transform.position = PlayerSpawnPoint.position;
-        player.transform.rotation = PlayerSpawnPoint.rotation;
         UIManager.Instance.Close("HomePopup");
         UIManager.Instance.Open("InGameHUDPopup");
         _gameState = GameState.Playing;
-        player.SetRagdoll(false);
-        player.SetStateIdle();
         LevelManager.Instance.SpawnLevel(PlayerData.Level, 2);
+        player.SetAll(PlayerSpawnPoint);
     }
 
     public void BackToHome()

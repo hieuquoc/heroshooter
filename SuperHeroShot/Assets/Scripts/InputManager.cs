@@ -246,4 +246,14 @@ public class InputManager : MonoBehaviour
         if (laserButton != null) laserButton.SetInteractable(canUseLaser);
         if (rocketButton != null) rocketButton.SetInteractable(canUseRocket);
     }
+
+    public void Reset()
+    {
+        _moveInput = Vector3.zero;
+        _lookInput = Vector2.zero;
+        _sprintButtonHeld = false;
+        _flightUpButtonHeld = false;
+        laserButton.ResetCooldown();
+        rocketButton.ResetCooldown();
+    }
 }

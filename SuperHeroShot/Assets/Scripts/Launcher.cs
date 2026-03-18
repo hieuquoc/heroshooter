@@ -56,7 +56,7 @@ public class Launcher : MonoBehaviour
         Vector3 origin    = GameManager.Camera.transform.position;
         Vector3 direction = GameManager.Camera.transform.forward;
 
-        if (Physics.Raycast(origin, direction, out RaycastHit hit, _launcherData.range, enemyLayerMask))
+        if (Physics.BoxCast(origin, Vector3.one * 0.5f, direction, out RaycastHit hit, Quaternion.identity, _launcherData.range, enemyLayerMask))
         {
             
             if(_timers[_lockedCount] > 0f && hit.collider.CompareTag("enemy"))

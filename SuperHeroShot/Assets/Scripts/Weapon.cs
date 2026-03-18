@@ -121,6 +121,12 @@ public class Weapon : MonoBehaviour
     {
         return rocketAim.cooldown + rocketAim.fireInterval * 3 + 2;
     }
+
+    public void Reset()
+    {
+        rocketAim.cooldownTimer = 0f;
+        rayShoot.cooldownTimer = 0f;
+    }
 }
 
 [System.Serializable]
