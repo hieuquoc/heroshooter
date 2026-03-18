@@ -105,7 +105,6 @@ public class Bullet : PooledObject
 
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log($"Bullet hit: {other.name}");
         if(impactEffectPrefab != null)
         {
             GameObject effect = ObjectPool.Instance.Get(impactEffectPrefab, transform.position, Quaternion.identity);

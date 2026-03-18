@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -59,6 +60,17 @@ public class UIManager : MonoBehaviour
         }
         Debug.LogWarning($"UIManager: popup '{name}' not found");
         return false;
+    }
+
+    public void OpenPopupDelay(string name, float delay)
+    {
+        StartCoroutine(OpenWithDelay(name, delay));
+    }
+    
+    IEnumerator OpenWithDelay(string name, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        Open(name);
     }
 
     public bool Close(string name)

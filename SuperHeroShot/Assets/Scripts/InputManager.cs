@@ -1,6 +1,8 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
+using UnityEngine.Events;
 
 public class InputManager : MonoBehaviour
 {
@@ -22,21 +24,28 @@ public class InputManager : MonoBehaviour
         }
         Instance = this;
         DontDestroyOnLoad(gameObject);
-        if(Application.isEditor || Application.platform == RuntimePlatform.WindowsPlayer || Application.platform == RuntimePlatform.OSXPlayer)
-        {
-            useMouseLook = true;
-        }
-        else
-        {
-            useMouseLook = false;
-        }
     }
 
     void Start()
     {
         _player = GameManager.Player;
-        sprintButton.onClick.AddListener(OnSprintButtonClicked);
-        flightUpButton.onClick.AddListener(OnFlightUpButtonClicked);
+        // Use HoldButton component for pointer down/up (shorter and reusable)
+        if (sprintButton != null)
+        {
+            var hb = sprintButton.gameObject.GetComponent<HoldButton>() ?? sprintButton.gameObject.AddComponent<HoldButton>();
+            hb.onDown.AddListener(() => { 
+                if (_player != null) _sprintButtonHeld = true; 
+                Debug.Log("Sprint button down, player sprinting: " + (_player != null ? _player.CurrentState.ToString() : "null player"));
+                });
+            hb.onUp.AddListener(() => { if (_player != null) _sprintButtonHeld = false; });
+        }
+
+        if (flightUpButton != null)
+        {
+            var hb2 = flightUpButton.gameObject.GetComponent<HoldButton>() ?? flightUpButton.gameObject.AddComponent<HoldButton>();
+            hb2.onDown.AddListener(() => { _flightUpButtonHeld = true; });
+            hb2.onUp.AddListener(() => { _flightUpButtonHeld = false; });
+        }
         laserButton.button.onClick.AddListener(() => _player.ShootLaser());
         rocketButton.button.onClick.AddListener(() => _player.ShootRocket());
         laserButton.cooldownDuration = _player.LaserCooldown;
@@ -60,6 +69,8 @@ public class InputManager : MonoBehaviour
 
     [SerializeField] private bool _isFlyingUp;
     private bool _navButtonPressed;
+    private bool _sprintButtonHeld;
+    private bool _flightUpButtonHeld;
 
 
     void Update()
@@ -108,7 +119,7 @@ public class InputManager : MonoBehaviour
             _moveInput.y = 1f;
         } 
 
-        _player.SetSprinting(Input.GetKey(KeyCode.LeftShift));
+        _player.SetSprinting(_sprintButtonHeld || Input.GetKey(KeyCode.LeftShift));
         if(_player.CurrentState == PlayerState.Sprint && !_player.IsDashing)
         {
             if(_navButtonPressed && _canDash)
@@ -137,17 +148,6 @@ public class InputManager : MonoBehaviour
 
         HandleFlyingUp();
     }
-
-    public void OnSprintButtonClicked()
-    {
-        _player.SetSprinting(true);
-    }
-
-    public void OnFlightUpButtonClicked()
-    {
-        _isFlyingUp = true;
-    }
-
     private void HandleFlyingUp()
     {
         if(Input.GetKey(KeyCode.Space))
@@ -155,7 +155,7 @@ public class InputManager : MonoBehaviour
             _isFlyingUp = true;
         }
 
-        if(_isFlyingUp)
+        if(_isFlyingUp || _flightUpButtonHeld)
         {
             _moveInput.y = 1f;
         }else

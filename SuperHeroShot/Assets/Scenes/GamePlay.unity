@@ -20,12 +20,12 @@ RenderSettings:
   m_FogDensity: 0.01
   m_LinearFogStart: 100
   m_LinearFogEnd: 150
-  m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
+  m_AmbientSkyColor: {r: 0.51139194, g: 0.55476445, b: 0.6415094, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 1
   m_AmbientMode: 3
-  m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
+  m_SubtractiveShadowColor: {r: 0.627451, g: 0.6063262, b: 0.41960785, a: 1}
   m_SkyboxMaterial: {fileID: 2100000, guid: 15b06f8077a2a1844a32369eb25fc902, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
@@ -1577,7 +1577,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7581607301602911958, guid: 15d2927ecc71fed4d9a54293683d1ed6, type: 3}
   m_PrefabInstance: {fileID: 2016548293402312090}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1463657504}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
@@ -5904,6 +5904,11 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 10, y: 0.0000008742278, z: 10}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &292857661 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6063203983902346581, guid: 15d2927ecc71fed4d9a54293683d1ed6, type: 3}
+  m_PrefabInstance: {fileID: 2016548293402312090}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &295765349
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -32310,6 +32315,29 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 4.952671, y: 6.1181154, z: 5.1493344}
   m_Center: {x: -0.13094223, y: 3.0589356, z: -0.028357744}
+--- !u!1 &1463657504 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4729670607418050900, guid: 15d2927ecc71fed4d9a54293683d1ed6, type: 3}
+  m_PrefabInstance: {fileID: 2016548293402312090}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1463657508
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1463657504}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f15f2dc80f3b6e48baae8883640bc44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onDown:
+    m_PersistentCalls:
+      m_Calls: []
+  onUp:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &1463719930
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -33022,12 +33050,30 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5294927230591654167, guid: 15d2927ecc71fed4d9a54293683d1ed6, type: 3}
   m_PrefabInstance: {fileID: 2016548293402312090}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 292857661}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1493533048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 292857661}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f15f2dc80f3b6e48baae8883640bc44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onDown:
+    m_PersistentCalls:
+      m_Calls: []
+  onUp:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &1499602602
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -48876,7 +48922,13 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6063203983902346581, guid: 15d2927ecc71fed4d9a54293683d1ed6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1493533048}
+    - targetCorrespondingSourceObject: {fileID: 4729670607418050900, guid: 15d2927ecc71fed4d9a54293683d1ed6, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1463657508}
   m_SourcePrefab: {fileID: 100100000, guid: 15d2927ecc71fed4d9a54293683d1ed6, type: 3}
 --- !u!1001 &2694992120255064540
 PrefabInstance:

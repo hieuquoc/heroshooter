@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PrefabID: 0
-  Speed: 15
+  Speed: 25
   impactEffectPrefab: {fileID: 1124335935880280, guid: 316a16fa1bdae23448d3eb27eb9dedad, type: 3}
   _target: {x: 0, y: 0, z: 0}
   _bezierControlXZDistance: 5

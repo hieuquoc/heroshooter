@@ -298,6 +298,8 @@ public class PlayerController : MonoBehaviour, IDamageable
     {
         Debug.Log("Player died!");
         SetRagdoll(true);
+        UIManager.Instance.Close("InGameHUDPopup");
+        UIManager.Instance.OpenPopupDelay("LosePopup", 2f);
     }
 
     public void SetRagdoll(bool active)
