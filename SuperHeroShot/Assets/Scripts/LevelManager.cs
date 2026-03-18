@@ -32,6 +32,8 @@ public class LevelManager : MonoBehaviour
     public LayerMask groundMask = ~0;
     public LayerMask obstacleMask = 0;
     public bool debugGizmos = true;
+    [Tooltip("Toggle drawing of the corner downward raycast gizmos.")]
+    public bool drawCornerRays = true;
     [Header("Level Spawn Rules")]
     [Tooltip("Base maximum enemies (at level 1..4, etc). Every 5 levels increases this max by +5.")]
     public int baseMaxEnemies = 20;
@@ -52,6 +54,15 @@ public class LevelManager : MonoBehaviour
             return;
         }
         Instance = this;
+        // ensure grid origin follows this object's transform
+        gridOrigin = transform.position;
+    }
+
+    void OnValidate()
+    {
+        // keep grid origin synced to the transform in editor
+        if (this != null)
+            gridOrigin = transform.position;
     }
 
     /// <summary>
@@ -83,6 +94,7 @@ public class LevelManager : MonoBehaviour
                 bool allCornersHit = true;
                 Vector3 accumHit = Vector3.zero;
                 int hitCount = 0;
+                Vector3[] cornerHits = new Vector3[corners.Length];
 
                 for (int i = 0; i < corners.Length; i++)
                 {
@@ -90,6 +102,7 @@ public class LevelManager : MonoBehaviour
                     {
                         accumHit += hit.point;
                         hitCount++;
+                        cornerHits[i] = hit.point;
                     }
                     else
                     {
@@ -101,6 +114,23 @@ public class LevelManager : MonoBehaviour
                 if (!allCornersHit)
                 {
                     // cell invalid
+                    continue;
+                }
+
+                // ensure corner heights are similar (avoid steep slopes)
+                float minY = float.MaxValue;
+                float maxY = float.MinValue;
+                for (int i = 0; i < cornerHits.Length; i++)
+                {
+                    float y = cornerHits[i].y;
+                    if (y < minY) minY = y;
+                    if (y > maxY) maxY = y;
+                }
+
+                // reject cell if vertical spread among corners is too large
+                if (maxY - minY > 0.2f)
+                {
+                    // too sloped
                     continue;
                 }
 
@@ -319,9 +349,10 @@ public class LevelManager : MonoBehaviour
         if (!debugGizmos) return;
 
         Gizmos.color = Color.yellow;
-        // Draw grid outline
+        // Draw grid outline (use transform as authoritative origin so moving object updates immediately)
+        Vector3 originBase = transform != null ? transform.position : gridOrigin;
         Vector3 gridSize = new Vector3(gridWidth * cellSize, 0f, gridHeight * cellSize);
-        Gizmos.DrawWireCube(gridOrigin + new Vector3(gridSize.x, 0f, gridSize.z) * 0.5f, new Vector3(gridSize.x, 0.01f, gridSize.z));
+        Gizmos.DrawWireCube(originBase + new Vector3(gridSize.x, 0f, gridSize.z) * 0.5f, new Vector3(gridSize.x, 0.01f, gridSize.z));
 
         // Draw each cell as small wire cube
         float halfCheck = checkSize * 0.5f;
@@ -329,7 +360,7 @@ public class LevelManager : MonoBehaviour
         {
             for (int z = 0; z < gridHeight; z++)
             {
-                Vector3 center = gridOrigin + new Vector3((x + 0.5f) * cellSize, 0f, (z + 0.5f) * cellSize);
+                Vector3 center = originBase + new Vector3((x + 0.5f) * cellSize, 0f, (z + 0.5f) * cellSize);
                 // find if this center exists in spawnPositions (approx)
                 bool valid = false;
                 foreach (var p in spawnPositions)
@@ -355,6 +386,41 @@ public class LevelManager : MonoBehaviour
         foreach (var p in spawnPositions)
         {
             Gizmos.DrawCube(p + Vector3.up * 0.1f, markerSize);
+        }
+        // Draw corner raycast debug lines for each cell (only when enabled and we have baked positions)
+        if (drawCornerRays && spawnPositions != null && spawnPositions.Count > 0)
+        {
+            Gizmos.color = Color.white;
+            for (int x = 0; x < gridWidth; x++)
+            {
+                for (int z = 0; z < gridHeight; z++)
+                {
+                    Vector3 center = originBase + new Vector3((x + 0.5f) * cellSize, 0f, (z + 0.5f) * cellSize);
+                    Vector3[] corners = new Vector3[4]
+                    {
+                        center + new Vector3(-halfCheck, sampleHeight, -halfCheck),
+                        center + new Vector3(-halfCheck, sampleHeight,  halfCheck),
+                        center + new Vector3( halfCheck, sampleHeight, -halfCheck),
+                        center + new Vector3( halfCheck, sampleHeight,  halfCheck),
+                    };
+
+                    for (int i = 0; i < corners.Length; i++)
+                    {
+                        Vector3 origin = corners[i];
+                        if (Physics.Raycast(origin, Vector3.down, out RaycastHit hit, maxRayDistance, groundMask, QueryTriggerInteraction.Ignore))
+                        {
+                            Gizmos.color = Color.green;
+                            Gizmos.DrawLine(origin, hit.point);
+                            Gizmos.DrawSphere(hit.point, 0.05f);
+                        }
+                        else
+                        {
+                            Gizmos.color = Color.red;
+                            Gizmos.DrawLine(origin, origin + Vector3.down * maxRayDistance);
+                        }
+                    }
+                }
+            }
         }
     }
 }
