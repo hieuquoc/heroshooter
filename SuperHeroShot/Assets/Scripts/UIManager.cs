@@ -55,6 +55,7 @@ public class UIManager : MonoBehaviour
     {
         if (popups.TryGetValue(name, out var p))
         {
+            if(p.IsActionInProgress) return false; // prevent opening if already animating
             p.Open();
             return true;
         }
@@ -77,6 +78,8 @@ public class UIManager : MonoBehaviour
     {
         if (popups.TryGetValue(name, out var p))
         {
+            if(!p.gameObject.activeSelf) return false; // already closed
+            if(p.IsActionInProgress) return false; // prevent closing if already animating
             p.Close();
             return true;
         }

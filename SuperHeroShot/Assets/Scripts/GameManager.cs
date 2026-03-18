@@ -52,7 +52,16 @@ public class GameManager : MonoBehaviour
         UIManager.Instance.Open("InGameHUDPopup");
         _gameState = GameState.Playing;
         player.SetRagdoll(false);
+        player.SetStateIdle();
         LevelManager.Instance.SpawnLevel(PlayerData.Level, 2);
+    }
+
+    public void BackToHome()
+    {
+        cameraFollow.gameObject.SetActive(false);
+        player.gameObject.SetActive(false);
+        UIManager.Instance.Open("HomePopup");
+        _gameState = GameState.Home;
     }
 }
 

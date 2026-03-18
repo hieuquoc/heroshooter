@@ -8,6 +8,8 @@ public class BasePopup : MonoBehaviour
 
     [Tooltip("Animation curve for open/close progress")]
     public AnimationCurve curve = AnimationCurve.EaseInOut(0, 0, 1, 1);
+    private bool isActionInProgress = false;
+    public bool IsActionInProgress => isActionInProgress;
 
     CanvasGroup canvasGroup;
     RectTransform rectTransform;
@@ -30,6 +32,8 @@ public class BasePopup : MonoBehaviour
 
     public virtual void Open()
     {
+        if (isActionInProgress) return;
+        isActionInProgress = true;
         StopAllCoroutines();
         gameObject.SetActive(true);
         StartCoroutine(Animate(true));
@@ -37,6 +41,8 @@ public class BasePopup : MonoBehaviour
 
     public virtual void Close()
     {
+        if (isActionInProgress) return;
+        isActionInProgress = true;
         StopAllCoroutines();
         StartCoroutine(Animate(false));
     }
@@ -77,6 +83,8 @@ public class BasePopup : MonoBehaviour
             canvasGroup.blocksRaycasts = false;
             gameObject.SetActive(false);
         }
+        isActionInProgress = false;
+
     }
 
     // Immediate helpers

@@ -55,6 +55,10 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     void Update()
     {
+        if(currentState == PlayerState.Die)
+        {
+            return; // dead player does not process input or movement
+        }
         // read movement input from InputManager (player only accepts input from it)
         movementInput = InputManager.Instance.MoveInput;       
         
@@ -300,6 +304,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         SetRagdoll(true);
         UIManager.Instance.Close("InGameHUDPopup");
         UIManager.Instance.OpenPopupDelay("LosePopup", 2f);
+        currentState = PlayerState.Die;
     }
 
     public void SetRagdoll(bool active)
@@ -316,13 +321,15 @@ public class PlayerController : MonoBehaviour, IDamageable
         if (mainCollider != null)
             mainCollider.enabled = !active;
 
-        if (active)
-        {
-            // stop processing player input/movement
-            enabled = false;
-        }
-
         rigidbody.isKinematic = false; // Ensure main rigidbody also follows kinematic state
+    }
+
+    public void SetStateIdle()
+    {
+        if(currentState != PlayerState.Idle)
+        {
+            ChangeState(PlayerState.Idle);
+        }
     }
 }
 
@@ -332,5 +339,6 @@ public enum PlayerState
     Move = 1,
     Sprint = 2,
     LaserShoot = 3,
-    RocketAim = 4
+    RocketAim = 4,
+    Die = 5
 }

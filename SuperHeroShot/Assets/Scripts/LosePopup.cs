@@ -24,7 +24,7 @@ public class LosePopup : BasePopup
 
         if (exitButton != null)
         {
-            UIManager.Instance.Open("HomePopup");
+            exitButton.onClick.AddListener(() => GameManager.Instance.BackToHome());
             exitButton.onClick.AddListener(Close);
         }
         base.Awake();
