@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IDamageable
 {
     [SerializeField] private PlayerState currentState = PlayerState.Idle;
     public PlayerState CurrentState => currentState;
@@ -42,6 +42,8 @@ public class PlayerController : MonoBehaviour
     {
         if (rigidbody == null)
             rigidbody = GetComponent<Rigidbody>();
+        if (GetComponent<Health>() != null)
+            _health = GetComponent<Health>();
     }
 
     void Start()
@@ -258,6 +260,19 @@ public class PlayerController : MonoBehaviour
             weapon.AimRocket();
         }
     }
+
+    // IDamageable implementation for receiving damage
+    public void TakeDamage(float amount, WeaponType weaponType = WeaponType.Pistol)
+    {
+        if (_health == null) _health = GetComponent<Health>();
+        if (_health != null)
+        {
+            _health.TakeDamage(amount, weaponType);
+            InGameHUD.Instance.UpdateHealthBar(_health.GetCurrentHealth(), _health.MaxHealth);
+        }
+    }
+
+    private Health _health;
 }
 
 public enum PlayerState

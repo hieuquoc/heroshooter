@@ -1,10 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InGameHUD : BasePopup
 {
     public const string PopupName = "InGameHUDPopup";
+
+    public static InGameHUD Instance { get; private set; }
+
+    public Image healthBarFill;
+
+    void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -16,5 +31,13 @@ public class InGameHUD : BasePopup
     void Update()
     {
         
+    }
+
+    public void UpdateHealthBar(float currentHp, float maxHp)
+    {
+        if (healthBarFill != null)
+        {
+            healthBarFill.fillAmount = Mathf.Clamp01(currentHp / maxHp);
+        }
     }
 }

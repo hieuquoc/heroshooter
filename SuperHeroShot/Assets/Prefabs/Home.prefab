@@ -2061,6 +2061,7 @@ GameObject:
   - component: {fileID: 189723676406858741}
   - component: {fileID: 7888497958683728194}
   - component: {fileID: 4344103750162652879}
+  - component: {fileID: 2309731343011594323}
   m_Layer: 5
   m_Name: Home
   m_TagString: Untagged
@@ -2178,6 +2179,18 @@ MonoBehaviour:
   freeSkillAdsIcon: {fileID: 3357372197315777670}
   invulnerabilityAdsIcon: {fileID: 1600921629838373859}
   UICamera: {fileID: 0}
+--- !u!225 &2309731343011594323
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7385781895885286624}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &7643234009590322548
 GameObject:
   m_ObjectHideFlags: 0

@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations;
 
-public class Enemy : PooledObject
+public class Enemy : PooledObject, IDamageable
 {
-    public int MaxHealth = 1;
-    public int Health = 1;
+    private Health _health;
+    private int _lastDamageTaken = 0;
 
     [Header("Weapon")]
     public WeaponData weaponData;
@@ -35,6 +35,21 @@ public class Enemy : PooledObject
     void OnEnable()
     {
         SetRagdoll(false);
+        if (_health == null) _health = GetComponent<Health>();
+        if (_health != null)
+        {
+            _health.onDamagedWithType += OnDamagedWithType;
+            _health.onDeath.AddListener(OnHealthDeath);
+        }
+    }
+
+    void OnDisable()
+    {
+        if (_health != null)
+        {
+            _health.onDamagedWithType -= OnDamagedWithType;
+            _health.onDeath.RemoveListener(OnHealthDeath);
+        }
     }
 
     void Update()
@@ -62,11 +77,20 @@ public class Enemy : PooledObject
         Vector3 dir = _playerTransform.position - origin;
         float dist = dir.magnitude;
 
-        if (!Physics.Raycast(origin, dir.normalized, out RaycastHit hit, dist, playerMask, QueryTriggerInteraction.Ignore))
-            return;   // bị chặn → skip interval
+        Debug.DrawRay(origin, dir.normalized * dist, Color.red, 0.1f);
 
-        if (!hit.collider.CompareTag("Player"))
-            return;   // raycast trúng vật khác trước player → skip
+        if (!Physics.Raycast(origin, dir.normalized, out RaycastHit hit, dist, playerMask, QueryTriggerInteraction.Ignore))
+            {
+                Debug.Log("Enemy cannot see player, skipping shoot." + LayerMask.LayerToName(playerMask));
+                return;
+            }   // bị chặn → skip interval
+
+        if (!hit.collider.transform.root.CompareTag("Player"))
+            {
+                Debug.Log("Enemy raycast hit something else before player, skipping shoot." + LayerMask.LayerToName(playerMask) 
+                + " hit: " + hit.collider.name + " hit layer: " + LayerMask.LayerToName(hit.collider.gameObject.layer));
+                return;
+            }   // raycast trúng vật khác trước player → skip
 
         // Bắn
         weaponData.currentAimDirection = dir.normalized;
@@ -76,8 +100,7 @@ public class Enemy : PooledObject
             .GetComponent<Bullet>();
         if (bullet != null)
         {
-            bullet.Damage = weaponData.damage;
-            bullet.Direction = weaponData.currentAimDirection;
+            bullet.Shoot(weaponData.currentAimDirection, weaponData.damage, weaponData.weaponType);
         }
 
         weaponData.fireTimer = weaponData.fireInterval;
@@ -105,11 +128,13 @@ public class Enemy : PooledObject
 
     public void Initialize(int health)
     {
-        MaxHealth = health;
-        Health = health;
+        if (_health == null) _health = GetComponent<Health>();
+        if (_health != null)
+            _health.SetMaxHealth(health);
     }
 
-    public void TakeDamage(int damage, WeaponType weaponType)
+    // IDamageable implementation — handle weapon-specific rules, then forward to Health
+    public void TakeDamage(float damage, WeaponType weaponType = WeaponType.Pistol)
     {
         hitDirection = (transform.position - GameManager.Player.transform.position).normalized;
         if (weaponType == WeaponType.Ray)
@@ -120,16 +145,24 @@ public class Enemy : PooledObject
             }
             rayHitTime = Time.time;
         }
-        Health -= damage;
-        if (Health <= 0)
+
+        _lastDamageTaken = Mathf.CeilToInt(damage);
+        if (_health == null) _health = GetComponent<Health>();
+        if (_health != null)
         {
-            Die(damage);
+            _health.TakeDamage(damage, weaponType);
         }
-        else
-        {
-            // Handle taking damage, e.g., play hit animation, etc.
-            Debug.Log($"Enemy took {damage} damage! Remaining health: {Health}");
-        }
+    }
+
+    private void OnDamagedWithType(float amount, WeaponType type)
+    {
+        // Could trigger hit animations, particles, etc.
+        Debug.Log($"Enemy took {amount} damage from {type}. Remaining: {_health?.GetCurrentHealth()}");
+    }
+
+    private void OnHealthDeath()
+    {
+        Die(_lastDamageTaken);
     }
 
     [Header("Ragdoll Force")]

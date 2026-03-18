@@ -37,8 +37,13 @@ public class GameManager : MonoBehaviour
 
     public void StartGame()
     {
-        // Example: reset player HP and flags at the start of each game
-        PlayerData.HP = PlayerData.MaxHp;
+        // Reset player HP at the start of the game via Health component
+        if (player != null)
+        {
+            var h = player.GetComponent<Health>();
+            if (h != null)
+                h.SetMaxHealth(PlayerData.MaxHp);
+        }
         cameraFollow.gameObject.SetActive(true);
         player.gameObject.SetActive(true);
         player.transform.position = PlayerSpawnPoint.position;

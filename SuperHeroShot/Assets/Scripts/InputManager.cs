@@ -71,6 +71,7 @@ public class InputManager : MonoBehaviour
 
     private void HandleMoveInput()
     {
+        _isFlyingUp = false;
         _navButtonPressed = false;
         Vector3 kb = Vector3.zero;
         if (Input.GetKey(KeyCode.W)) kb.z += 1f;
@@ -116,7 +117,7 @@ public class InputManager : MonoBehaviour
                 _canDash = false;
             }
         }
-        HandleFlyingUp();
+        
         if(!_navButtonPressed)
         {
             _canDash = true;
@@ -133,6 +134,8 @@ public class InputManager : MonoBehaviour
             _player.ShootRocket();
             if (rocketButton != null) rocketButton.StartCooldown();
         }
+
+        HandleFlyingUp();
     }
 
     public void OnSprintButtonClicked()
@@ -142,12 +145,11 @@ public class InputManager : MonoBehaviour
 
     public void OnFlightUpButtonClicked()
     {
-        _moveInput.y = 1f;
+        _isFlyingUp = true;
     }
 
     private void HandleFlyingUp()
     {
-        _isFlyingUp = false;
         if(Input.GetKey(KeyCode.Space))
         {
             _isFlyingUp = true;
@@ -156,6 +158,9 @@ public class InputManager : MonoBehaviour
         if(_isFlyingUp)
         {
             _moveInput.y = 1f;
+        }else
+        {
+            _moveInput.y = 0f;
         }
     }
 

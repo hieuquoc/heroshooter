@@ -21,13 +21,13 @@ public class Bullet : PooledObject
     private Vector3 _bezierControlPoint;
     private float _bezierT;
 
-    public void Shoot(Vector3 direction, WeaponType weaponType)
+    public void Shoot(Vector3 direction, int damage, WeaponType weaponType)
     {
         Direction = direction;
+        Damage = damage;
         WeaponType = weaponType;
         transform.rotation = Quaternion.LookRotation(direction);
         _lifeTimer = 5f;
-        Debug.Log("bullet time " + _lifeTimer);
     }
 
     public void Shoot(Vector3 target, int damage)
@@ -117,9 +117,12 @@ public class Bullet : PooledObject
             return;
         }
 
-        Enemy enemy = other.GetComponent<Enemy>();
-        if (enemy != null)
-            enemy.TakeDamage(Damage, WeaponType);
+        IDamageable dmgTarget = other.GetComponentInParent<IDamageable>();
+        if (dmgTarget != null)
+        {
+            dmgTarget.TakeDamage(Damage, WeaponType);
+        }
+        
         ObjectPool.Instance.Return(gameObject);
     }
 
@@ -129,9 +132,9 @@ public class Bullet : PooledObject
         foreach (Collider hit in hits)
         {
             Debug.Log($"Explosion hit: {hit.name}");
-            Enemy enemy = hit.GetComponent<Enemy>();
-            if (enemy != null)
-                enemy.TakeDamage(Damage, WeaponType);
+            IDamageable dmg = hit.GetComponentInParent<IDamageable>();
+            if (dmg != null)
+                dmg.TakeDamage(Damage, WeaponType);
         }
         ObjectPool.Instance.Return(gameObject);
     }

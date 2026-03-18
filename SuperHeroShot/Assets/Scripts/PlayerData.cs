@@ -85,9 +85,8 @@ public static class PlayerData
         _level = Mathf.Max(1, PlayerPrefs.GetInt(KEY_LEVEL, 1));
         _kills = Mathf.Max(0, PlayerPrefs.GetInt(KEY_KILLS, 0));
 
-        // Reset runtime state
-        _maxHp     = 100;
-        _hp        = _maxHp;
+        // Reset runtime-only flags. HP is intentionally NOT reset here;
+        // GameManager.StartGame will initialize player HP via the Health component.
         Invincible = false;
         FreeWeapon = false;
     }
