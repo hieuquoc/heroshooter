@@ -9,6 +9,7 @@ public class InGameHUD : BasePopup
     public const string PopupName = "InGameHUDPopup";
 
     public static InGameHUD Instance { get; private set; }
+    public Image hurtOverlay;
 
     public Image healthBarFill;
     [SerializeField] private TextMeshProUGUI enemyCountText;
@@ -22,12 +23,50 @@ public class InGameHUD : BasePopup
         }
         Instance = this;
         base.Awake();
+        if (hurtOverlay != null)
+        {
+            Color col = hurtOverlay.color;
+            col.a = 0f;
+            hurtOverlay.color = col;
+        }
     }
 
     // Start is called before the first frame update
     void Start()
     {
         UIManager.Instance.Register(PopupName, this);
+    }
+
+    Coroutine _hurtRoutine;
+    [SerializeField] private float hurtDuration = 0.4f;
+    [SerializeField] private float hurtMaxAlpha = 0.6f;
+
+    /// <summary>
+    /// Show a brief hurt flash. `amount` can scale intensity.
+    /// </summary>
+    public void ShowHurt(float amount)
+    {
+        if (hurtOverlay == null) return;
+        float alpha = Mathf.Clamp01((amount / 20f) * hurtMaxAlpha);
+        if (alpha <= 0f) alpha = hurtMaxAlpha * 0.4f;
+        if (_hurtRoutine != null) StopCoroutine(_hurtRoutine);
+        _hurtRoutine = StartCoroutine(HurtFlash(alpha, hurtDuration));
+    }
+
+    IEnumerator HurtFlash(float startAlpha, float duration)
+    {
+        float t = 0f;
+        Color baseCol = hurtOverlay.color;
+        while (t < duration)
+        {
+            t += Time.deltaTime;
+            float p = 1f - (t / duration);
+            float a = startAlpha * p;
+            hurtOverlay.color = new Color(baseCol.r, baseCol.g, baseCol.b, a);
+            yield return null;
+        }
+        hurtOverlay.color = new Color(baseCol.r, baseCol.g, baseCol.b, 0f);
+        _hurtRoutine = null;
     }
 
     // Update is called once per frame
@@ -52,4 +91,5 @@ public class InGameHUD : BasePopup
         }
     }
 
+    
 }

@@ -275,6 +275,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         {
             _health.TakeDamage(amount, weaponType);
             InGameHUD.Instance.UpdateHealthBar(_health.GetCurrentHealth(), _health.MaxHealth);
+            InGameHUD.Instance.ShowHurt(amount * 10);
         }
     }
 
@@ -284,18 +285,30 @@ public class PlayerController : MonoBehaviour, IDamageable
     {
         if (_health == null) _health = GetComponent<Health>();
         if (_health != null)
+        {
             _health.onDeath.AddListener(OnHealthDeath);
+            _health.onDamaged.AddListener(OnHealthDamaged);
+        }
     }
 
     void OnDisable()
     {
         if (_health != null)
+        {
             _health.onDeath.RemoveListener(OnHealthDeath);
+            _health.onDamaged.RemoveListener(OnHealthDamaged);
+        }
     }
 
     private void OnHealthDeath()
     {
         Die();
+    }
+
+    private void OnHealthDamaged(float amount)
+    {
+        InGameHUD.Instance?.ShowHurt(amount);
+        InGameHUD.Instance?.UpdateHealthBar(_health.GetCurrentHealth(), _health.MaxHealth);
     }
 
     private void Die()

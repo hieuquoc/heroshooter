@@ -7,6 +7,8 @@ public class MarkerManager : MonoBehaviour
 
     [SerializeField] Camera _cam;
     [SerializeField] RectTransform _canvasRect;
+    [SerializeField] bool showOffscreen = true;
+    [SerializeField] float screenBorder = 40f; // pixels margin from screen edge when clamping
 
     private struct IndicatorEntry
     {
@@ -138,15 +140,49 @@ public class MarkerManager : MonoBehaviour
                        && screenPos.x >= 0f && screenPos.x <= Screen.width
                        && screenPos.y >= 0f && screenPos.y <= Screen.height;
 
-            if (entry.Instance.activeSelf != inView)
-                entry.Instance.SetActive(inView);
-
             if (inView)
             {
+                if (!entry.Instance.activeSelf) entry.Instance.SetActive(true);
                 RectTransformUtility.ScreenPointToLocalPointInRectangle(
                     _canvasRect, screenPos, null, out Vector2 localPoint);
-
                 entry.Instance.GetComponent<RectTransform>().anchoredPosition = localPoint;
+            }
+            else if (showOffscreen)
+            {
+                // show marker clamped to screen edge toward the target
+                if (!entry.Instance.activeSelf) entry.Instance.SetActive(true);
+
+                Vector2 screenCenter = new Vector2(Screen.width * 0.5f, Screen.height * 0.5f);
+                Vector2 pos2D = new Vector2(screenPos.x, screenPos.y);
+
+                // If behind camera, flip direction
+                Vector2 dir = (pos2D - screenCenter);
+                if (screenPos.z < 0f)
+                    dir = -dir;
+
+                if (dir.sqrMagnitude < 0.0001f)
+                    dir = Vector2.up * 0.001f;
+
+                Vector2 dirN = dir.normalized;
+
+                float maxX = screenCenter.x - screenBorder;
+                float maxY = screenCenter.y - screenBorder;
+
+                // compute scale so point lies within the rectangle defined by maxX/maxY
+                float scaleX = Mathf.Abs(dirN.x) > 0.0001f ? maxX / Mathf.Abs(dirN.x) : float.MaxValue;
+                float scaleY = Mathf.Abs(dirN.y) > 0.0001f ? maxY / Mathf.Abs(dirN.y) : float.MaxValue;
+                float scale = Mathf.Min(scaleX, scaleY);
+
+                Vector2 edgeScreenPos = screenCenter + dirN * scale;
+
+                RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                    _canvasRect, edgeScreenPos, null, out Vector2 localEdge);
+
+                entry.Instance.GetComponent<RectTransform>().anchoredPosition = localEdge;
+            }
+            else
+            {
+                if (entry.Instance.activeSelf) entry.Instance.SetActive(false);
             }
         }
     }
