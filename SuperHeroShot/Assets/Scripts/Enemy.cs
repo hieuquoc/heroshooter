@@ -195,6 +195,10 @@ public class Enemy : PooledObject, IDamageable
             rb.AddForce(forceVec, ForceMode.Impulse);
 
         ObjectPool.Instance.ReturnDelayed(gameObject, ragdollReturnDelay);
+        if(LevelManager.Instance.GetCurrentEnemyCount() <= 0)
+        {
+            GameManager.Instance.WinGame();
+        }
     }
 
     void SetRagdoll(bool enabled)

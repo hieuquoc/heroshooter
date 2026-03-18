@@ -65,6 +65,11 @@ public class LevelManager : MonoBehaviour
             gridOrigin = transform.position;
     }
 
+    public int GetCurrentEnemyCount()
+    {
+        return _spawned.Count;
+    }
+
     /// <summary>
     /// Bake the grid and fill spawnPositions with valid positions.
     /// This can be invoked from the custom inspector button.

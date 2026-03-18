@@ -53,6 +53,14 @@ public class GameManager : MonoBehaviour
         UIManager.Instance.Open("HomePopup");
         _gameState = GameState.Home;
     }
+
+    public void WinGame()
+    {
+        if(_gameState != GameState.Playing) return;
+        _gameState = GameState.GameOver;
+        PlayerData.Level += 1; // level up on win
+        UIManager.Instance.Open("WinPopup");
+    }
 }
 
 public enum GameState
