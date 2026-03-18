@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Weapon : MonoBehaviour
+namespace rescueforce
+{
+    public class Weapon : MonoBehaviour
 {
     public WeaponData handShoot;
     public WeaponData rayShoot;
@@ -168,3 +170,6 @@ public enum WeaponType
     Ray,
     RocketAim,
 }
+
+}
+

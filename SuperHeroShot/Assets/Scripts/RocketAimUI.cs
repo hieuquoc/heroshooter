@@ -1,7 +1,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class RocketAimUI : MonoBehaviour
+namespace rescueforce
+{
+    public class RocketAimUI : MonoBehaviour
 {
     public static RocketAimUI Instance { get; private set; }
 
@@ -79,3 +81,6 @@ public class RocketAimUI : MonoBehaviour
             fillbarContainer.SetActive(active);
     }
 }
+
+}
+

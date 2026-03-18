@@ -1,13 +1,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-/// <summary>
-/// Crosshair with spread-based recoil effect.
-/// Attach to a Canvas UI GameObject that has four child Image RectTransforms
-/// (Top, Bottom, Left, Right) representing the crosshair arms.
-/// Call the static Notify* methods from Weapon.cs to trigger recoil.
-/// </summary>
-public class CrossHair : MonoBehaviour
+namespace rescueforce
+{
+    public class CrossHair : MonoBehaviour
 {
     public static CrossHair Instance { get; private set; }
 
@@ -117,3 +113,6 @@ public class CrossHair : MonoBehaviour
             img.color = next;
     }
 }
+
+}
+

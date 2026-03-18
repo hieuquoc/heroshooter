@@ -2,7 +2,9 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class VirtualJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
+namespace rescueforce
+{
+    public class VirtualJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
 {
     public RectTransform joystickBackground;
     public RectTransform joystickHandle;
@@ -50,3 +52,5 @@ public class VirtualJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
         if (joystickHandle != null) joystickHandle.anchoredPosition = Vector2.zero;
     }
 }
+}
+

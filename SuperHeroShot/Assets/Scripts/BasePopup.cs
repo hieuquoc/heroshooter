@@ -1,7 +1,9 @@
 using System.Collections;
 using UnityEngine;
 
-public class BasePopup : MonoBehaviour
+namespace rescueforce
+{
+    public class BasePopup : MonoBehaviour
 {
     [Tooltip("Duration of open/close animation in seconds")]
     public float animationDuration = 0.25f;
@@ -107,4 +109,6 @@ public class BasePopup : MonoBehaviour
         canvasGroup.blocksRaycasts = false;
         gameObject.SetActive(false);
     }
+}
+
 }

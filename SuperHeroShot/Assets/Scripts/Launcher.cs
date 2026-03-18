@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 
-public class Launcher : MonoBehaviour
+namespace rescueforce
+{
+    public class Launcher : MonoBehaviour
 {
     private const int MaxTargets = 3;
 
@@ -134,3 +136,6 @@ public class Launcher : MonoBehaviour
         _launcherData = data;
     }
 }
+
+}
+

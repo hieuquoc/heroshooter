@@ -1,6 +1,8 @@
 using UnityEngine;
 
-public class SamplePopup : MonoBehaviour
+namespace rescueforce
+{
+    public class SamplePopup : MonoBehaviour
 {
     public BasePopup popup;
 
@@ -14,3 +16,6 @@ public class SamplePopup : MonoBehaviour
         if (popup != null) popup.Close();
     }
 }
+}
+
+

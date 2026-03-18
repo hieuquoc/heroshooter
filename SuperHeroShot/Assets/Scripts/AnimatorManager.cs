@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations;
 
-public class AnimatorManager : MonoBehaviour
+namespace rescueforce
+{
+    public class AnimatorManager : MonoBehaviour
 {
     public Animator animator;
     [SerializeField] private Vector2 smoothInput;
@@ -70,3 +72,6 @@ public class AnimatorManager : MonoBehaviour
         animator.SetTrigger("LaserShoot");
     }
 }
+
+}
+

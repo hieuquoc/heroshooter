@@ -2,7 +2,9 @@ using UnityEngine;
 using UnityEngine.Events;
 using System;
 
-public class Health : MonoBehaviour, IDamageable
+namespace rescueforce
+{
+    public class Health : MonoBehaviour, IDamageable
 {
     [SerializeField] private float maxHealth = 100f;
     public UnityEvent onDeath;
@@ -49,3 +51,6 @@ public class Health : MonoBehaviour, IDamageable
     public float GetCurrentHealth() => currentHealth;
     
 }
+
+}
+

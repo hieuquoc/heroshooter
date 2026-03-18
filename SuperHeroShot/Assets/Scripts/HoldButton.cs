@@ -2,7 +2,9 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Events;
 
-public class HoldButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+namespace rescueforce
+{
+    public class HoldButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     public UnityEvent onDown = new UnityEvent();
     public UnityEvent onUp = new UnityEvent();
@@ -17,3 +19,6 @@ public class HoldButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         onUp.Invoke();
     }
 }
+
+}
+

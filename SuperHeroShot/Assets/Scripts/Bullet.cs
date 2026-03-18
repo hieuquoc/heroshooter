@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : PooledObject
+namespace rescueforce
+{
+    public class Bullet : PooledObject
 {
     public int Damage { get; set; }
     public Vector3 Direction { get; set; }
@@ -145,3 +147,6 @@ public class Bullet : PooledObject
     }
 
 }
+
+}
+

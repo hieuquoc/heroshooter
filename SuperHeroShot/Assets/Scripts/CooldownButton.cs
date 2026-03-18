@@ -3,7 +3,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(Button))]
+namespace rescueforce
+{
+    [RequireComponent(typeof(Button))]
 public class CooldownButton : MonoBehaviour
 {
     [Tooltip("Button to control during cooldown (auto-assigned to this GameObject's Button)")]
@@ -93,3 +95,6 @@ public class CooldownButton : MonoBehaviour
         InteractLock.SetActive(!interactable);
     }
 }
+
+}
+

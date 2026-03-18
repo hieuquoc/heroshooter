@@ -2,7 +2,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HomePopup : BasePopup
+namespace rescueforce
+{
+    public class HomePopup : BasePopup
 {
     [Tooltip("Text component to display the current level")]
     public TMP_Text levelText;
@@ -84,3 +86,6 @@ public class HomePopup : BasePopup
         UICamera.SetActive(false);
     }
 }
+
+}
+

@@ -4,7 +4,9 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.Events;
 
-public class InputManager : MonoBehaviour
+namespace rescueforce
+{
+    public class InputManager : MonoBehaviour
 {
     public VirtualJoystick moveJoystick;
     public static InputManager Instance { get; private set; }
@@ -257,3 +259,6 @@ public class InputManager : MonoBehaviour
         rocketButton.ResetCooldown();
     }
 }
+
+}
+

@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour, IDamageable
+namespace rescueforce
+{
+    public class PlayerController : MonoBehaviour, IDamageable
 {
     [SerializeField] private PlayerState currentState = PlayerState.Idle;
     public PlayerState CurrentState => currentState;
@@ -362,3 +364,6 @@ public enum PlayerState
     RocketAim = 4,
     Die = 5
 }
+}
+
+

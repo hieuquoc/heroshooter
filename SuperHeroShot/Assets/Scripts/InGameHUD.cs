@@ -4,7 +4,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class InGameHUD : BasePopup
+namespace rescueforce
+{
+    public class InGameHUD : BasePopup
 {
     public const string PopupName = "InGameHUDPopup";
 
@@ -93,3 +95,6 @@ public class InGameHUD : BasePopup
 
     
 }
+
+}
+

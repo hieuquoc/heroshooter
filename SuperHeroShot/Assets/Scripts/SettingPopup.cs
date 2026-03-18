@@ -1,7 +1,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SettingPopup : BasePopup
+namespace rescueforce
+{
+    public class SettingPopup : BasePopup
 {
     [Header("UI References")]
     public Slider cameraSensitivitySlider;
@@ -72,3 +74,6 @@ public class SettingPopup : BasePopup
             UIManager.Instance.Unregister(popupName);
     }
 }
+
+}
+

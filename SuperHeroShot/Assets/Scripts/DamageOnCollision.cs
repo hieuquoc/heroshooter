@@ -1,6 +1,8 @@
 using UnityEngine;
 
-public class DamageOnCollision : MonoBehaviour
+namespace rescueforce
+{
+    public class DamageOnCollision : MonoBehaviour
 {
     public float damage = 25f;
     public bool destroyOnHit = true;
@@ -24,3 +26,6 @@ public class DamageOnCollision : MonoBehaviour
         }
     }
 }
+
+}
+

@@ -81,10 +81,10 @@ public class Hovl_Laser : MonoBehaviour
                 }*/
                 if (hit.collider.CompareTag("enemy"))
                 {
-                    Enemy enemy = hit.collider.GetComponent<Enemy>();
+                    rescueforce.Enemy enemy = hit.collider.GetComponent<rescueforce.Enemy>();
                     if (enemy != null)
                     {
-                        enemy.TakeDamage(damageOverTime, WeaponType.Ray);
+                        enemy.TakeDamage(damageOverTime,  rescueforce.WeaponType.Ray);
                     }
                 }
             }

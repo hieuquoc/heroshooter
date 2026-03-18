@@ -2,7 +2,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 
-public class WinPopup : BasePopup
+namespace rescueforce
+{
+    public class WinPopup : BasePopup
 {
     [SerializeField] Button exitButton;
 
@@ -17,3 +19,6 @@ public class WinPopup : BasePopup
         }
     }
 }
+}
+
+

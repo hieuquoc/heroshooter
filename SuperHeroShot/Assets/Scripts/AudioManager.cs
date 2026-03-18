@@ -1,10 +1,8 @@
 using UnityEngine;
 
-/// <summary>
-/// Simple singleton audio manager with one music AudioSource and one SFX AudioSource.
-/// Attach to a persistent GameObject in the initial scene (or place in a bootstrap prefab).
-/// </summary>
-public class AudioManager : MonoBehaviour
+namespace rescueforce
+{
+    public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance { get; private set; }
 
@@ -121,5 +119,7 @@ public class AudioManager : MonoBehaviour
     {
         PlaySfx(targetLockSfx);
     }
+
+}
 
 }

@@ -1,6 +1,8 @@
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+namespace rescueforce
+{
+    public class GameManager : MonoBehaviour
 {
     public PlayerController player;
     public CameraFollow cameraFollow;
@@ -69,3 +71,6 @@ public enum GameState
     Playing,
     GameOver
 }
+}
+
+

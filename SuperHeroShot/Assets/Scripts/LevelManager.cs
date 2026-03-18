@@ -1,13 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// LevelManager holds baked spawn positions and can spawn enemies using the project's ObjectPool.
-/// Use the editor button (LevelManager inspector) to bake a grid of candidate cells.
-/// Each cell is validated by casting 4 downward raycasts at the square corners and an overlap check.
-/// Valid positions are stored in `spawnPositions`.
-/// </summary>
-public class LevelManager : MonoBehaviour
+namespace rescueforce
+{
+    public class LevelManager : MonoBehaviour
 {
     [Header("Spawn Settings")]
     public GameObject enemyPrefab;
@@ -429,3 +425,6 @@ public class LevelManager : MonoBehaviour
         }
     }
 }
+
+}
+

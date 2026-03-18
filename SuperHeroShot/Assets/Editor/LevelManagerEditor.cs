@@ -2,7 +2,9 @@ using UnityEngine;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 
-[CustomEditor(typeof(LevelManager))]
+namespace rescueforce
+{
+    [CustomEditor(typeof(LevelManager))]
 public class LevelManagerEditor : Editor
 {
     public override void OnInspectorGUI()
@@ -43,3 +45,6 @@ public class LevelManagerEditor : Editor
         EditorGUILayout.EndHorizontal();
     }
 }
+
+}
+

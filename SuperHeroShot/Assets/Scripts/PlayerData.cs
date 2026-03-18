@@ -1,12 +1,9 @@
 using UnityEngine;
 
-/// <summary>
-/// Static data store for the player.
-/// - Level and Kills are persisted via PlayerPrefs.
-/// - HP, Invincible, FreeWeapon are runtime-only (reset on Load).
-/// Usage: PlayerData.Load() once at startup, then read/write properties freely.
-/// </summary>
-public static class PlayerData
+
+namespace rescueforce
+{
+    public static class PlayerData
 {
     public static bool IsInvincible { get; set; } = false;
     public static bool IsFreeFire { get; set; } = false;
@@ -126,3 +123,6 @@ public static class PlayerData
         if (amount > 0) HP += amount;
     }
 }
+
+}
+

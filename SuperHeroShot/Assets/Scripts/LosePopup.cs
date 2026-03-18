@@ -2,7 +2,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 
-public class LosePopup : BasePopup
+namespace rescueforce
+{
+    public class LosePopup : BasePopup
 {
     [Header("UI")]
     [SerializeField] Text titleText;
@@ -30,3 +32,6 @@ public class LosePopup : BasePopup
         base.Awake();
     }
 }
+
+}
+

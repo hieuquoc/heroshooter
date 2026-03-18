@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations;
 
-public class Enemy : PooledObject, IDamageable
+namespace rescueforce
+{
+    public class Enemy : PooledObject, IDamageable
 {
     private Health _health;
     private int _lastDamageTaken = 0;
@@ -215,3 +217,6 @@ public class Enemy : PooledObject, IDamageable
         mainCollider.enabled = !enabled;
     }
 }
+
+}
+

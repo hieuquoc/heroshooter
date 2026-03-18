@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UIManager : MonoBehaviour
+namespace rescueforce
+{
+    public class UIManager : MonoBehaviour
 {
     public static UIManager Instance { get; private set; }
 
@@ -123,3 +125,6 @@ public class UIManager : MonoBehaviour
         return false;
     }
 }
+
+}
+
