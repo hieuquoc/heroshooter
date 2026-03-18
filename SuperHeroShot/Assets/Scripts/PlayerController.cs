@@ -30,6 +30,8 @@ public class PlayerController : MonoBehaviour, IDamageable
     [SerializeField] private AnimatorManager animatorManager;
     [SerializeField] private Weapon weapon;
     public AnimatorManager AnimatorManager => animatorManager;
+    [Header("Ragdoll")]
+    [SerializeField] private Collider mainCollider; // assign the player's main root collider (disabled when ragdoll)
     public CameraFollow cameraFollow;
     public bool IsAimming => currentState == PlayerState.LaserShoot || currentState == PlayerState.RocketAim;
 
@@ -273,6 +275,53 @@ public class PlayerController : MonoBehaviour, IDamageable
     }
 
     private Health _health;
+
+    void OnEnable()
+    {
+        if (_health == null) _health = GetComponent<Health>();
+        if (_health != null)
+            _health.onDeath.AddListener(OnHealthDeath);
+    }
+
+    void OnDisable()
+    {
+        if (_health != null)
+            _health.onDeath.RemoveListener(OnHealthDeath);
+    }
+
+    private void OnHealthDeath()
+    {
+        Die();
+    }
+
+    private void Die()
+    {
+        Debug.Log("Player died!");
+        SetRagdoll(true);
+    }
+
+    public void SetRagdoll(bool active)
+    {
+        foreach (var rb in GetComponentsInChildren<Rigidbody>())
+            rb.isKinematic = !active;
+
+        foreach (var col in GetComponentsInChildren<Collider>())
+            col.enabled = active;
+
+        if (animatorManager != null && animatorManager.animator != null)
+            animatorManager.animator.enabled = !active;
+
+        if (mainCollider != null)
+            mainCollider.enabled = !active;
+
+        if (active)
+        {
+            // stop processing player input/movement
+            enabled = false;
+        }
+
+        rigidbody.isKinematic = false; // Ensure main rigidbody also follows kinematic state
+    }
 }
 
 public enum PlayerState

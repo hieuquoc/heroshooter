@@ -53,6 +53,7 @@ public class BasePopup : MonoBehaviour
 
         if (opening)
         {
+            Debug.Log($"Opening popup '{gameObject.name}'");
             canvasGroup.interactable = true;
             canvasGroup.blocksRaycasts = true;
         }

@@ -51,6 +51,7 @@ public class GameManager : MonoBehaviour
         UIManager.Instance.Close("HomePopup");
         UIManager.Instance.Open("InGameHUDPopup");
         _gameState = GameState.Playing;
+        player.SetRagdoll(false);
     }
 }
 

@@ -54,6 +54,10 @@ public class Enemy : PooledObject, IDamageable
 
     void Update()
     {
+        if(_health.GetCurrentHealth() <= 0)
+        {
+             return; // dead enemy does not rotate or shoot
+        }
         RotateTowardPlayer();
         TryShoot();
     }
@@ -81,14 +85,11 @@ public class Enemy : PooledObject, IDamageable
 
         if (!Physics.Raycast(origin, dir.normalized, out RaycastHit hit, dist, playerMask, QueryTriggerInteraction.Ignore))
             {
-                Debug.Log("Enemy cannot see player, skipping shoot." + LayerMask.LayerToName(playerMask));
                 return;
             }   // bị chặn → skip interval
 
         if (!hit.collider.transform.root.CompareTag("Player"))
             {
-                Debug.Log("Enemy raycast hit something else before player, skipping shoot." + LayerMask.LayerToName(playerMask) 
-                + " hit: " + hit.collider.name + " hit layer: " + LayerMask.LayerToName(hit.collider.gameObject.layer));
                 return;
             }   // raycast trúng vật khác trước player → skip
 

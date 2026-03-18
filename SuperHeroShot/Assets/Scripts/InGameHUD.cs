@@ -11,7 +11,7 @@ public class InGameHUD : BasePopup
 
     public Image healthBarFill;
 
-    void Awake()
+    protected override void Awake()
     {
         if (Instance != null && Instance != this)
         {
@@ -19,6 +19,7 @@ public class InGameHUD : BasePopup
             return;
         }
         Instance = this;
+        base.Awake();
     }
 
     // Start is called before the first frame update
