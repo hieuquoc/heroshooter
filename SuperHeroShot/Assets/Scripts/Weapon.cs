@@ -53,6 +53,7 @@ public class Weapon : MonoBehaviour
         bullet.Shoot(handShoot.currentAimDirection, handShoot.damage, handShoot.weaponType);
         GameManager.Player.AnimatorManager.ShootAnimation();
         CrossHair.NotifyPistolShot();
+        AudioManager.Instance.PlayShootSfx();
     }
 
     public void ShootRay()
@@ -60,7 +61,7 @@ public class Weapon : MonoBehaviour
         rayShoot.bulletPrefab.SetActive(true);
         rayShoot.fireTimer = rayShoot.fireInterval;
         rayShoot.cooldownTimer = rayShoot.cooldown;
-        
+        AudioManager.Instance.PlayLaserSfx();
         
     }
 

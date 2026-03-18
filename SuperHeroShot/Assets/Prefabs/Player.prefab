@@ -15378,6 +15378,7 @@ GameObject:
   - component: {fileID: 3096026329665415992}
   - component: {fileID: 1100188288016856209}
   - component: {fileID: 2668435852329757847}
+  - component: {fileID: 8322516299227715775}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -15490,7 +15491,7 @@ MonoBehaviour:
     - {fileID: 127419227894178899}
     damage: 1
     range: 5000
-    fireInterval: 5
+    fireInterval: 4.2
     fireTimer: 0
     cooldown: 10
     cooldownTimer: 0
@@ -15568,6 +15569,14 @@ MonoBehaviour:
   onDamaged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!81 &8322516299227715775
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7636893330351092935}
+  m_Enabled: 1
 --- !u!1 &8105498185978397480
 GameObject:
   m_ObjectHideFlags: 0

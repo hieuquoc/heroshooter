@@ -92,6 +92,7 @@ public class Launcher : MonoBehaviour
         markers.Add(MarkerManager.Instance.AddTarget(MarkerPrefab, target, hitPoint));
         _targets[_lockedCount] = target;
         hitPoints.Add(hitPoint);
+        AudioManager.Instance.PlayTargetLockSfx();
     }
 
     /// <summary>Player thả nút aim sớm → bắn những gì đã lock được.</summary>
@@ -125,6 +126,7 @@ public class Launcher : MonoBehaviour
     {
         Bullet bullet = ObjectPool.Instance.Get(_launcherData.bulletPrefab, _launcherData.shootingPoints[index].position, _launcherData.shootingPoints[index].rotation).GetComponent<Bullet>();
         bullet.Shoot(target, _launcherData.damage);
+        AudioManager.Instance.PlayRocketSfx();
     }
 
     public void SetUp(WeaponData data)

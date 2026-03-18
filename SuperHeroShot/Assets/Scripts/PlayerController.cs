@@ -276,6 +276,7 @@ public class PlayerController : MonoBehaviour, IDamageable
             _health.TakeDamage(amount, weaponType);
             InGameHUD.Instance.UpdateHealthBar(_health.GetCurrentHealth(), _health.MaxHealth);
             InGameHUD.Instance.ShowHurt(amount * 10);
+            AudioManager.Instance.PlayHurtSfx();
         }
     }
 
