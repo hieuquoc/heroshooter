@@ -160,6 +160,7 @@ public class WeaponData
 
     public bool CanShoot()
     {
+        if(PlayerData.IsFreeFire && fireTimer <= 0f) return true;
         return cooldownTimer <= 0f && fireTimer <= 0f;
     }
 }

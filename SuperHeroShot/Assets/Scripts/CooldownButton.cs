@@ -52,6 +52,7 @@ public class CooldownButton : MonoBehaviour
 
     public void StartCooldown()
     {
+        if(PlayerData.IsFreeFire) return;
         if (cooldownDuration <= 0f) return;
         if (running != null) return;
         running = StartCoroutine(CooldownRoutine());

@@ -62,6 +62,8 @@ namespace rescueforce
         _gameState = GameState.GameOver;
         PlayerData.Level += 1; // level up on win
         UIManager.Instance.Open("WinPopup");
+        PlayerData.IsFreeFire = false;
+        PlayerData.IsInvincible = false;
     }
 }
 

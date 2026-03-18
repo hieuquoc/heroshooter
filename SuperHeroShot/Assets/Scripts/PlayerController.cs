@@ -5,365 +5,369 @@ using UnityEngine;
 namespace rescueforce
 {
     public class PlayerController : MonoBehaviour, IDamageable
-{
-    [SerializeField] private PlayerState currentState = PlayerState.Idle;
-    public PlayerState CurrentState => currentState;
-    public Vector3 movementInput;
-    public InputManager inputManager;
-    public float moveSpeed = 5f;
-    public float sprintSpeed = 8f;
-    public float dashSpeed = 15f;
-    public float dashDuration = 0.5f;   
-    public float dashCooldown = 1f;
-    public Vector3 cameraForward;
-    [SerializeField] private Rigidbody rigidbody;
-    private Vector3 _sprintDirection;
-    [SerializeField] private float _dashTimer;
-    private Vector3 _moveDirection;
-    [SerializeField] private bool _isDashing;
-    [SerializeField] private bool _isSprinting;
-    [SerializeField] private float lookRotationSpeed = 200f;
-    [SerializeField] private Transform centerPoint;
-    private int _dashDirectionInput;
-    private float _dashCooldownTimer;
-    private Vector3 _dashVel;
-    public bool IsDashing => _isDashing;
-    public bool CanDash => _dashCooldownTimer <= 0f;
-    [SerializeField] private AnimatorManager animatorManager;
-    [SerializeField] private Weapon weapon;
-    public AnimatorManager AnimatorManager => animatorManager;
-    [Header("Ragdoll")]
-    [SerializeField] private Collider mainCollider; // assign the player's main root collider (disabled when ragdoll)
-    public CameraFollow cameraFollow;
-    public bool IsAimming => currentState == PlayerState.LaserShoot || currentState == PlayerState.RocketAim;
-
-    public Transform CenterPoint => centerPoint;
-    public float RocketCooldown => weapon.RocketDuration();
-    public float LaserCooldown => weapon.LaserCooldown();
-
-
-    private void Awake()
     {
-        if (rigidbody == null)
-            rigidbody = GetComponent<Rigidbody>();
-        if (GetComponent<Health>() != null)
-            _health = GetComponent<Health>();
-    }
+        [SerializeField] private PlayerState currentState = PlayerState.Idle;
+        public PlayerState CurrentState => currentState;
+        public Vector3 movementInput;
+        public InputManager inputManager;
+        public float moveSpeed = 5f;
+        public float sprintSpeed = 8f;
+        public float dashSpeed = 15f;
+        public float dashDuration = 0.5f;
+        public float dashCooldown = 1f;
+        public Vector3 cameraForward;
+        [SerializeField] private Rigidbody rigidbody;
+        private Vector3 _sprintDirection;
+        [SerializeField] private float _dashTimer;
+        private Vector3 _moveDirection;
+        [SerializeField] private bool _isDashing;
+        [SerializeField] private bool _isSprinting;
+        [SerializeField] private float lookRotationSpeed = 200f;
+        [SerializeField] private Transform centerPoint;
+        private int _dashDirectionInput;
+        private float _dashCooldownTimer;
+        private Vector3 _dashVel;
+        public bool IsDashing => _isDashing;
+        public bool CanDash => _dashCooldownTimer <= 0f;
+        [SerializeField] private AnimatorManager animatorManager;
+        [SerializeField] private Weapon weapon;
+        public AnimatorManager AnimatorManager => animatorManager;
+        [Header("Ragdoll")]
+        [SerializeField] private Collider mainCollider; // assign the player's main root collider (disabled when ragdoll)
+        public CameraFollow cameraFollow;
+        public bool IsAimming => currentState == PlayerState.LaserShoot || currentState == PlayerState.RocketAim;
 
-    void Start()
-    {
-        cameraFollow = GameManager.Camera;
-    }
+        public Transform CenterPoint => centerPoint;
+        public float RocketCooldown => weapon.RocketDuration();
+        public float LaserCooldown => weapon.LaserCooldown();
 
-    void Update()
-    {
-        if(currentState == PlayerState.Die)
+
+        private void Awake()
         {
-            return; // dead player does not process input or movement
+            if (rigidbody == null)
+                rigidbody = GetComponent<Rigidbody>();
+            if (GetComponent<Health>() != null)
+                _health = GetComponent<Health>();
         }
-        // read movement input from InputManager (player only accepts input from it)
-        movementInput = InputManager.Instance.MoveInput;       
-        
-        UpdateState(movementInput, _isSprinting, _isDashing);
 
-        switch (currentState)
+        void Start()
         {
-            case PlayerState.Idle:
-                Stopping();
-                UpdateLook();
-                break;
-            case PlayerState.Move:
-                MoveNormal();
-                UpdateLook();
-                break;
-            case PlayerState.Sprint:
-                MoveSprint();
-                UpdateLook(2, true);
-                break;
-            case PlayerState.LaserShoot:
-                UpdateLook(2);
-                break;
-            case PlayerState.RocketAim:
-                UpdateLook(2);
-                break;
+            cameraFollow = GameManager.Camera;
         }
-    }
 
-    // Move the player on the X,Z plane using Rigidbody based on movementInput (Vector2)
-    private void MoveNormal()
-    {
-        Vector3 input = inputManager.MoveInput;
-        if (input.sqrMagnitude < 0.0001f)
-            return;
-
-        // Flatten camera forward onto XZ plane before use
-        Vector3 forward = GameManager.Camera.transform.forward;
-        forward.y = 0f;
-        forward.Normalize();
-        Vector3 right = Vector3.Cross(Vector3.up, forward);
-
-        // XZ: driven by input.x (strafe) and input.z (forward/back)
-        Vector3 desired = forward * input.z + right * input.x;
-        if (desired.sqrMagnitude > 0.0001f)
-            desired.Normalize();
-
-        Vector3 targetVel = desired * moveSpeed;
-
-        // Y: use input.y if provided (e.g. fly/jump axis), otherwise preserve rigidbody gravity
-        targetVel.y = Mathf.Abs(input.y) > 0.0001f ? input.y * moveSpeed : rigidbody.velocity.y;
-
-        rigidbody.velocity = targetVel;
-    }
-
-    public void UpdateState(Vector3 movementInput, bool isSprinting, bool isDashing)
-    {
-        if (IsAimming)
+        void Update()
         {
-            return;
-        }
-        PlayerState newState = currentState;
-        if(!isSprinting && !isDashing)
-        {
-            if (movementInput.sqrMagnitude < 0.0001f)
+            if (currentState == PlayerState.Die)
             {
-                newState = PlayerState.Idle;
+                return; // dead player does not process input or movement
+            }
+            // read movement input from InputManager (player only accepts input from it)
+            movementInput = InputManager.Instance.MoveInput;
+
+            UpdateState(movementInput, _isSprinting, _isDashing);
+
+            switch (currentState)
+            {
+                case PlayerState.Idle:
+                    Stopping();
+                    UpdateLook();
+                    break;
+                case PlayerState.Move:
+                    MoveNormal();
+                    UpdateLook();
+                    break;
+                case PlayerState.Sprint:
+                    MoveSprint();
+                    UpdateLook(2, true);
+                    break;
+                case PlayerState.LaserShoot:
+                    UpdateLook(2);
+                    break;
+                case PlayerState.RocketAim:
+                    UpdateLook(2);
+                    break;
+            }
+        }
+
+        // Move the player on the X,Z plane using Rigidbody based on movementInput (Vector2)
+        private void MoveNormal()
+        {
+            Vector3 input = inputManager.MoveInput;
+            if (input.sqrMagnitude < 0.0001f)
+                return;
+
+            // Flatten camera forward onto XZ plane before use
+            Vector3 forward = GameManager.Camera.transform.forward;
+            forward.y = 0f;
+            forward.Normalize();
+            Vector3 right = Vector3.Cross(Vector3.up, forward);
+
+            // XZ: driven by input.x (strafe) and input.z (forward/back)
+            Vector3 desired = forward * input.z + right * input.x;
+            if (desired.sqrMagnitude > 0.0001f)
+                desired.Normalize();
+
+            Vector3 targetVel = desired * moveSpeed;
+
+            // Y: use input.y if provided (e.g. fly/jump axis), otherwise preserve rigidbody gravity
+            targetVel.y = Mathf.Abs(input.y) > 0.0001f ? input.y * moveSpeed : rigidbody.velocity.y;
+
+            rigidbody.velocity = targetVel;
+        }
+
+        public void UpdateState(Vector3 movementInput, bool isSprinting, bool isDashing)
+        {
+            if (IsAimming)
+            {
+                return;
+            }
+            PlayerState newState = currentState;
+            if (!isSprinting && !isDashing)
+            {
+                if (movementInput.sqrMagnitude < 0.0001f)
+                {
+                    newState = PlayerState.Idle;
+                }
+                else
+                {
+                    newState = PlayerState.Move;
+                }
+                animatorManager.SetWeightLayerShoot(1f);
+            }
+            else if (isSprinting)
+            {
+                newState = PlayerState.Sprint;
+                animatorManager.SetWeightLayerShoot(0f);
+            }
+            if (newState != currentState)
+            {
+                ChangeState(newState);
+            }
+        }
+
+        public void Stopping()
+        {
+            if (currentState != PlayerState.Idle || rigidbody.velocity.sqrMagnitude < 0.0001f)
+                return;
+            rigidbody.velocity = Vector3.Lerp(rigidbody.velocity, Vector3.zero, Time.deltaTime * 5f);
+        }
+
+        // Rotate player yaw (Y) to follow camera yaw
+        private void UpdateLook(float speedMultiplier = 1f, bool usePitch = false)
+        {
+            if (cameraFollow == null)
+                return;
+            Vector3 cameraVector = new Vector3(0, cameraFollow.Yaw, 0);
+            if (usePitch)
+            {
+                cameraVector.x = cameraFollow.Pitch - 15f;
+            }
+            Quaternion targetRot = Quaternion.Euler(cameraVector);
+            transform.rotation = Quaternion.RotateTowards(
+                transform.rotation,
+                targetRot,
+                lookRotationSpeed * speedMultiplier * Time.deltaTime
+            );
+        }
+
+        private void MoveSprint()
+        {
+            if (cameraFollow == null) return;
+
+            // Lock sprint direction to camera forward (flat)
+            Vector3 forward = cameraFollow.transform.forward;
+            forward.Normalize();
+
+            // Camera-relative right — always perpendicular to forward,
+            // so dash velocity won't cancel any of the forward component.
+            Vector3 right = Vector3.Cross(Vector3.up, forward);
+
+            // Snap player to face sprint direction immediately
+            //transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(forward), lookRotationSpeed * Time.deltaTime);
+
+            _dashVel = Vector3.zero;
+            if (_isDashing && _dashTimer > 0f)
+            {
+                _dashTimer -= Time.deltaTime;
+                _dashVel = right * _dashDirectionInput * dashSpeed;
             }
             else
             {
-                newState = PlayerState.Move;
+                _isDashing = false;
             }
-            animatorManager.SetWeightLayerShoot(1f);
-        }
-        else if (isSprinting)
-        {
-            newState = PlayerState.Sprint;
-            animatorManager.SetWeightLayerShoot(0f);
-        }
-        if(newState != currentState)
-        {
-            ChangeState(newState);
-        }
-    }
+            if (_dashCooldownTimer > 0f)
+            {
+                _dashCooldownTimer -= Time.deltaTime;
+            }
 
-    public void Stopping()
-    {
-        if (currentState != PlayerState.Idle || rigidbody.velocity.sqrMagnitude < 0.0001f)
-            return;
-        rigidbody.velocity = Vector3.Lerp(rigidbody.velocity, Vector3.zero, Time.deltaTime * 5f);
-    }
-
-    // Rotate player yaw (Y) to follow camera yaw
-    private void UpdateLook(float speedMultiplier = 1f, bool usePitch = false)
-    {
-        if (cameraFollow == null)
-            return;
-        Vector3 cameraVector = new Vector3(0 ,cameraFollow.Yaw, 0);
-        if(usePitch)
-        {
-            cameraVector.x = cameraFollow.Pitch - 15f;
-        }
-        Quaternion targetRot = Quaternion.Euler(cameraVector);
-        transform.rotation = Quaternion.RotateTowards(
-            transform.rotation,
-            targetRot,
-            lookRotationSpeed * speedMultiplier * Time.deltaTime
-        );
-    }
-
-    private void MoveSprint()
-    {
-        if (cameraFollow == null) return;
-
-        // Lock sprint direction to camera forward (flat)
-        Vector3 forward = cameraFollow.transform.forward;
-        forward.Normalize();
-
-        // Camera-relative right — always perpendicular to forward,
-        // so dash velocity won't cancel any of the forward component.
-        Vector3 right = Vector3.Cross(Vector3.up, forward);
-
-        // Snap player to face sprint direction immediately
-        //transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(forward), lookRotationSpeed * Time.deltaTime);
-            
-        _dashVel = Vector3.zero;        
-        if(_isDashing && _dashTimer > 0f)
-        {
-            _dashTimer -= Time.deltaTime;
-            _dashVel = right * _dashDirectionInput * dashSpeed;
-        }else
-        {
-            _isDashing = false;
-        }      
-        if(_dashCooldownTimer > 0f)
-        {
-            _dashCooldownTimer -= Time.deltaTime;
+            Vector3 targetVel = forward * sprintSpeed + _dashVel;
+            rigidbody.velocity = targetVel;
         }
 
-        Vector3 targetVel = forward * sprintSpeed + _dashVel;
-        rigidbody.velocity = targetVel;
-    }
 
-
-    public void SetSprinting(bool sprinting)
-    {
-        _isSprinting = sprinting;
-    }
-
-    public void SetDashing(bool dashing, int directionInput = 0)
-    {
-        _isDashing = dashing;
-        _dashDirectionInput = directionInput;
-        _dashTimer = dashDuration;
-        animatorManager.SetTriggerDash(_dashDirectionInput);
-        _dashCooldownTimer = dashCooldown;
-    }
-
-    public void ChangeState(PlayerState newState)
-    {
-        Debug.Log("Changing state from " + currentState + " to " + newState);
-        currentState = newState;
-        switch (currentState)
+        public void SetSprinting(bool sprinting)
         {
-            case PlayerState.Idle:
-            animatorManager.SetTriggerIdle();
-            inputManager.SetSkillButtonInteractable(true, true);
-                break;
-            case PlayerState.Move:
-            animatorManager.SetTriggerMove();
-            inputManager.SetSkillButtonInteractable(true, true);
-                break;
-            case PlayerState.Sprint:
-            animatorManager.SetTriggerSprint();
-            inputManager.SetSkillButtonInteractable(false, false);
-                break;
-            case PlayerState.LaserShoot:
-            animatorManager.ShootRayAnimation();
-            inputManager.SetSkillButtonInteractable(false, false);
-            rigidbody.velocity = Vector3.zero;
-                break;
-            case PlayerState.RocketAim:
-            inputManager.SetSkillButtonInteractable(false, false);
-            rigidbody.velocity = Vector3.zero;
-            break;
+            _isSprinting = sprinting;
         }
-    }
 
-    public void ShootLaser()
-    {
-        if(currentState == PlayerState.Idle || currentState == PlayerState.Move)
-        if (weapon.rayShoot.CanShoot())
+        public void SetDashing(bool dashing, int directionInput = 0)
         {
-            ChangeState(PlayerState.LaserShoot);
-            weapon.ShootRay();
+            _isDashing = dashing;
+            _dashDirectionInput = directionInput;
+            _dashTimer = dashDuration;
+            animatorManager.SetTriggerDash(_dashDirectionInput);
+            _dashCooldownTimer = dashCooldown;
         }
-    }
 
-    public void ShootRocket()
-    {
-        Debug.Log("Attempting to shoot rocket. Can shoot: " + weapon.rocketAim.CanShoot() + ", Current state: " + currentState);
-        if(currentState == PlayerState.Idle || currentState == PlayerState.Move)
-        if (weapon.rocketAim.CanShoot())
+        public void ChangeState(PlayerState newState)
         {
-            ChangeState(PlayerState.RocketAim);
-            weapon.AimRocket();
+            Debug.Log("Changing state from " + currentState + " to " + newState);
+            currentState = newState;
+            switch (currentState)
+            {
+                case PlayerState.Idle:
+                    animatorManager.SetTriggerIdle();
+                    inputManager.SetSkillButtonInteractable(true, true);
+                    break;
+                case PlayerState.Move:
+                    animatorManager.SetTriggerMove();
+                    inputManager.SetSkillButtonInteractable(true, true);
+                    break;
+                case PlayerState.Sprint:
+                    animatorManager.SetTriggerSprint();
+                    inputManager.SetSkillButtonInteractable(false, false);
+                    break;
+                case PlayerState.LaserShoot:
+                    animatorManager.ShootRayAnimation();
+                    inputManager.SetSkillButtonInteractable(false, false);
+                    rigidbody.velocity = Vector3.zero;
+                    break;
+                case PlayerState.RocketAim:
+                    inputManager.SetSkillButtonInteractable(false, false);
+                    rigidbody.velocity = Vector3.zero;
+                    break;
+            }
         }
-    }
 
-    // IDamageable implementation for receiving damage
-    public void TakeDamage(float amount, WeaponType weaponType = WeaponType.Pistol)
-    {
-        if (_health == null) _health = GetComponent<Health>();
-        if (_health != null)
+        public void ShootLaser()
         {
-            _health.TakeDamage(amount, weaponType);
-            InGameHUD.Instance.UpdateHealthBar(_health.GetCurrentHealth(), _health.MaxHealth);
-            InGameHUD.Instance.ShowHurt(amount * 10);
-            AudioManager.Instance.PlayHurtSfx();
+            if (currentState == PlayerState.Idle || currentState == PlayerState.Move)
+                if (weapon.rayShoot.CanShoot())
+                {
+                    ChangeState(PlayerState.LaserShoot);
+                    weapon.ShootRay();
+                }
         }
-    }
 
-    private Health _health;
-
-    void OnEnable()
-    {
-        if (_health == null) _health = GetComponent<Health>();
-        if (_health != null)
+        public void ShootRocket()
         {
-            _health.onDeath.AddListener(OnHealthDeath);
-            _health.onDamaged.AddListener(OnHealthDamaged);
+            Debug.Log("Attempting to shoot rocket. Can shoot: " + weapon.rocketAim.CanShoot() + ", Current state: " + currentState);
+            if (currentState == PlayerState.Idle || currentState == PlayerState.Move)
+                if (weapon.rocketAim.CanShoot())
+                {
+                    ChangeState(PlayerState.RocketAim);
+                    weapon.AimRocket();
+                }
         }
-    }
 
-    void OnDisable()
-    {
-        if (_health != null)
+        // IDamageable implementation for receiving damage
+        public void TakeDamage(float amount, WeaponType weaponType = WeaponType.Pistol)
         {
-            _health.onDeath.RemoveListener(OnHealthDeath);
-            _health.onDamaged.RemoveListener(OnHealthDamaged);
+            if(PlayerData.IsInvincible) return;
+            if (_health == null) _health = GetComponent<Health>();
+            if (_health != null)
+            {
+                _health.TakeDamage(amount, weaponType);
+                InGameHUD.Instance.UpdateHealthBar(_health.GetCurrentHealth(), _health.MaxHealth);
+                InGameHUD.Instance.ShowHurt(amount * 10);
+                AudioManager.Instance.PlayHurtSfx();
+            }
         }
+
+        private Health _health;
+
+        void OnEnable()
+        {
+            if (_health == null) _health = GetComponent<Health>();
+            if (_health != null)
+            {
+                _health.onDeath.AddListener(OnHealthDeath);
+                _health.onDamaged.AddListener(OnHealthDamaged);
+            }
+        }
+
+        void OnDisable()
+        {
+            if (_health != null)
+            {
+                _health.onDeath.RemoveListener(OnHealthDeath);
+                _health.onDamaged.RemoveListener(OnHealthDamaged);
+            }
+        }
+
+        private void OnHealthDeath()
+        {
+            Die();
+        }
+
+        private void OnHealthDamaged(float amount)
+        {
+            InGameHUD.Instance?.ShowHurt(amount);
+            InGameHUD.Instance?.UpdateHealthBar(_health.GetCurrentHealth(), _health.MaxHealth);
+        }
+
+        private void Die()
+        {
+            Debug.Log("Player died!");
+            SetRagdoll(true);
+            UIManager.Instance.Close("InGameHUDPopup");
+            UIManager.Instance.OpenPopupDelay("LosePopup", 2f);
+            currentState = PlayerState.Die;
+            PlayerData.IsFreeFire = false;
+            PlayerData.IsInvincible = false;
+        }
+
+        public void SetRagdoll(bool active)
+        {
+            foreach (var rb in GetComponentsInChildren<Rigidbody>())
+                rb.isKinematic = !active;
+
+            foreach (var col in GetComponentsInChildren<Collider>())
+                col.enabled = active;
+
+            if (animatorManager != null && animatorManager.animator != null)
+                animatorManager.animator.enabled = !active;
+
+            if (mainCollider != null)
+                mainCollider.enabled = !active;
+
+            rigidbody.isKinematic = false; // Ensure main rigidbody also follows kinematic state
+        }
+
+
+        public void SetAll(Transform spawnPoint)
+        {
+            transform.position = spawnPoint.position;
+            transform.rotation = spawnPoint.rotation;
+            SetRagdoll(false);
+            if (_health != null)
+                _health.SetMaxHealth(PlayerData.MaxHp);
+            currentState = PlayerState.Idle;
+            weapon.Reset();
+            InputManager.Instance.Reset();
+        }
+
     }
 
-    private void OnHealthDeath()
+    public enum PlayerState
     {
-        Die();
+        Idle = 0,
+        Move = 1,
+        Sprint = 2,
+        LaserShoot = 3,
+        RocketAim = 4,
+        Die = 5
     }
-
-    private void OnHealthDamaged(float amount)
-    {
-        InGameHUD.Instance?.ShowHurt(amount);
-        InGameHUD.Instance?.UpdateHealthBar(_health.GetCurrentHealth(), _health.MaxHealth);
-    }
-
-    private void Die()
-    {
-        Debug.Log("Player died!");
-        SetRagdoll(true);
-        UIManager.Instance.Close("InGameHUDPopup");
-        UIManager.Instance.OpenPopupDelay("LosePopup", 2f);
-        currentState = PlayerState.Die;
-    }
-
-    public void SetRagdoll(bool active)
-    {
-        foreach (var rb in GetComponentsInChildren<Rigidbody>())
-            rb.isKinematic = !active;
-
-        foreach (var col in GetComponentsInChildren<Collider>())
-            col.enabled = active;
-
-        if (animatorManager != null && animatorManager.animator != null)
-            animatorManager.animator.enabled = !active;
-
-        if (mainCollider != null)
-            mainCollider.enabled = !active;
-
-        rigidbody.isKinematic = false; // Ensure main rigidbody also follows kinematic state
-    }
-
-    
-    public void SetAll(Transform spawnPoint)
-    {
-        transform.position = spawnPoint.position;
-        transform.rotation = spawnPoint.rotation;
-        SetRagdoll(false);
-        if (_health != null)
-            _health.SetMaxHealth(PlayerData.MaxHp);
-        currentState = PlayerState.Idle;
-        weapon.Reset();
-        InputManager.Instance.Reset();
-    }
-    
-}
-
-public enum PlayerState
-{
-    Idle = 0,
-    Move = 1,
-    Sprint = 2,
-    LaserShoot = 3,
-    RocketAim = 4,
-    Die = 5
-}
 }
 
 
