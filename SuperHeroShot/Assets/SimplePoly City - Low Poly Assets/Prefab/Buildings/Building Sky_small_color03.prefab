@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3300000}
   - component: {fileID: 2300000}
   - component: {fileID: 2767652357661560684}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Building Sky_small_color03
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -103,5 +103,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 12.999999, y: 16.928885, z: 11.196715}
-  m_Center: {x: 0.000009059907, y: 8.464442, z: -0.4587293}
+  m_Size: {x: 12.999999, y: 16.516726, z: 11.196715}
+  m_Center: {x: 0.000009059907, y: 8.258363, z: -0.4587293}

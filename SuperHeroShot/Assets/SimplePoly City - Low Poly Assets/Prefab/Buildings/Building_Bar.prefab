@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2300000}
   - component: {fileID: 9500000}
   - component: {fileID: 3801532448621413306}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Building_Bar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -125,5 +125,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 7.3578935, y: 10.411013, z: 6.164571}
-  m_Center: {x: -0.0225451, y: 5.205495, z: -0.33756506}
+  m_Size: {x: 7.3578935, y: 10.094966, z: 6.164571}
+  m_Center: {x: -0.022545101, y: 5.0474715, z: -0.33756495}
