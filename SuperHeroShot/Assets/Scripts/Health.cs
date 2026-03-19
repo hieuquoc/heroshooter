@@ -45,6 +45,7 @@ namespace rescueforce
     private void Die()
     {
         isDead = true;
+        if(onDeath != null)
         onDeath?.Invoke();
     }
 

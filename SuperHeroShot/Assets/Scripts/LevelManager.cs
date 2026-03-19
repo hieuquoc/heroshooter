@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -135,13 +136,45 @@ namespace rescueforce
                     continue;
                 }
 
-                // ensure there are no obstacles overlapping the center area
+                // compute sample position (average corner ground height)
                 Vector3 samplePos = (hitCount > 0) ? (accumHit / hitCount) : center;
-                float overlapRadius = Mathf.Max(0.01f, checkSize * 0.45f);
-                Collider[] overlaps = Physics.OverlapSphere(samplePos, overlapRadius, obstacleMask, QueryTriggerInteraction.Ignore);
-                if (overlaps != null && overlaps.Length > 0)
+
+                // Raycast down at the cell center and ensure its hit Y is consistent
+                // with the four corner hits (i.e., all five points lie on same plane).
+                Vector3 centerOrigin = center + Vector3.up * sampleHeight;
+                if (!Physics.Raycast(centerOrigin, Vector3.down, out RaycastHit centerHit, maxRayDistance, groundMask, QueryTriggerInteraction.Ignore))
                 {
-                    // blocked by obstacle
+                    // no ground at center
+                    continue;
+                }
+
+                // additional vertical center box check to catch small columns near center
+                float centerBoxSize = Mathf.Max(0.01f, checkSize * 0.2f);
+                float centerBoxHalfHeight = Mathf.Max(0.1f, sampleHeight * 0.5f);
+                Vector3 centerBoxHalfExtents = new Vector3(centerBoxSize * 0.5f, centerBoxHalfHeight, centerBoxSize * 0.5f);
+                Vector3 centerBoxWorldPos = center + Vector3.up * centerBoxHalfHeight;
+                Collider[] centerObstacles = Physics.OverlapBox(centerBoxWorldPos, centerBoxHalfExtents, Quaternion.identity, obstacleMask, QueryTriggerInteraction.Ignore);
+                if (centerObstacles != null && centerObstacles.Length > 0)
+                {
+                    // small obstacle present near center (e.g., column) -> reject cell
+                    continue;
+                }
+
+                // check vertical spread including the center hit. require very tight tolerance.
+                float centerY = centerHit.point.y;
+                float minY2 = centerY;
+                float maxY2 = centerY;
+                for (int i = 0; i < cornerHits.Length; i++)
+                {
+                    float y = cornerHits[i].y;
+                    if (y < minY2) minY2 = y;
+                    if (y > maxY2) maxY2 = y;
+                }
+
+                // require center + corners to be nearly coplanar (y difference <= 0.01)
+                if (maxY2 - minY2 > 0.01f)
+                {
+                    // center differs from corners too much
                     continue;
                 }
 
@@ -349,80 +382,33 @@ namespace rescueforce
     {
         if (!debugGizmos) return;
 
-        Gizmos.color = Color.yellow;
-        // Draw grid outline (use transform as authoritative origin so moving object updates immediately)
-        Vector3 originBase = transform != null ? transform.position : gridOrigin;
-        Vector3 gridSize = new Vector3(gridWidth * cellSize, 0f, gridHeight * cellSize);
-        Gizmos.DrawWireCube(originBase + new Vector3(gridSize.x, 0f, gridSize.z) * 0.5f, new Vector3(gridSize.x, 0.01f, gridSize.z));
+        if (spawnPositions == null || spawnPositions.Count == 0) return;
 
-        // Draw each cell as small wire cube
-        float halfCheck = checkSize * 0.5f;
-        for (int x = 0; x < gridWidth; x++)
-        {
-            for (int z = 0; z < gridHeight; z++)
-            {
-                Vector3 center = originBase + new Vector3((x + 0.5f) * cellSize, 0f, (z + 0.5f) * cellSize);
-                // find if this center exists in spawnPositions (approx)
-                bool valid = false;
-                foreach (var p in spawnPositions)
-                {
-                    Vector2 a = new Vector2(p.x, p.z);
-                    Vector2 b = new Vector2(center.x, center.z);
-                    if (Vector2.Distance(a, b) < 0.001f)
-                    {
-                        valid = true;
-                        break;
-                    }
-                }
-
-                Gizmos.color = valid ? new Color(0f, 1f, 0f, 0.6f) : new Color(1f, 0f, 0f, 0.15f);
-                Vector3 drawCenter = center + Vector3.up * 0.01f;
-                Gizmos.DrawCube(drawCenter, new Vector3(checkSize, 0.02f, checkSize));
-            }
-        }
-
-        // Draw spawn positions as small cube markers
-        Gizmos.color = Color.cyan;
-        Vector3 markerSize = Vector3.one * 0.2f;
+        // Draw only boxes at valid baked spawn positions
+        Vector3 size = new Vector3(checkSize, 0.02f, checkSize);
+        Gizmos.color = new Color(0f, 1f, 0f, 0.6f);
         foreach (var p in spawnPositions)
         {
-            Gizmos.DrawCube(p + Vector3.up * 0.1f, markerSize);
+            Vector3 drawPos = p + Vector3.up * 0.01f;
+            Gizmos.DrawCube(drawPos, size);
+            Gizmos.color = Color.black;
+            Gizmos.DrawWireCube(drawPos, size);
+            Gizmos.color = new Color(0f, 1f, 0f, 0.6f);
         }
-        // Draw corner raycast debug lines for each cell (only when enabled and we have baked positions)
-        if (drawCornerRays && spawnPositions != null && spawnPositions.Count > 0)
-        {
-            Gizmos.color = Color.white;
-            for (int x = 0; x < gridWidth; x++)
-            {
-                for (int z = 0; z < gridHeight; z++)
-                {
-                    Vector3 center = originBase + new Vector3((x + 0.5f) * cellSize, 0f, (z + 0.5f) * cellSize);
-                    Vector3[] corners = new Vector3[4]
-                    {
-                        center + new Vector3(-halfCheck, sampleHeight, -halfCheck),
-                        center + new Vector3(-halfCheck, sampleHeight,  halfCheck),
-                        center + new Vector3( halfCheck, sampleHeight, -halfCheck),
-                        center + new Vector3( halfCheck, sampleHeight,  halfCheck),
-                    };
+    }
 
-                    for (int i = 0; i < corners.Length; i++)
-                    {
-                        Vector3 origin = corners[i];
-                        if (Physics.Raycast(origin, Vector3.down, out RaycastHit hit, maxRayDistance, groundMask, QueryTriggerInteraction.Ignore))
-                        {
-                            Gizmos.color = Color.green;
-                            Gizmos.DrawLine(origin, hit.point);
-                            Gizmos.DrawSphere(hit.point, 0.05f);
-                        }
-                        else
-                        {
-                            Gizmos.color = Color.red;
-                            Gizmos.DrawLine(origin, origin + Vector3.down * maxRayDistance);
-                        }
-                    }
-                }
-            }
-        }
+    public void StartLevel(int level)
+    {
+        StartCoroutine(StartLevelRoutine(level));
+    }
+
+    IEnumerator StartLevelRoutine(int level)
+    {
+        ClearAllEnemies();
+        // optional: add some delay or transition effect here before spawning
+        yield return new WaitForSeconds(0.1f);
+        SpawnLevel(level, 2);
+        InGameHUD.Instance?.UpdateEnemyCount(0, totalEnemies);
     }
 }
 

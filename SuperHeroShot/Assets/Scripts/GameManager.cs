@@ -45,7 +45,7 @@ namespace rescueforce
         UIManager.Instance.Close("HomePopup");
         UIManager.Instance.Open("InGameHUDPopup");
         _gameState = GameState.Playing;
-        LevelManager.Instance.SpawnLevel(PlayerData.Level, 2);
+        LevelManager.Instance.StartLevel(PlayerData.Level);
         player.SetAll(PlayerSpawnPoint);
     }
 
@@ -62,6 +62,7 @@ namespace rescueforce
         if(_gameState != GameState.Playing) return;
         _gameState = GameState.GameOver;
         PlayerData.Level += 1; // level up on win
+        PlayerPrefs.SetInt("Level", PlayerData.Level);
         UIManager.Instance.Open("WinPopup");
         PlayerData.IsFreeFire = false;
         PlayerData.IsInvincible = false;

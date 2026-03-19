@@ -275,7 +275,7 @@ namespace rescueforce
         {
             if(PlayerData.IsInvincible) return;
             if (_health == null) _health = GetComponent<Health>();
-            if (_health != null)
+            if (_health != null && _health.GetCurrentHealth() > 0f)
             {
                 _health.TakeDamage(amount, weaponType);
                 InGameHUD.Instance.UpdateHealthBar(_health.GetCurrentHealth(), _health.MaxHealth);

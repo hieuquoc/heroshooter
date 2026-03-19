@@ -17,6 +17,8 @@ namespace rescueforce
             exitButton.onClick.AddListener(() => GameManager.Instance.BackToHome());
             exitButton.onClick.AddListener(Close);
         }
+
+        base.Awake();
     }
 }
 }

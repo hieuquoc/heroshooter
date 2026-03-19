@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3300000}
   - component: {fileID: 2300000}
   - component: {fileID: 7396496512350121581}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Props_Traffic Signal_big
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -103,5 +103,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.7, y: 6.019949, z: 0.6}
-  m_Center: {x: 0, y: 3.0100164, z: -0.019756943}
+  m_Size: {x: 0.24387455, y: 6.019949, z: 0.21958923}
+  m_Center: {x: -0.014281806, y: 3.0100164, z: -0.011797473}
