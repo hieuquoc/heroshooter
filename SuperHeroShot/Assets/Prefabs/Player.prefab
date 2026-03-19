@@ -15378,7 +15378,7 @@ GameObject:
   - component: {fileID: 3096026329665415992}
   - component: {fileID: 1100188288016856209}
   - component: {fileID: 2668435852329757847}
-  - component: {fileID: 8322516299227715775}
+  - component: {fileID: 7099251756742583750}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -15489,8 +15489,8 @@ MonoBehaviour:
     weaponType: 1
     shootingPoints:
     - {fileID: 127419227894178899}
-    damage: 1
-    range: 5000
+    damage: 2
+    range: 10000
     fireInterval: 4.2
     fireTimer: 0
     cooldown: 10
@@ -15503,7 +15503,7 @@ MonoBehaviour:
     - {fileID: 1982567347610008275}
     - {fileID: 4173081161555134085}
     - {fileID: 7276142198529232255}
-    damage: 3
+    damage: 10
     range: 5000
     fireInterval: 0.15
     fireTimer: 0
@@ -15569,7 +15569,7 @@ MonoBehaviour:
   onDamaged:
     m_PersistentCalls:
       m_Calls: []
---- !u!81 &8322516299227715775
+--- !u!81 &7099251756742583750
 AudioListener:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

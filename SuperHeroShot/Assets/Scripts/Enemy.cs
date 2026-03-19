@@ -24,7 +24,7 @@ namespace rescueforce
     public Transform markPoint; // điểm để hiển thị marker trên UI
 
     private float rayHitTime;
-    private float rayHitInterval = 0.5f;
+    private float rayHitInterval = 0.05f;
     private Vector3 hitDirection;   // hướng từ player đến enemy, dùng để apply force khi chết
 
     Transform _playerTransform;

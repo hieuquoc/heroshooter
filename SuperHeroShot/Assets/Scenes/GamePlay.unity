@@ -4886,6 +4886,18 @@ PrefabInstance:
       propertyPath: inputManager
       value: 
       objectReference: {fileID: 2133253562}
+    - target: {fileID: 3096026329665415992, guid: a3b44e1df5f402c4f8be0aae1dc94c6e, type: 3}
+      propertyPath: rayShoot.range
+      value: 10000
+      objectReference: {fileID: 0}
+    - target: {fileID: 3096026329665415992, guid: a3b44e1df5f402c4f8be0aae1dc94c6e, type: 3}
+      propertyPath: rayShoot.damage
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3096026329665415992, guid: a3b44e1df5f402c4f8be0aae1dc94c6e, type: 3}
+      propertyPath: rocketAim.damage
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 6395958105554107259, guid: a3b44e1df5f402c4f8be0aae1dc94c6e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.0014930964
