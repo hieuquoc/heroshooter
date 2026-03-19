@@ -1942,7 +1942,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1694440905904960110, guid: a3b44e1df5f402c4f8be0aae1dc94c6e, type: 3}
   m_PrefabInstance: {fileID: 1849785243401061362}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1806509140}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dd8d2cfbe1b27f8409297aa5efe0234b, type: 3}
@@ -3921,19 +3921,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 6657813715020545130, guid: 15d2927ecc71fed4d9a54293683d1ed6, type: 3}
   m_PrefabInstance: {fileID: 2016548293402312090}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1806509140 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7636893330351092935, guid: a3b44e1df5f402c4f8be0aae1dc94c6e, type: 3}
-  m_PrefabInstance: {fileID: 1849785243401061362}
-  m_PrefabAsset: {fileID: 0}
---- !u!81 &1806509146
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1806509140}
-  m_Enabled: 1
 --- !u!1 &1819877419
 GameObject:
   m_ObjectHideFlags: 0
@@ -4886,18 +4873,6 @@ PrefabInstance:
       propertyPath: inputManager
       value: 
       objectReference: {fileID: 2133253562}
-    - target: {fileID: 3096026329665415992, guid: a3b44e1df5f402c4f8be0aae1dc94c6e, type: 3}
-      propertyPath: rayShoot.range
-      value: 10000
-      objectReference: {fileID: 0}
-    - target: {fileID: 3096026329665415992, guid: a3b44e1df5f402c4f8be0aae1dc94c6e, type: 3}
-      propertyPath: rayShoot.damage
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3096026329665415992, guid: a3b44e1df5f402c4f8be0aae1dc94c6e, type: 3}
-      propertyPath: rocketAim.damage
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 6395958105554107259, guid: a3b44e1df5f402c4f8be0aae1dc94c6e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.0014930964
@@ -4938,18 +4913,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6552010625751900536, guid: a3b44e1df5f402c4f8be0aae1dc94c6e, type: 3}
+      propertyPath: MaxLength
+      value: 5000
+      objectReference: {fileID: 0}
     - target: {fileID: 7636893330351092935, guid: a3b44e1df5f402c4f8be0aae1dc94c6e, type: 3}
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 8322516299227715775, guid: a3b44e1df5f402c4f8be0aae1dc94c6e, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7636893330351092935, guid: a3b44e1df5f402c4f8be0aae1dc94c6e, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1806509146}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a3b44e1df5f402c4f8be0aae1dc94c6e, type: 3}
 --- !u!1001 &2016548293402312090
 PrefabInstance:
