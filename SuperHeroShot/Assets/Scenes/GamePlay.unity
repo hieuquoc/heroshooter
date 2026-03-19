@@ -569,7 +569,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &275346217
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3426,7 +3426,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1518341127}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 344535178}
+        m_TargetAssemblyTypeName: rescueforce.InGameHUD, Assembly-CSharp
+        m_MethodName: ShowSettingPopup
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1518341127
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3447,8 +3459,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: fd68e7879847f7443a8ed5ae53ba8039, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -4746,6 +4758,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Setting
       objectReference: {fileID: 0}
+    - target: {fileID: 2391892345630627256, guid: 30e3fb9bb9cfd444cbbf2d37d12a00df, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2505269543117123444, guid: 30e3fb9bb9cfd444cbbf2d37d12a00df, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -4825,6 +4841,26 @@ PrefabInstance:
     - target: {fileID: 2505269543117123444, guid: 30e3fb9bb9cfd444cbbf2d37d12a00df, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4258786832381531668, guid: 30e3fb9bb9cfd444cbbf2d37d12a00df, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.489
+      objectReference: {fileID: 0}
+    - target: {fileID: 4258786832381531668, guid: 30e3fb9bb9cfd444cbbf2d37d12a00df, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7661571168732404325, guid: 30e3fb9bb9cfd444cbbf2d37d12a00df, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.489
+      objectReference: {fileID: 0}
+    - target: {fileID: 7661571168732404325, guid: 30e3fb9bb9cfd444cbbf2d37d12a00df, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7661571168732404325, guid: 30e3fb9bb9cfd444cbbf2d37d12a00df, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.489
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5291,6 +5327,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1900888647}
     m_Modifications:
+    - target: {fileID: 1040138566737540240, guid: b404e4f7d28f0be48a0a861222a213fc, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -221.51135
+      objectReference: {fileID: 0}
+    - target: {fileID: 2045887853693620560, guid: b404e4f7d28f0be48a0a861222a213fc, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -56
+      objectReference: {fileID: 0}
+    - target: {fileID: 2171759154649964350, guid: b404e4f7d28f0be48a0a861222a213fc, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2234713093500041878, guid: b404e4f7d28f0be48a0a861222a213fc, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -5379,6 +5427,10 @@ PrefabInstance:
       propertyPath: UICamera
       value: 
       objectReference: {fileID: 1263833924}
+    - target: {fileID: 4416988434449921151, guid: b404e4f7d28f0be48a0a861222a213fc, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 76.18866
+      objectReference: {fileID: 0}
     - target: {fileID: 7385781895885286624, guid: b404e4f7d28f0be48a0a861222a213fc, type: 3}
       propertyPath: m_Name
       value: Home
