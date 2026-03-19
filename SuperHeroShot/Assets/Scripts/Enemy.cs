@@ -57,6 +57,10 @@ namespace rescueforce
 
     void Update()
     {
+        if(GameManager.Instance.GameState != GameState.Playing)
+        {
+            return; // không làm gì nếu game đang pause hoặc đã kết thúc
+        }
         if(_health.GetCurrentHealth() <= 0)
         {
              return; // dead enemy does not rotate or shoot

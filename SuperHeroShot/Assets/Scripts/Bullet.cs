@@ -58,6 +58,8 @@ namespace rescueforce
 
     void Update()
     {
+        
+
         _lifeTimer -= Time.deltaTime;
         if (_lifeTimer <= 0f)
         {
