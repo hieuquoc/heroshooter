@@ -64,6 +64,7 @@ namespace rescueforce
         PlayerData.Level += 1; // level up on win
         PlayerPrefs.SetInt("Level", PlayerData.Level);
         UIManager.Instance.Open("WinPopup");
+        UIManager.Instance.Close("InGameHUDPopup");
         PlayerData.IsFreeFire = false;
         PlayerData.IsInvincible = false;
     }

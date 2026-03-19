@@ -12,8 +12,8 @@ namespace rescueforce
 
     [Header("PlayerPrefs Keys")]
     public string cameraKey = "CameraSensitivity";
-    public string soundKey = "SoundEnabled";
-    public string musicKey = "MusicEnabled";
+    public string soundKey = "SfxActive";
+    public string musicKey = "MusicActive";
 
     [Tooltip("Name used to register with UIManager")]
     public string popupName = PopupNames.Setting;
@@ -23,6 +23,8 @@ namespace rescueforce
         base.Awake();
         if (UIManager.Instance != null)
             UIManager.Instance.Register(popupName, this);
+        soundToggle.onValueChanged.AddListener(OnSoundToggleChanged);
+        musicToggle.onValueChanged.AddListener(OnMusicToggleChanged);
     }
 
     public override void Open()
@@ -60,12 +62,14 @@ namespace rescueforce
     {
         PlayerPrefs.SetInt(soundKey, isOn ? 1 : 0);
         PlayerPrefs.Save();
+        AudioManager.Instance.SetActiveSfx(isOn);
     }
 
     public void OnMusicToggleChanged(bool isOn)
     {
         PlayerPrefs.SetInt(musicKey, isOn ? 1 : 0);
         PlayerPrefs.Save();
+        AudioManager.Instance.SetActiveMusic(isOn);
     }
 
     void OnDestroy()
