@@ -29,6 +29,7 @@ namespace rescueforce
         PlayerData.Load();
         player.gameObject.SetActive(false);
         cameraFollow.gameObject.SetActive(false);
+        Instantiate(Resources.Load<GameObject>("City"), Vector3.zero, Quaternion.identity);
     }
 
     // Update is called once per frame

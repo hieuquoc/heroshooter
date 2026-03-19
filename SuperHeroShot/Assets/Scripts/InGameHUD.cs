@@ -14,6 +14,7 @@ namespace rescueforce
     public Image hurtOverlay;
 
     public Image healthBarFill;
+    public TutorialTipManager tutorialTipManager;
     [SerializeField] private TextMeshProUGUI enemyCountText;
 
     protected override void Awake()
@@ -37,6 +38,15 @@ namespace rescueforce
     void Start()
     {
         UIManager.Instance.Register(PopupName, this);
+    }
+
+    public override void Open()
+    {
+        base.Open();
+        if (tutorialTipManager != null)
+        {
+            tutorialTipManager.Show();
+        }
     }
 
     Coroutine _hurtRoutine;
